@@ -113,6 +113,7 @@ in
             "browser.safebrowsing.malware.enabled" = true;
             "browser.safebrowsing.phishing.enabled" = true;
             "browser.send_pings" = false;
+            "browser.eme.ui.enabled" = true;
             "device.sensors.enabled" = false;
             "dom.battery.enabled" = false;
             "dom.webaudio.enabled" = false;
@@ -149,6 +150,7 @@ in
             "media.ffvpx.enabled" = false;
             "media.navigator.mediadatadecoder_vpx_enabled" = true;
             "media.rdd-vpx.enabled" = false;
+            "media.gmp-widevinecdm.enabled" = true;
           };
         };
       };
