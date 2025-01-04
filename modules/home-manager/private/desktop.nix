@@ -50,7 +50,6 @@ in
       [
         sops
         samba
-        nextcloud-client
         keepassxc
         (discord.override {
           nss = nss_latest;
@@ -65,11 +64,6 @@ in
         nixpkgs-review
         vdhcoapp
         element-desktop
-
-        # For tomrijndorp.find-it-faster
-        fzf
-        ripgrep
-        bat
       ]
       ++ (with fPkgs; [
         deezer
@@ -171,7 +165,6 @@ in
           editorconfig.editorconfig
           mkhl.direnv
           usernamehw.errorlens
-          tomrijndorp.find-it-faster
 
           # nix dev
           jnoortheen.nix-ide
