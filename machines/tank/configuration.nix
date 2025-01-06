@@ -522,7 +522,7 @@ in
       };
     };
     stalwart-mail = {
-      enable = false;
+      enable = true;
       settings = {
         store.db = {
           type = "rocksdb";
