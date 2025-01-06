@@ -28,7 +28,7 @@ in
       owner = "grafana";
       group = "grafana";
     };
-    vmauth = { };
+    victoriametrics = { };
   };
 
   networking = {
@@ -74,7 +74,8 @@ in
       enable = true;
       hostname = "vm.pointjig.de";
       package = vmPackage;
-      credentialsFile = secrets.vmauth.path;
+      username = "vm";
+      credentialsFile = secrets.victoriametrics.path;
     };
     grafana = {
       enable = true;

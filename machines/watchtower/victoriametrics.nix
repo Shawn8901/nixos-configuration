@@ -15,17 +15,6 @@ let
     ;
 
   cfg = config.shawn8901.victoriametrics;
-  yaml = pkgs.formats.yaml { };
-
-  authConfig = yaml.generate "auth.yml" {
-    users = [
-      {
-        username = "vm";
-        password = "%{PASSWORD}";
-        url_prefix = "http://${config.services.victoriametrics.listenAddress}";
-      }
-    ];
-  };
 in
 {
   options = {
@@ -40,25 +29,12 @@ in
         type = types.int;
         default = 8427;
       };
+      username = mkOption { type = types.str; };
       credentialsFile = mkOption { type = types.path; };
       datasources = mkOption { type = types.listOf types.raw; };
     };
   };
   config = mkIf cfg.enable {
-    systemd.services.vmauth = {
-      description = "VictoriaMetrics basic auth proxy";
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
-      serviceConfig = {
-        Restart = "on-failure";
-        RestartSec = 5;
-        DynamicUser = true;
-        EnvironmentFile = cfg.credentialsFile;
-        ExecStart = "${cfg.package}/bin/vmauth -auth.config=${authConfig} -httpListenAddr=:${toString cfg.port}";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-
     services = {
       nginx = {
         enable = mkDefault true;
@@ -81,7 +57,9 @@ in
         inherit (cfg) package;
         enable = true;
         retentionPeriod = "1y";
-        listenAddress = "localhost:8428";
+        listenAddress = "localhost:${toString cfg.port}";
+        basicAuthUsername = cfg.username;
+        basicAuthPasswordFile = cfg.credentialsFile;
         extraOptions = [
           "-selfScrapeInterval=10s"
           "-selfScrapeInstance=${config.networking.hostName}"
