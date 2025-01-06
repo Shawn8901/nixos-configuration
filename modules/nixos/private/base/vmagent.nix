@@ -61,7 +61,7 @@ in
           ];
       };
       remoteWrite = {
-        url = "https://vm.pointjig.de/api/v1/write";
+        url = lib.mkDefault "https://vm.pointjig.de/api/v1/write";
         basicAuthUsername = "vm";
         basicAuthPasswordFile = config.sops.secrets.vmagent.path;
       };

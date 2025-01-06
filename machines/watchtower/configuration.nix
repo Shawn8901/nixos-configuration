@@ -45,8 +45,7 @@ in
     nginx.package = pkgs.nginxQuic;
     vmagent = {
       package = vmPackage;
-      remoteWrite.url = lib.mkForce "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
-      extraArgs = lib.mkForce [ "-remoteWrite.label=instance=${config.networking.hostName}" ];
+      remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
     };
   };
 
@@ -88,6 +87,10 @@ in
           name = "VictoriaMetrics";
           type = "victoriametrics-datasource";
           url = "http://${config.services.victoriametrics.listenAddress}";
+          basicAuth = true;
+          basicAuthUser = "vm";
+          isDefault = true;
+          secureJsonData.basicAuthPassword = "$DATASOURCE_PASSWORD";
         }
       ];
     };
