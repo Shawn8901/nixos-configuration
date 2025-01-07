@@ -542,8 +542,8 @@ in
     ];
     nginx = {
       package = pkgs.nginxQuic;
-      virtualHosts."tank.pointjig.de" = {
-        serverName = "tank.pointjig.de";
+      virtualHosts."mail.tank.pointjig.de" = {
+        serverName = "mail.tank.pointjig.de";
         forceSSL = true;
         enableACME = true;
         http3 = true;
