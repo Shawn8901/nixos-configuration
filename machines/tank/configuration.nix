@@ -556,14 +556,30 @@ in
         };
       };
     };
+    postgresql = {
+      settings = {
+        track_activities = true;
+        track_counts = true;
+        track_io_timing = true;
+      };
+      ensureDatabases = [ "stalwart-mail" ];
+      ensureUsers = [
+        {
+          name = "stalwart-mail";
+          ensureDBOwnership = true;
+        }
+      ];
+    };
     stalwart-mail = {
       enable = true;
       package = stalwart-mail-small;
       settings = {
         store.db = {
-          type = "rocksdb";
-          path = "/var/lib/stalwart-mail/db";
-          compression = "lz4";
+          type = "postgresql";
+          host = "localhost";
+          password = "%{env:POSTGRESQL_PASSWORD}%";
+          port = 5432;
+          database = "stalwart-mail";
         };
         storage.blob = "db";
 
