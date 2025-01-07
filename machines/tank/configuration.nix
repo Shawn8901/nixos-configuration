@@ -13,6 +13,41 @@ let
 
   inherit (config.sops) secrets;
   inherit (lib) concatStringsSep;
+
+  stalwart-mail-small =
+    (pkgs.stalwart-mail.overrideAttrs (oldAttrs: {
+      # The packages API cargo*Features is not overridable
+      # So override the implementation fields
+      cargoBuildNoDefaultFeatures = true;
+      cargoBuildFeatures = [ "postgres" ];
+      cargoCheckNoDefaultFeatures = true;
+      cargoCheckFeatures = [
+        "postgres"
+        # Additionally add sqlite for tests,
+        # to unbreak some tests that use sqlite
+        "sqlite"
+      ];
+
+      checkFlags = oldAttrs.checkFlags ++ [
+        # uses rocksdb which we want to disable explicitly
+        "--skip=directory::oidc::oidc_directory"
+        "--skip=smtp::inbound::mail::mail"
+        "--skip=smtp::inbound::milter::milter_session"
+        "--skip=smtp::inbound::milter::mta_hook_session"
+        "--skip=smtp::inbound::rcpt::rcpt"
+        "--skip=smtp::inbound::sign::sign_and_seal"
+        "--skip=smtp::inbound::throttle::throttle_inbound"
+      ];
+
+      env = removeAttrs oldAttrs.env [
+        "ROCKSDB_INCLUDE_DIR"
+        "ROCKSDB_LIB_DIR"
+      ];
+    })).override
+      {
+        foundationdb = null;
+        rocksdb_8_11 = null;
+      };
 in
 {
   sops.secrets = lib.mkMerge [
@@ -522,7 +557,8 @@ in
       };
     };
     stalwart-mail = {
-      enable = false;
+      enable = true;
+      package = stalwart-mail-small;
       settings = {
         store.db = {
           type = "rocksdb";
