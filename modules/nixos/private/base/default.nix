@@ -9,8 +9,10 @@ in
     info.enable = mkDefault false;
   };
 
-  system.stateVersion = mkDefault "23.05";
-
+  system = {
+    stateVersion = mkDefault "23.05";
+    disableInstallerTools = true;
+  };
   time.timeZone = "Europe/Berlin";
 
   i18n.defaultLocale = "de_DE.UTF-8";
@@ -19,6 +21,8 @@ in
     font = "Lat2-Terminus16";
     keyMap = "de";
   };
+
+  programs.command-not-found.enable = false;
 
   boot = {
     tmp.useTmpfs = mkDefault true;

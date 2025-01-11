@@ -24,15 +24,12 @@ in
       ];
     };
 
-    system = {
-      disableInstallerTools = true;
-      autoUpgrade = {
-        enable = true;
-        dates = "05:14";
-        flake = "github:shawn8901/nixos-configuration";
-        allowReboot = true;
-        persistent = true;
-      };
+    system.autoUpgrade = {
+      enable = true;
+      dates = "05:14";
+      flake = "github:shawn8901/nixos-configuration";
+      allowReboot = true;
+      persistent = true;
     };
 
     networking = {
