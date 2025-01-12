@@ -36,7 +36,7 @@ in
       "amdgpu"
       "amd_pstate"
     ];
-    kernelPackages = packagesFor self'.packages.linux_xanmod_x86_64_v3;
+    kernelPackages = pkgs.linuxPackages;
     kernelParams = [
       "initcall_blacklist=acpi_cpufreq_init"
       "amd_pstate=passive"
