@@ -12,6 +12,8 @@ let
   inherit (inputs.firefox-addons.lib.${system}) buildFirefoxXpiAddon;
   inherit (pkgs.hostPlatform) system;
 
+  iniFormat = pkgs.formats.ini { };
+
   fPkgs = self'.packages;
   cfg = config.shawn8901.desktop;
   firefox-addon-packages = inputs'.firefox-addons.packages;
@@ -30,10 +32,23 @@ in
     xdg = {
       enable = true;
       mime.enable = true;
-      configFile."chromium-flags.conf".text = ''
-        --ozone-platform-hint=auto
-        --enable-features=WaylandWindowDecorations
-      '';
+      configFile = {
+        "chromium-flags.conf".text = ''
+          --ozone-platform-hint=auto
+          --enable-features=WaylandWindowDecorations
+        '';
+        "akonadi/akonadiserverrc".source = iniFormat.generate "akonadiserverrc" {
+          Debug = {
+            Tracer = "dbus";
+          };
+          "%General" = {
+            Driver = "QSQLITE";
+          };
+          "QSQLITE" = {
+            Name = "/home/shawn/.local/share/akonadi/akonadi.db";
+          };
+        };
+      };
     };
     services = {
       nextcloud-client = {
