@@ -1,14 +1,13 @@
 {
   self',
+  inputs',
   config,
   pkgs,
-  lib,
-  inputs,
+  modulesPath,
   ...
 }:
 let
   inherit (config.sops) secrets;
-  inherit (pkgs.hostPlatform) system;
 
   vmPackage = pkgs.victoriametrics.override {
     withBackupTools = false;
@@ -19,6 +18,9 @@ let
   };
 in
 {
+
+  imports = [ "${modulesPath}/profiles/headless.nix" ];
+
   sops.secrets = {
     root = {
       neededForUsers = true;
@@ -66,7 +68,7 @@ in
     attic = {
       enable = true;
       hostName = "cache.pointjig.de";
-      package = inputs.nixpkgs.legacyPackages.${system}.attic-server;
+      package = inputs'.nixpkgs.legacyPackages.attic-server;
       environmentFile = secrets.attic-env.path;
     };
     victoriametrics = {

@@ -2,6 +2,7 @@
   config,
   flakeConfig,
   inputs',
+  modulesPath,
   ...
 }:
 let
@@ -10,6 +11,9 @@ let
   inherit (config.sops) secrets;
 in
 {
+
+  imports = [ "${modulesPath}/profiles/headless.nix" ];
+
   sops.secrets = {
     zrepl = { };
   };
