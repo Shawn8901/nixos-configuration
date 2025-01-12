@@ -12,9 +12,6 @@ let
   inherit (inputs.firefox-addons.lib.${system}) buildFirefoxXpiAddon;
   inherit (pkgs.hostPlatform) system;
 
-  iniFormat = pkgs.formats.ini { };
-
-  fPkgs = self'.packages;
   cfg = config.shawn8901.desktop;
   firefox-addon-packages = inputs'.firefox-addons.packages;
 in
@@ -37,17 +34,6 @@ in
           --ozone-platform-hint=auto
           --enable-features=WaylandWindowDecorations
         '';
-        "akonadi/akonadiserverrc".source = iniFormat.generate "akonadiserverrc" {
-          Debug = {
-            Tracer = "dbus";
-          };
-          "%General" = {
-            Driver = "QSQLITE";
-          };
-          "QSQLITE" = {
-            Name = "/home/shawn/.local/share/akonadi/akonadi.db";
-          };
-        };
       };
     };
     services = {
@@ -80,7 +66,7 @@ in
         vdhcoapp
         element-desktop
       ]
-      ++ (with fPkgs; [
+      ++ (with self'.packages; [
         deezer
         nas
         generate-zrepl-ssl
