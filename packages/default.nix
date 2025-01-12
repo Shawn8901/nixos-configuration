@@ -6,6 +6,27 @@
 }:
 let
   inherit (builtins) elem;
+
+  overrideMesa =
+    package:
+    (package.overrideAttrs (oldAttrs: {
+      env.NIX_CFLAGS_COMPILE = toString [
+        "-march=x86-64-v3"
+      ];
+    })).override
+      {
+        galliumDrivers = [
+          "radeonsi"
+          "llvmpipe"
+          "svga"
+          "d3d12"
+        ];
+        vulkanDrivers = [
+          "amd"
+          "microsoft-experimental"
+        ];
+      };
+
 in
 {
   perSystem =
@@ -47,6 +68,9 @@ in
         deezer = pkgsDeezer.callPackage ./deezer { };
 
         linux_xanmod_x86_64_v3 = pkgs.callPackage ./linux-xanmod-x86-64-v3 { };
+
+        mesa_x86_64_v3 = overrideMesa pkgs.mesa;
+        i686-mesa_x86_64_v3 = overrideMesa pkgs.pkgsi686Linux.mesa;
       };
     in
     {
