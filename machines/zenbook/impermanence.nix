@@ -1,4 +1,16 @@
-{ config, ... }:
+{ config, lib, ... }:
+let
+  makePersistMount = path: {
+    "${path}" = {
+      device = "/persist${path}";
+      options = [
+        "bind"
+        "noauto"
+        "x-systemd.automount"
+      ];
+    };
+  };
+in
 {
   boot.initrd.systemd.services.initrd-rollback-root = {
     after = [ "zfs-import-rpool.service" ];
@@ -19,66 +31,19 @@
     Defaults lecture = never
   '';
 
-  fileSystems = {
-
-    "/var/lib/bluetooth" = {
-      device = "/persist/var/lib/bluetooth";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-
-    "/var/lib/NetworkManager" = {
-      device = "/persist/var/lib/NetworkManager";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-
-    "/var/lib/cups" = {
-      device = "/persist/var/lib/cups";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-
-    "/var/lib/systemd" = {
-      device = "/persist/var/lib/systemd";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-
-    "/var/lib/prometheus2" = {
-      device = "/persist/var/lib/prometheus2";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-
-    "/var/lib/upower" = {
-      device = "/persist/var/lib/upower";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-
-    "/var/lib/nixos" = {
-      device = "/persist/var/lib/nixos";
-      noCheck = true;
-      options = [ "bind" ];
-    };
-  };
+  fileSystems = lib.mkMerge [
+    {
+      "/var/lib/nixos" = {
+        device = "/persist/var/lib/nixos";
+        noCheck = true;
+        options = [ "bind" ];
+      };
+    }
+    (makePersistMount "/var/lib/bluetooth")
+    (makePersistMount "/var/lib/NetworkManager")
+    (makePersistMount "/var/lib/cups")
+    (makePersistMount "/var/lib/systemd")
+    (makePersistMount "/var/lib/prometheus2")
+    (makePersistMount "/var/lib/upower")
+  ];
 }
