@@ -1,7 +1,7 @@
 {
   "enabled": 1,
   "hidden": false,
-  "description": "system flake",
+  "description": "jobset evaluation",
   "nixexprinput": "nixexpr",
   "nixexprpath": ".hydra/jobsets.nix",
   "checkinterval": 3600,
