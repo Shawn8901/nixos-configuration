@@ -4,6 +4,7 @@
   lib,
   config,
   flakeConfig,
+  modulesPath,
   ...
 }:
 let
@@ -15,6 +16,10 @@ let
 
 in
 {
+
+  imports = [ "${modulesPath}/profiles/perlless.nix" ];
+  # We dont build fully perlless yet
+  system.forbiddenDependenciesRegexes = lib.mkForce [ ];
 
   nixpkgs.config.allowUnfreePredicate = allowUnfreePredicate [
     "steam"
@@ -28,7 +33,6 @@ in
     "discord"
     "teamspeak-client"
     "teamspeak3"
-
     "tampermonkey"
     "betterttv"
     "teamviewer"
