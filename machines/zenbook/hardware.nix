@@ -55,7 +55,6 @@ in
       "zfs"
       "ntfs"
     ];
-    kernel.sysctl."vm.swappiness" = lib.mkDefault 1;
     zfs.devNodes = "/dev/disk/by-id";
     loader = {
       systemd-boot.enable = true;
