@@ -46,7 +46,10 @@ in
     kernel.sysctl = {
       "vm.swappiness" = lib.mkDefault 1;
     };
-    zfs.devNodes = "/dev/disk/by-id";
+    zfs = {
+      devNodes = "/dev/disk/by-id";
+      package = pkgs.zfs_2_3;
+    };
 
     loader = {
       systemd-boot.enable = true;
