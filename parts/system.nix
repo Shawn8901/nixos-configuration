@@ -40,7 +40,7 @@ let
           flakeConfig = config;
         };
         hasSystemImpermanence = pathExists "${configDir}/impermanence.nix";
-        hasHomeImpermanence = user: pathExists "${configDir}/impermanence-home-${user}.nix";
+        hasHomeImpermanence = userName: pathExists "${configDir}/impermanence-home-${userName}.nix";
       in
       lib.nixosSystem {
         modules =
@@ -94,9 +94,9 @@ let
                     ++ (attrValues self.flakeModules.home-manager)
                     ++ conf.home-manager.extraModules;
                   users = genAttrs conf.home-manager.users (
-                    name:
+                    userName:
                     let
-                      user = config.users.users.${name};
+                      user = config.users.users.${userName};
                     in
                     {
                       imports =
@@ -114,9 +114,9 @@ let
                           )
                         ]
                         ++ lib.optionals (pathExists "${configDir}/home.nix") [ "${configDir}/home.nix" ]
-                        ++ lib.optionals (hasHomeImpermanence user) [
+                        ++ lib.optionals (hasHomeImpermanence name) [
                           inputs.impermanence.homeManagerModules.impermanence
-                          "${configDir}/impermanence-home-${user}.nix"
+                          "${configDir}/impermanence-home-${userName}.nix"
                         ];
                     }
                   );
