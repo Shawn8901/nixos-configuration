@@ -104,6 +104,21 @@
         "type": "github"
       }
     },
+    "impermanence": {
+      "locked": {
+        "lastModified": 1736688610,
+        "narHash": "sha256-1Zl9xahw399UiZSJ9Vxs1W4WRFjO1SsNdVZQD4nghz0=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "c64bed13b562fc3bb454b48773d4155023ac31b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "type": "github"
+      }
+    },
     "mimir": {
       "inputs": {
         "nixpkgs": [
@@ -199,6 +214,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
+        "impermanence": "impermanence",
         "mimir": "mimir",
         "mimir-client": "mimir-client",
         "nixpkgs": "nixpkgs",

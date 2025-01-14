@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (builtins) hashString;
+  inherit (builtins) hashString pathExists;
   inherit (lib)
     mapAttrs
     attrValues
@@ -39,6 +39,8 @@ let
             ;
           flakeConfig = config;
         };
+        hasSystemImpermanence = pathExists "${configDir}/impermanence.nix";
+        hasHomeImpermanence = user: pathExists "${configDir}/impermanence-home-${user}.nix";
       in
       lib.nixosSystem {
         modules =
@@ -69,8 +71,9 @@ let
             { sops.defaultSopsFile = "${configDir}/secrets.yaml"; }
             "${configDir}/configuration.nix"
           ]
-          ++ lib.optionals (builtins.pathExists "${configDir}/hardware.nix") [ "${configDir}/hardware.nix" ]
-          ++ lib.optionals (builtins.pathExists "${configDir}/impermanence.nix") [
+          ++ lib.optionals (pathExists "${configDir}/hardware.nix") [ "${configDir}/hardware.nix" ]
+          ++ lib.optionals hasSystemImpermanence [
+            inputs.impermanence.nixosModules.impermanence
             "${configDir}/impermanence.nix"
           ]
           ++ (attrValues config.flake.nixosModules)
@@ -96,20 +99,25 @@ let
                       user = config.users.users.${name};
                     in
                     {
-                      imports = [
-                        (
-                          { config, ... }:
-                          {
-                            sops = {
-                              age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
-                              defaultSopsFile = "${configDir}/secrets-home.yaml";
-                              defaultSymlinkPath = "/run/user/${toString user.uid}/secrets";
-                              defaultSecretsMountPoint = "/run/user/${toString user.uid}/secrets.d";
-                            };
-                          }
-                        )
-                      ] ++ lib.optionals (builtins.pathExists "${configDir}/home.nix") [ "${configDir}/home.nix" ];
-
+                      imports =
+                        [
+                          (
+                            { config, ... }:
+                            {
+                              sops = {
+                                age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+                                defaultSopsFile = "${configDir}/secrets-home.yaml";
+                                defaultSymlinkPath = "/run/user/${toString user.uid}/secrets";
+                                defaultSecretsMountPoint = "/run/user/${toString user.uid}/secrets.d";
+                              };
+                            }
+                          )
+                        ]
+                        ++ lib.optionals (pathExists "${configDir}/home.nix") [ "${configDir}/home.nix" ]
+                        ++ lib.optionals (hasHomeImpermanence user) [
+                          inputs.impermanence.homeManagerModules.impermanence
+                          "${configDir}/impermanence-home-${user}.nix"
+                        ];
                     }
                   );
                 };
