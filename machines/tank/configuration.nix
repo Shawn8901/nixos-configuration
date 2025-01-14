@@ -159,6 +159,7 @@ in
     keep-derivations = true;
   };
   services = {
+    immich.enable = true;
     openssh.hostKeys = [
       {
         path = "/persist/etc/ssh/ssh_host_ed25519_key";
@@ -542,16 +543,31 @@ in
     ];
     nginx = {
       package = pkgs.nginxQuic;
-      virtualHosts."mail.tank.pointjig.de" = {
-        serverName = "mail.tank.pointjig.de";
-        forceSSL = true;
-        enableACME = true;
-        http3 = true;
-        kTLS = true;
-        locations = {
-          "/" = {
-            proxyPass = "http://localhost:8080";
-            recommendedProxySettings = true;
+      virtualHosts = {
+        "mail.tank.pointjig.de" = {
+          serverName = "mail.tank.pointjig.de";
+          forceSSL = true;
+          enableACME = true;
+          http3 = true;
+          kTLS = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:8080";
+              recommendedProxySettings = true;
+            };
+          };
+        };
+        "immich.tank.pointjig.de" = {
+          serverName = "immich.tank.pointjig.de";
+          forceSSL = true;
+          enableACME = true;
+          http3 = true;
+          kTLS = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:${toString config.services.immich.port}";
+              recommendedProxySettings = true;
+            };
           };
         };
       };

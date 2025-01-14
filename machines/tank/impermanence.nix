@@ -17,6 +17,7 @@
       "/var/lib/attic"
       "/var/lib/fail2ban"
       "/var/lib/hydra"
+      "/var/lib/immich"
       "/var/lib/nixos"
       "/var/lib/prometheus2"
       "/var/lib/samba"
