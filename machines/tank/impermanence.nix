@@ -1,16 +1,4 @@
 { lib, ... }:
-let
-  makePersistMount = path: {
-    "${path}" = {
-      device = "/persist${path}";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-  };
-in
 {
   boot.initrd.postResumeCommands = lib.mkAfter ''
     echo "Rollback rpool to blank snapshot"
@@ -21,26 +9,22 @@ in
     Defaults lecture = never
   '';
 
-  environment.etc."machine-id".source = "/persist/etc/machine-id";
-  environment.etc."/etc/nixos".source = "/persist/etc/nixos";
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/var/lib/acme"
+      "/var/lib/alsa"
+      "/var/lib/attic"
+      "/var/lib/fail2ban"
+      "/var/lib/hydra"
+      "/var/lib/nixos"
+      "/var/lib/prometheus2"
+      "/var/lib/samba"
+      "/var/lib/stalwart-mail"
+      "/var/lib/systemd"
+      "/var/lib/vnstat"
+    ];
+    files = [ "/etc/machine-id" ];
+  };
 
-  fileSystems = lib.mkMerge [
-    {
-      "/var/lib/nixos" = {
-        device = "/persist/var/lib/nixos";
-        noCheck = true;
-        options = [ "bind" ];
-      };
-    }
-    (makePersistMount "/var/lib/alsa")
-    (makePersistMount "/var/lib/stalwart-mail")
-    (makePersistMount "/var/lib/attic")
-    (makePersistMount "/var/lib/acme")
-    (makePersistMount "/var/lib/fail2ban")
-    (makePersistMount "/var/lib/vnstat")
-    (makePersistMount "/var/lib/samba")
-    (makePersistMount "/var/lib/hydra")
-    (makePersistMount "/var/lib/prometheus2")
-    (makePersistMount "/var/lib/systemd")
-  ];
 }
