@@ -1,17 +1,5 @@
-{ config, lib, ... }:
+{ config, ... }:
 
-let
-  makePersistMount = path: {
-    "${path}" = {
-      device = "/persist${path}";
-      options = [
-        "bind"
-        "noauto"
-        "x-systemd.automount"
-      ];
-    };
-  };
-in
 {
   boot.initrd.systemd.services.initrd-rollback-root = {
     after = [ "zfs-import-rpool.service" ];
@@ -25,31 +13,23 @@ in
     };
   };
 
-  # boot.initrd.postDeviceCommands = lib.mkAfter ''
-  #   zfs rollback -r rpool/local/root@blank
-  # '';
-
-  environment.etc."machine-id".source = "/persist/etc/machine-id";
-  environment.etc."nixos".source = "/persist/etc/nixos";
-
   security.sudo.extraConfig = ''
     Defaults lecture = never
   '';
 
-  fileSystems = lib.mkMerge [
-    {
-      "/var/lib/nixos" = {
-        device = "/persist/var/lib/nixos";
-        noCheck = true;
-        options = [ "bind" ];
-      };
-    }
-    (makePersistMount "/var/lib/bluetooth")
-    (makePersistMount "/var/lib/NetworkManager")
-    (makePersistMount "/var/lib/libvirt")
-    (makePersistMount "/var/lib/cups")
-    (makePersistMount "/var/lib/systemd")
-    (makePersistMount "/var/lib/prometheus2")
-    (makePersistMount "/var/lib/upower")
-  ];
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/bluetooth"
+      "/var/lib/cups"
+      "/var/lib/libvirt"
+      "/var/lib/NetworkManager"
+      "/var/lib/nixos"
+      "/var/lib/prometheus2"
+      "/var/lib/systemd"
+      "/var/lib/upower"
+    ];
+    files = [ "/etc/machine-id" ];
+  };
 }
