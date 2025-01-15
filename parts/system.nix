@@ -60,7 +60,7 @@ let
               nix = {
                 registry = {
                   nixpkgs.flake = conf.nixpkgs;
-                  nixos-config.flake = inputs.self;
+                  nixos-config.flake = self;
                 };
                 nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
               };
