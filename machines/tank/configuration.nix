@@ -48,6 +48,8 @@ let
         foundationdb = null;
         rocksdb_8_11 = null;
       };
+
+  immichName = "immich.tank.pointjig.de";
 in
 {
   sops.secrets = lib.mkMerge [
@@ -159,7 +161,26 @@ in
     keep-derivations = true;
   };
   services = {
-    immich.enable = true;
+    immich = {
+      enable = true;
+      settings = {
+        server.externalDomain = "https://${immichName}";
+        notifications.smtp.enabled = false;
+        newVersionCheck.enabled = false;
+        metadata.faces.import = false;
+        ffmpeg = {
+          threads = 2;
+          acceptedVideoCodecs = [
+            "h264"
+            "hevc"
+            "vp9"
+            "av1"
+          ];
+          transcode = "required";
+        };
+
+      };
+    };
     openssh.hostKeys = [
       {
         path = "/persist/etc/ssh/ssh_host_ed25519_key";
@@ -557,8 +578,8 @@ in
             };
           };
         };
-        "immich.tank.pointjig.de" = {
-          serverName = "immich.tank.pointjig.de";
+        "${immichName}" = {
+          serverName = immichName;
           forceSSL = true;
           enableACME = true;
           http3 = true;
@@ -567,6 +588,7 @@ in
             "/" = {
               proxyPass = "http://localhost:${toString config.services.immich.port}";
               recommendedProxySettings = true;
+              proxyWebsockets = true;
             };
           };
         };
