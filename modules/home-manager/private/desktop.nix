@@ -252,6 +252,10 @@ in
               "formatting" = {
                 "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
               };
+              "flake" = {
+                "autoArchive" = true;
+                "autoEvalInputs" = true;
+              };
             };
           };
           "python.analysis.autoImportCompletions" = true;
