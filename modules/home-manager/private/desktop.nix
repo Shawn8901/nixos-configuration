@@ -67,7 +67,6 @@ in
         element-desktop
       ]
       ++ (with self'.packages; [
-        deezer
         nas
         generate-zrepl-ssl
       ]);

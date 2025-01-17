@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:Shawn8901/nixpkgs/nixos-unstable-custom";
     nixpkgs-stable.url = "github:Shawn8901/nixpkgs/nixos-24.11-custom";
-    nixpkgs-deezer.url = "github:NixOS/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
       url = "github:nix-community/home-manager";

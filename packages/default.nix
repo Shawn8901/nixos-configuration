@@ -46,12 +46,6 @@ in
   flake = withSystem "x86_64-linux" (
     { system, pkgs, ... }:
     let
-      pkgsDeezer = import inputs.nixpkgs-deezer {
-        inherit system;
-        config.allowUnfreePredicate = pkg: elem (lib.getName pkg) [ "deezer" ];
-        config.permittedInsecurePackages = [ "electron-13.6.9" ];
-      };
-
       packages = {
         rtc-helper = pkgs.callPackage ./shellscripts/rtc-helper.nix { };
         nas = pkgs.callPackage ./shellscripts/nas.nix { };
@@ -64,8 +58,6 @@ in
         asus-touchpad-numpad-driver = pkgs.python3.pkgs.callPackage ./asus-touchpad-numpad-driver { };
 
         jameica-fhs = pkgs.callPackage ./jameica/fhsenv.nix { };
-
-        deezer = pkgsDeezer.callPackage ./deezer { };
 
         linux_xanmod_x86_64_v3 = pkgs.callPackage ./linux-xanmod-x86-64-v3 { };
 

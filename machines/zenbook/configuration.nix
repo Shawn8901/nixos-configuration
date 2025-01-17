@@ -23,7 +23,6 @@ in
     "vscode"
     "vscode-extension-MS-python-vscode-pylance"
     "vscode-extension-mhutchie-git-graph"
-    "deezer"
     "discord"
     "teamspeak-client"
     "teamspeak3"
