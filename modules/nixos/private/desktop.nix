@@ -134,6 +134,11 @@ in
       ];
     };
 
+    boot.kernel.sysctl = {
+      # https://github.com/ValveSoftware/Proton/wiki/Requirements#increasing-the-maximum-number-of-memory-map-areas-a-process-may-have
+      "vm.max_map_count" = 2147483642;
+    };
+
     programs = {
       dconf.enable = true;
       ssh.startAgent = true;
