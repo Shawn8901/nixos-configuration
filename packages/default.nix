@@ -35,7 +35,7 @@ in
       packages = {
         pg-upgrade = pkgs.callPackage ./pg-upgrade { };
         generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
-        vm-grafana-datasource = pkgs.callPackage ./vm-grafana-datasource { };
+        victoriametrics-metrics-datasource = pkgs.callPackage ./victoriametrics-metrics-datasource { };
       };
     in
     {
