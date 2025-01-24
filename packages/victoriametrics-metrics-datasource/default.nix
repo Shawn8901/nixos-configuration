@@ -5,11 +5,11 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "victoriametrics-metrics-datasource";
-  version = "0.12.1";
+  version = "0.12.2";
 
   src = fetchzip {
     url = "https://github.com/VictoriaMetrics/victoriametrics-datasource/releases/download/v${finalAttrs.version}/victoriametrics-metrics-datasource-v${finalAttrs.version}.zip";
-    hash = "sha256-/JvlLZy/9ga6MzaoSEOsMhFGzYwD5dsZDbMkPTNSMhU=";
+    hash = "sha256-nlCGDWWfR50Ts+RYhbEi4a3iXfqT+dqR8c/b04r/EFU=";
   };
 
   dontConfigure = true;
