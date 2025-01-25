@@ -56,7 +56,11 @@ in
     useNetworkd = false;
     useDHCP = false;
   };
-  systemd.network.wait-online.anyInterface = true;
+  systemd = {
+    network.wait-online.anyInterface = true;
+    services.display-manager.serviceConfig.KeyringMode = "inherit";
+    tmpfiles.rules = [ "d /media/nas 0750 shawn users -" ];
+  };
 
   environment.systemPackages = with pkgs; [
     cifs-utils
@@ -173,7 +177,6 @@ in
       chargeUpto = 80;
     };
   };
-  systemd.tmpfiles.rules = [ "d /media/nas 0750 shawn users -" ];
 
   programs.nh.flake = "/home/shawn/dev/nixos-configuration";
 
@@ -206,7 +209,7 @@ in
 
     session  include   sddm
   '';
-  systemd.services.display-manager.serviceConfig.KeyringMode = "inherit";
+
   services.displayManager = {
     autoLogin = {
       enable = true;

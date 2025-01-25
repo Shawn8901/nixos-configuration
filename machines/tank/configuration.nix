@@ -664,7 +664,7 @@ in
       };
     };
   };
-  systemd.services.stalwart-mail.serviceConfig = lib.mkIf (config.services.stalwart-mail.enable) {
+  systemd.services.stalwart-mail.serviceConfig = lib.mkIf config.services.stalwart-mail.enable {
     User = "stalwart-mail";
     EnvironmentFile = [ secrets.stalwart-fallback-admin.path ];
   };

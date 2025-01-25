@@ -65,7 +65,13 @@ in
     useNetworkd = false;
     useDHCP = false;
   };
-  systemd.network.wait-online.anyInterface = true;
+  systemd = {
+    tmpfiles.rules = [
+      "d /media/nas 0750 shawn users -" # needed by own nas script for mounting
+      "d /etc/exports.d 0750 root root" # needed by zfs to run 'zfs mount -a'
+    ];
+    network.wait-online.anyInterface = true;
+  };
 
   services = {
     resolved.enable = false;
@@ -164,10 +170,6 @@ in
     };
     keyboard.zsa.enable = true;
   };
-  systemd.tmpfiles.rules = [
-    "d /media/nas 0750 shawn users -" # needed by own nas script for mounting
-    "d /etc/exports.d 0750 root root" # needed by zfs to run 'zfs mount -a'
-  ];
 
   programs = {
     ausweisapp = {

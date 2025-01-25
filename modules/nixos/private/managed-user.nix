@@ -13,7 +13,7 @@ in
   options = {
     shawn8901.managed-user = {
       enable = mkEnableOption "preconfigured users" // {
-        default = (config ? home-manager);
+        default = config ? home-manager;
       };
     };
   };
