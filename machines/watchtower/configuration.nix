@@ -82,8 +82,7 @@ in
       enable = true;
       hostname = "grafana.pointjig.de";
       credentialsFile = secrets.grafana-env.path;
-      declarativePlugins = [ self'.packages.victoriametrics-metrics-datasource ];
-      settings.plugins.allow_loading_unsigned_plugins = "victoriametrics-metrics-datasource";
+      declarativePlugins = [ pkgs.grafanaPlugins.victoriametrics-metrics-datasource ];
       datasources = [
         {
           name = "VictoriaMetrics";

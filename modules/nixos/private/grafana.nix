@@ -97,7 +97,7 @@ in
             check_for_updates = false;
             reporting_enabled = false;
           };
-        } // cfg.settings;
+        };
         provision = {
           enable = true;
           alerting.contactPoints.settings = {
