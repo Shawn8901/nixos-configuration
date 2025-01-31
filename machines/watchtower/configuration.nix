@@ -82,10 +82,13 @@ in
       enable = true;
       hostname = "grafana.pointjig.de";
       credentialsFile = secrets.grafana-env.path;
-      declarativePlugins = [ pkgs.grafanaPlugins.victoriametrics-metrics-datasource ];
+      declarativePlugins = with pkgs.grafanaPlugins; [
+        victoriametrics-logs-datasource
+        victoriametrics-metrics-datasource
+      ];
       datasources = [
         {
-          name = "VictoriaMetrics";
+          name = "VictoriaMetrics Metrics";
           type = "victoriametrics-metrics-datasource";
           url = "http://${config.services.victoriametrics.listenAddress}";
           basicAuth = true;
