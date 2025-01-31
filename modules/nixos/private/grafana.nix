@@ -20,6 +20,7 @@ in
       };
       credentialsFile = mkOption { type = types.path; };
       datasources = mkOption { type = types.listOf types.raw; };
+      deleteDatasources = mkOption { type = types.listOf types.raw; };
       declarativePlugins = mkOption {
         type = with types; nullOr (listOf path);
         default = null;
@@ -122,6 +123,7 @@ in
           };
 
           datasources.settings.datasources = cfg.datasources;
+          datasources.settings.deleteDatasources = cfg.deleteDatasources;
         };
       };
     };

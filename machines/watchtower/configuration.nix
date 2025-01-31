@@ -97,6 +97,12 @@ in
           secureJsonData.basicAuthPassword = "$DATASOURCE_PASSWORD";
         }
       ];
+      deleteDatasources = [
+        {
+          name = "VictoriaMetrics";
+          orgId = 1;
+        }
+      ];
     };
     server.enable = true;
   };
