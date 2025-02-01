@@ -34,7 +34,7 @@ in
       "ntsync"
       "sg"
     ];
-    kernelPackages = packagesFor self'.packages.linux_xanmod_x86_64_v3;
+    kernelPackages = pkgs.linuxPackages;
     extraModprobeConfig = ''
       options zfs zfs_arc_max=4294967296
       options nct6775 force_id=0xd420

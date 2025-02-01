@@ -95,8 +95,6 @@ in
       graphics = {
         enable = true;
         enable32Bit = true;
-        package = self'.packages.mesa_x86_64_v3.drivers;
-        package32 = self'.packages.i686-mesa_x86_64_v3.drivers;
         extraPackages = [ pkgs.libva ];
         extraPackages32 = [ pkgs.pkgsi686Linux.libva ];
       };
