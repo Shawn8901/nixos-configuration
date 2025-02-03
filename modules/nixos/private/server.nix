@@ -52,6 +52,7 @@ in
 
     programs.nano.enable = false;
     services = {
+      logrotate.enable = true;
       qemuGuest.enable = true;
       resolved = {
         enable = true;
