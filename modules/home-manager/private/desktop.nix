@@ -183,8 +183,8 @@ in
           wix.vscode-import-cost
 
           # rust dev
-          rust-lang.rust-analyzer
-          vadimcn.vscode-lldb
+          #rust-lang.rust-analyzer
+          #vadimcn.vscode-lldb
         ];
         keybindings = [
           {
