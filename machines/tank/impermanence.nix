@@ -23,6 +23,7 @@
       "/var/lib/samba"
       "/var/lib/stalwart-mail"
       "/var/lib/systemd"
+      "/var/lib/vaultwarden"
       "/var/lib/vnstat"
     ];
     files = [ "/etc/machine-id" ];
