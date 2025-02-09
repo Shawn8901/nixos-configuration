@@ -50,6 +50,7 @@ let
       };
 
   immichName = "immich.tank.pointjig.de";
+  vaultwardenName = "vaultwarden.tank.pointjig.de";
 in
 {
   sops.secrets = lib.mkMerge [
@@ -147,6 +148,13 @@ in
             fi
           '';
         };
+      vaultwarden = {
+        after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
+        serviceConfig = {
+          StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
+        };
+      };
     };
     timers.pointalpha-online = {
       wantedBy = [ "timers.target" ];
@@ -178,7 +186,22 @@ in
           ];
           transcode = "required";
         };
-
+      };
+    };
+    vaultwarden = {
+      enable = true;
+      dbBackend = "postgresql";
+      config = {
+        DATABASE_URL = "postgresql:///vaultwarden?host=/run/postgresql";
+        DOMAIN = "https://${vaultwardenName}";
+        DATA_FOLDER = "/var/lib/vaultwarden";
+        ENABLE_WEBSOCKET = true;
+        LOG_LEVEL = "warn";
+        PASSWORD_ITERATIONS = 600000;
+        ROCKET_ADDRESS = "127.0.0.1";
+        ROCKET_PORT = 8222;
+        SIGNUPS_VERIFY = true;
+        TRASH_AUTO_DELETE_DAYS = 30;
       };
     };
     openssh.hostKeys = [
@@ -592,6 +615,16 @@ in
             };
           };
         };
+        "${vaultwardenName}" = {
+          serverName = vaultwardenName;
+          forceSSL = true;
+          enableACME = true;
+          http3 = true;
+          kTLS = true;
+          locations."/" = {
+            proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+          };
+        };
       };
     };
     postgresql = {
@@ -600,10 +633,17 @@ in
         track_counts = true;
         track_io_timing = true;
       };
-      ensureDatabases = [ "stalwart-mail" ];
+      ensureDatabases = [
+        "stalwart-mail"
+        "vaultwarden"
+      ];
       ensureUsers = [
         {
           name = "stalwart-mail";
+          ensureDBOwnership = true;
+        }
+        {
+          name = "vaultwarden";
           ensureDBOwnership = true;
         }
       ];
