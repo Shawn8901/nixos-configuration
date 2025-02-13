@@ -87,6 +87,7 @@ in
             keepassxc-browser
             plasma-integration
             h264ify
+            bitwarden
             # firefox addons are from a input, that does not share pkgs with the host and some can not pass a
             # nixpkgs.config.allowUnfreePredicate to a flake input.
             # So overriding the stdenv is the only solution here to use the hosts nixpkgs.config.allowUnfreePredicate.
@@ -183,8 +184,8 @@ in
           wix.vscode-import-cost
 
           # rust dev
-          #rust-lang.rust-analyzer
-          #vadimcn.vscode-lldb
+          rust-lang.rust-analyzer
+          vadimcn.vscode-lldb
         ];
         keybindings = [
           {
@@ -234,6 +235,7 @@ in
             "editor.defaultFormatter" = "esbenp.prettier-vscode";
           };
           "editor.tabSize" = 2;
+          "terminal.integrated.gpuAcceleration" = false;
           "terminal.integrated.persistentSessionReviveProcess" = "never";
           "terminal.integrated.enablePersistentSessions" = false;
           "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
