@@ -91,7 +91,6 @@ in
         settings.General.Experimental = true;
         input.General.ClassicBondedOnly = false;
       };
-      pulseaudio.enable = false;
       graphics = {
         enable = true;
         enable32Bit = true;
