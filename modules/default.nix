@@ -5,7 +5,6 @@
   };
 
   config.fp-lib.modules.home-manager = {
-    public = ./home-manager/public;
     private = ./home-manager/private;
   };
 }
