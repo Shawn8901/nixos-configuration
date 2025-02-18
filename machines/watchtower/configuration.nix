@@ -1,5 +1,4 @@
 {
-  self',
   inputs',
   config,
   pkgs,

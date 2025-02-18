@@ -1,13 +1,10 @@
 {
-  self',
   config,
   pkgs,
-  lib,
   modulesPath,
   ...
 }:
 let
-  inherit (pkgs.linuxKernel) packagesFor;
   zfsOptions = [
     "zfsutil"
     "X-mount.mkdir"
