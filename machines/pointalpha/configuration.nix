@@ -47,6 +47,7 @@ in
     samba-ela = { };
   };
 
+  systemd.services.userborn.before = [ "systemd-oomd.socket" ];
   networking = {
     firewall.allowedTCPPorts = flakeConfig.shawn8901.zrepl.servePorts config.services.zrepl;
     networkmanager = {
