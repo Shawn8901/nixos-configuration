@@ -41,10 +41,7 @@ in
       useDHCP = lib.mkDefault false;
     };
 
-    hardware = {
-      pulseaudio.enable = false;
-      bluetooth.enable = false;
-    };
+    hardware.bluetooth.enable = false;
     security.acme = {
       acceptTerms = true;
       defaults.email = lib.mkDefault "shawn@pointjig.de";
