@@ -128,9 +128,7 @@ in
           StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
         };
       };
-      userborn = {
-        before = [ "systemd-oomd.socket" ];
-      };
+      userborn.before = [ "systemd-oomd.socket" ];
     };
     timers.pointalpha-online = {
       wantedBy = [ "timers.target" ];
