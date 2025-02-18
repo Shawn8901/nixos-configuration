@@ -5,6 +5,7 @@
   flakeConfig,
   pkgs,
   lib,
+  modulesPath,
   ...
 }:
 let
@@ -18,6 +19,11 @@ let
   vaultwardenName = "vaultwarden.tank.pointjig.de";
 in
 {
+
+  imports = [ "${modulesPath}/profiles/perlless.nix" ];
+  # We dont build fully perlless yet
+  system.forbiddenDependenciesRegexes = lib.mkForce [ ];
+
   sops.secrets = lib.mkMerge [
     {
       ssh-builder-key = {
@@ -25,7 +31,9 @@ in
       };
       zfs-ztank-key = { };
       zrepl = { };
-      ela = { };
+      ela = {
+        neededForUsers = true;
+      };
       nextcloud-admin = {
         owner = "nextcloud";
         group = "nextcloud";
@@ -119,6 +127,9 @@ in
         serviceConfig = {
           StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
         };
+      };
+      userborn = {
+        before = [ "systemd-oomd.socket" ];
       };
     };
     timers.pointalpha-online = {

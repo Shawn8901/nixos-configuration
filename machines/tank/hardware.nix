@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   modulesPath,
   ...
@@ -23,18 +22,18 @@ in
   ];
 
   boot = {
-    initrd.availableKernelModules = [
-      "ahci"
-      "xhci_pci"
-      "nvme"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-      "sr_mod"
-    ];
-    postBootCommands = lib.mkAfter ''
-      ${pkgs.zfs}/bin/zfs mount -a
-    '';
+    initrd = {
+      availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "sr_mod"
+      ];
+      systemd.enable = true;
+    };
     kernelModules = [
       "kvm-intel"
       "cifs"
@@ -52,8 +51,8 @@ in
     ];
     zfs = {
       devNodes = "/dev/disk/by-id";
-      extraPools = [ "ztank" ];
       requestEncryptionCredentials = [ "ztank" ];
+      extraPools = [ "ztank" ];
     };
 
     loader = {
@@ -82,20 +81,12 @@ in
       options = zfsOptions;
       neededForBoot = true;
     };
-
     "/var/log" = {
       device = "rpool/local/log";
       fsType = "zfs";
       options = zfsOptions;
       neededForBoot = true;
     };
-
-    "/home" = {
-      device = "rpool/safe/home";
-      fsType = "zfs";
-      options = zfsOptions;
-    };
-
     "/boot" = {
       device = "/dev/disk/by-uuid/605D-0B3B";
       fsType = "vfat";
