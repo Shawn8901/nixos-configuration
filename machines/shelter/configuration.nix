@@ -3,6 +3,7 @@
   flakeConfig,
   inputs',
   modulesPath,
+  lib,
   ...
 }:
 let
@@ -12,7 +13,12 @@ let
 in
 {
 
-  imports = [ "${modulesPath}/profiles/headless.nix" ];
+  imports = [
+    "${modulesPath}/profiles/headless.nix"
+    "${modulesPath}/profiles/perlless.nix"
+  ];
+  # We dont build fully perlless yet
+  system.forbiddenDependenciesRegexes = lib.mkForce [ ];
 
   sops.secrets = {
     zrepl = { };
