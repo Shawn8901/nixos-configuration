@@ -79,7 +79,7 @@ let
           ++ (attrValues config.flake.nixosModules)
           ++ conf.extraModules
           ++ lib.optionals (conf.home-manager.input != null) [
-            conf.home-manager.input.nixosModule
+            conf.home-manager.input.nixosModules.home-manager
             (
               { config, ... }:
               {
