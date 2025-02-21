@@ -51,7 +51,7 @@ in
       min-free = ${toString (1024 * 1024 * 1024)}
       max-free = ${toString (5 * 1024 * 1024 * 1024)}
     '';
-    nrBuildUsers = mkForce 16;
+    nrBuildUsers = mkForce 8;
     daemonIOSchedClass = "idle";
     daemonCPUSchedPolicy = "idle";
   };
