@@ -180,9 +180,7 @@ in
       kdePackages = pkgs.kdePackages.overrideScope (
         self: super: {
           akonadi = super.akonadi.override {
-            withMariaDB = false;
-            withSQLite = true;
-            defaultBackend = "SQLITE";
+            backend = "sqlite";
           };
         }
       );
