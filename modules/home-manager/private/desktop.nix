@@ -81,26 +81,31 @@ in
           keepassxc
         ];
         profiles."shawn" = {
-          extensions = with firefox-addon-packages; [
-            ublock-origin
-            umatrix
-            keepassxc-browser
-            plasma-integration
-            h264ify
-            bitwarden
-            # firefox addons are from a input, that does not share pkgs with the host and some can not pass a
-            # nixpkgs.config.allowUnfreePredicate to a flake input.
-            # So overriding the stdenv is the only solution here to use the hosts nixpkgs.config.allowUnfreePredicate.
-            (tampermonkey.override { inherit (pkgs) stdenv fetchurl; })
-            (betterttv.override { inherit (pkgs) stdenv fetchurl; })
-            # Download all plugins which are not in the repo manually
-            (buildFirefoxXpiAddon {
-              pname = "Video-DownloadHelper";
-              version = "8.2.2.8";
-              addonId = "{b9db16a4-6edc-47ec-a1f4-b86292ed211d}";
-              url = "https://addons.mozilla.org/firefox/downloads/file/4251369/video_downloadhelper-8.2.2.8.xpi";
-              sha256 = "sha256-l1+fZvdrT4BVMWQZxklQpTKqXLQBj/u5Js8pPtXzAN0=";
-              meta = { };
+          extensions = lib.mkMerge [
+            # There are no desktops not using unstable
+            (lib.optionalAttrs (!lib.versionOlder config.home.version.release "25.05") {
+              packages = with firefox-addon-packages; [
+                ublock-origin
+                umatrix
+                keepassxc-browser
+                plasma-integration
+                h264ify
+                bitwarden
+                # firefox addons are from a input, that does not share pkgs with the host and some can not pass a
+                # nixpkgs.config.allowUnfreePredicate to a flake input.
+                # So overriding the stdenv is the only solution here to use the hosts nixpkgs.config.allowUnfreePredicate.
+                (tampermonkey.override { inherit (pkgs) stdenv fetchurl; })
+                (betterttv.override { inherit (pkgs) stdenv fetchurl; })
+                # Download all plugins which are not in the repo manually
+                (buildFirefoxXpiAddon {
+                  pname = "Video-DownloadHelper";
+                  version = "8.2.2.8";
+                  addonId = "{b9db16a4-6edc-47ec-a1f4-b86292ed211d}";
+                  url = "https://addons.mozilla.org/firefox/downloads/file/4251369/video_downloadhelper-8.2.2.8.xpi";
+                  sha256 = "sha256-l1+fZvdrT4BVMWQZxklQpTKqXLQBj/u5Js8pPtXzAN0=";
+                  meta = { };
+                })
+              ];
             })
           ];
           settings = {
@@ -156,115 +161,123 @@ in
         };
       };
 
-      vscode = {
-        enable = true;
-        enableExtensionUpdateCheck = false;
-        enableUpdateCheck = false;
-        mutableExtensionsDir = false;
-        package = pkgs.vscode;
-        extensions = with pkgs.vscode-extensions; [
-          # general stuff
-          mhutchie.git-graph
-          editorconfig.editorconfig
-          mkhl.direnv
-          usernamehw.errorlens
+      vscode = lib.mkMerge [
+        # There are no desktops not using unstable
+        (lib.optionalAttrs (!lib.versionOlder config.home.version.release "25.05") {
+          profiles = {
+            default = {
+              enableExtensionUpdateCheck = false;
+              enableUpdateCheck = false;
+              keybindings = [
+                {
+                  "key" = "ctrl+d";
+                  "command" = "-editor.action.addSelectionToNextFindMatch";
+                  "when" = "editorFocus";
+                }
+                {
+                  "key" = "ctrl+d";
+                  "command" = "editor.action.deleteLines";
+                  "when" = "textInputFocus && !editorReadonly";
+                }
+                {
+                  "key" = "ctrl+shift+k";
+                  "command" = "-editor.action.deleteLines";
+                  "when" = "textInputFocus && !editorReadonly";
+                }
+                {
+                  "key" = "ctrl+shift+l";
+                  "command" = "find-it-faster.findWithinFiles";
+                }
+              ];
+              userSettings = {
+                "[nix]" = {
+                  "editor.insertSpaces" = true;
+                  "editor.tabSize" = 2;
+                  "editor.autoIndent" = "full";
+                  "editor.quickSuggestions" = {
+                    "other" = true;
+                    "comments" = false;
+                    "strings" = true;
+                  };
+                  "editor.formatOnSave" = true;
+                  "editor.formatOnPaste" = true;
+                  "editor.formatOnType" = false;
+                };
+                "[rust]" = {
+                  "editor.defaultFormatter" = "rust-lang.rust-analyzer";
+                };
+                "[python]" = {
+                  "editor.formatOnSave" = true;
+                  "editor.formatOnPaste" = true;
+                  "editor.formatOnType" = false;
+                  "editor.defaultFormatter" = "ms-python.autopep8";
+                };
+                "[typescript]" = {
+                  "editor.defaultFormatter" = "esbenp.prettier-vscode";
+                };
+                "editor.tabSize" = 2;
+                "terminal.integrated.gpuAcceleration" = false;
+                "terminal.integrated.persistentSessionReviveProcess" = "never";
+                "terminal.integrated.enablePersistentSessions" = false;
+                "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
+                "files.trimFinalNewlines" = true;
+                "files.insertFinalNewline" = true;
+                "diffEditor.ignoreTrimWhitespace" = false;
+                "editor.formatOnSave" = true;
+                "nix.enableLanguageServer" = true;
+                "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
+                "nix.serverPath" = "${getExe pkgs.nil}";
+                "nix.serverSettings" = {
+                  "nil" = {
+                    "diagnostics" = {
+                      "ignored" = [ ];
+                    };
+                    "formatting" = {
+                      "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
+                    };
+                    "flake" = {
+                      "autoArchive" = true;
+                      "autoEvalInputs" = true;
+                    };
+                  };
+                };
+                "python.analysis.autoImportCompletions" = true;
+                "python.analysis.typeCheckingMode" = "standard";
+                "find-it-faster.general.useTerminalInEditor" = true;
+              };
+              extensions = with pkgs.vscode-extensions; [
+                # general stuff
+                mhutchie.git-graph
+                editorconfig.editorconfig
+                mkhl.direnv
+                usernamehw.errorlens
 
-          # nix dev
-          jnoortheen.nix-ide
+                # nix dev
+                jnoortheen.nix-ide
 
-          # python dev
-          ms-python.python
-          ms-python.vscode-pylance
-          ms-python.debugpy
-          ms-python.isort
-          ms-python.autopep8
+                # python dev
+                ms-python.python
+                ms-python.vscode-pylance
+                ms-python.debugpy
+                ms-python.isort
 
-          # typescript dev
-          esbenp.prettier-vscode
-          wix.vscode-import-cost
+                # typescript dev
+                esbenp.prettier-vscode
+                wix.vscode-import-cost
 
-          # rust dev
-          rust-lang.rust-analyzer
-          vadimcn.vscode-lldb
-        ];
-        keybindings = [
-          {
-            "key" = "ctrl+d";
-            "command" = "-editor.action.addSelectionToNextFindMatch";
-            "when" = "editorFocus";
-          }
-          {
-            "key" = "ctrl+d";
-            "command" = "editor.action.deleteLines";
-            "when" = "textInputFocus && !editorReadonly";
-          }
-          {
-            "key" = "ctrl+shift+k";
-            "command" = "-editor.action.deleteLines";
-            "when" = "textInputFocus && !editorReadonly";
-          }
-          {
-            "key" = "ctrl+shift+l";
-            "command" = "find-it-faster.findWithinFiles";
-          }
-        ];
-        userSettings = {
-          "[nix]" = {
-            "editor.insertSpaces" = true;
-            "editor.tabSize" = 2;
-            "editor.autoIndent" = "full";
-            "editor.quickSuggestions" = {
-              "other" = true;
-              "comments" = false;
-              "strings" = true;
+                # rust dev
+                rust-lang.rust-analyzer
+                vadimcn.vscode-lldb
+              ];
             };
-            "editor.formatOnSave" = true;
-            "editor.formatOnPaste" = true;
-            "editor.formatOnType" = false;
           };
-          "[rust]" = {
-            "editor.defaultFormatter" = "rust-lang.rust-analyzer";
-          };
-          "[python]" = {
-            "editor.formatOnSave" = true;
-            "editor.formatOnPaste" = true;
-            "editor.formatOnType" = false;
-            "editor.defaultFormatter" = "ms-python.autopep8";
-          };
-          "[typescript]" = {
-            "editor.defaultFormatter" = "esbenp.prettier-vscode";
-          };
-          "editor.tabSize" = 2;
-          "terminal.integrated.gpuAcceleration" = false;
-          "terminal.integrated.persistentSessionReviveProcess" = "never";
-          "terminal.integrated.enablePersistentSessions" = false;
-          "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
-          "files.trimFinalNewlines" = true;
-          "files.insertFinalNewline" = true;
-          "diffEditor.ignoreTrimWhitespace" = false;
-          "editor.formatOnSave" = true;
-          "nix.enableLanguageServer" = true;
-          "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
-          "nix.serverPath" = "${getExe pkgs.nil}";
-          "nix.serverSettings" = {
-            "nil" = {
-              "diagnostics" = {
-                "ignored" = [ ];
-              };
-              "formatting" = {
-                "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
-              };
-              "flake" = {
-                "autoArchive" = true;
-                "autoEvalInputs" = true;
-              };
-            };
-          };
-          "python.analysis.autoImportCompletions" = true;
-          "python.analysis.typeCheckingMode" = "standard";
-          "find-it-faster.general.useTerminalInEditor" = true;
-        };
-      };
+        })
+        {
+          enable = true;
+          mutableExtensionsDir = false;
+          package = pkgs.vscode;
+        }
+      ];
 
       vim = {
         enable = true;
