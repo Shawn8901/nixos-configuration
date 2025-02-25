@@ -251,6 +251,7 @@ in
                 editorconfig.editorconfig
                 mkhl.direnv
                 usernamehw.errorlens
+                redhat.vscode-yaml
 
                 # nix dev
                 jnoortheen.nix-ide
