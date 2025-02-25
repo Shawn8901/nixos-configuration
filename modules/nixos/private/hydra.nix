@@ -132,7 +132,7 @@ in
           notificationSender = cfg.mailAdress;
           useSubstitutes = true;
           extraConfig = ''
-            evaluator_max_memory_size = ${toString (4 * 1024)}
+            evaluator_max_memory_size = ${toString (5 * 1024)}
             evaluator_workers = 2
             max_concurrent_evals = 4
             restrict-eval = false
