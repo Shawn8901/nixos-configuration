@@ -57,7 +57,7 @@ in
           withOpenASAR = true;
         })
         vlc
-        plasma-integration
+        kdePackages.plasma-integration
         libreoffice-qt
         krita
 
