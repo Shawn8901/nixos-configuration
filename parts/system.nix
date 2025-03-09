@@ -62,9 +62,8 @@ let
                   nixpkgs.flake = conf.nixpkgs;
                   nixos-config.flake = self;
                 };
-                nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+                nixPath = [ "nixpkgs=flake:nixpkgs" ];
               };
-              environment.etc."nix/inputs/nixpkgs".source = conf.nixpkgs.outPath;
             }
 
             inputs.sops-nix.nixosModules.sops
