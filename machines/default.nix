@@ -8,9 +8,9 @@
   config.fp-lib.nixosConfigurations = {
     watchtower = {
       hostPlatform.system = "aarch64-linux";
-      nixpkgs = inputs.nixpkgs-stable;
+      nixpkgs = inputs.nixpkgs;
       home-manager = {
-        input = inputs.home-manager-stable;
+        input = inputs.home-manager;
         users = [ "shawn" ];
       };
       extraModules = [
