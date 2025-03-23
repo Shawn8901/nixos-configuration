@@ -32,7 +32,7 @@
   cups,
   libdrm,
   wayland,
-  mesa,
+  libgbm,
   libxkbcommon,
   libXdamage,
   libXcomposite,
@@ -84,7 +84,7 @@ let
         cups
         libdrm
         wayland
-        mesa.drivers
+        libgbm
         libxkbcommon
         libXdamage
         libXcomposite
