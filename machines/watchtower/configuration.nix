@@ -50,6 +50,14 @@ in
 
       prometheusConfig.scrape_configs = [
         {
+          job_name = "blackbox_exporter";
+          static_configs = [
+            {
+              targets = [ "localhost:${toString config.services.prometheus.exporters.blackbox.port}" ];
+            }
+          ];
+        }
+        {
           job_name = "blackbox";
           params.module = [ "http_2xx" ];
           static_configs = [
@@ -70,7 +78,7 @@ in
               target_label = "target";
             }
             {
-              replacement = "127.0.0.1:9115";
+              replacement = "127.0.0.1:${toString config.services.prometheus.exporters.blackbox.port}";
               target_label = "__address__";
             }
           ];
