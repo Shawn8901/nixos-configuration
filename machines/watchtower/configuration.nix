@@ -47,7 +47,6 @@ in
     vmagent = {
       package = vmPackage;
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
-
       prometheusConfig.scrape_configs = [
         {
           job_name = "blackbox_exporter";
@@ -95,6 +94,9 @@ in
           modules = {
             http_2xx = {
               prober = "http";
+              http = {
+                preferred_ip_protocol = "ip4";
+              };
             };
           };
         };
