@@ -59,6 +59,7 @@ in
         }
         {
           job_name = "blackbox";
+          metrics_path = "/probe";
           params.module = [ "http_2xx" ];
           static_configs = [
             {
