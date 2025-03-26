@@ -47,6 +47,60 @@ in
     vmagent = {
       package = vmPackage;
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
+      prometheusConfig.scrape_configs = [
+        {
+          job_name = "blackbox_exporter";
+          static_configs = [
+            {
+              targets = [ "localhost:${toString config.services.prometheus.exporters.blackbox.port}" ];
+            }
+          ];
+        }
+        {
+          job_name = "blackbox";
+          metrics_path = "/probe";
+          params.module = [ "http_2xx" ];
+          static_configs = [
+            {
+              targets = [
+                "https://sapsrv01.clansap.org:8006"
+                "https://sapsrv02.clansap.org:8006"
+              ];
+            }
+          ];
+          relabel_configs = [
+            {
+              source_labels = [ "__address__" ];
+              target_label = "__param_target";
+            }
+            {
+              source_labels = [ "__param_target" ];
+              target_label = "target";
+            }
+            {
+              replacement = "127.0.0.1:${toString config.services.prometheus.exporters.blackbox.port}";
+              target_label = "__address__";
+            }
+          ];
+        }
+      ];
+    };
+    prometheus = {
+      enable = true;
+      exporters.blackbox = {
+        enable = true;
+        listenAddress = "localhost";
+        configFile = (pkgs.formats.yaml { }).generate "config.yml" {
+          modules = {
+            http_2xx = {
+              prober = "http";
+              http = {
+                preferred_ip_protocol = "ip4";
+              };
+            };
+          };
+        };
+      };
     };
   };
 
