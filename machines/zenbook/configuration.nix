@@ -217,7 +217,7 @@ in
     };
     sessionData.autologinSession = "plasma";
   };
-  boot.zfs.storeEncryptionCredentials = true;
+  boot.zfs.useKeyringForCredentials = true;
 
   shawn8901.desktop.enable = true;
 }
