@@ -180,7 +180,7 @@ in
       kdePackages = pkgs.kdePackages.overrideScope (
         self: super: {
           akonadi = super.akonadi.override {
-            backend = "sqlite";
+            backend = "postgres";
           };
         }
       );
