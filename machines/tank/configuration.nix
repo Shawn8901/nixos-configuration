@@ -709,7 +709,7 @@ in
       enable = true;
       package = fPkgs.rtc-helper;
       shutdownTime = "0:00:00";
-      wakeupTime = "15:00:00";
+      wakeupTime = "12:00:00";
     };
     nextcloud = {
       enable = true;
