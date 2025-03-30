@@ -64,6 +64,7 @@ in
       #   owner = lib.mkIf config.services.stfc-bot.enable "stfcbot";
       #   group = lib.mkIf config.services.stfc-bot.enable "stfcbot";
       # };
+      vaultwarden = { };
     }
     (lib.optionalAttrs config.services.stalwart-mail.enable {
       stalwart-fallback-admin = {
@@ -165,6 +166,7 @@ in
     vaultwarden = {
       enable = true;
       dbBackend = "postgresql";
+      environmentFile = secrets.vaultwarden.path;
       config = {
         DATABASE_URL = "postgresql:///vaultwarden?host=/run/postgresql";
         DOMAIN = "https://${vaultwardenName}";
@@ -174,8 +176,12 @@ in
         PASSWORD_ITERATIONS = 600000;
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = 8222;
-        SIGNUPS_VERIFY = true;
+        SIGNUPS_ALLOWED = false;
         TRASH_AUTO_DELETE_DAYS = 30;
+        SMTP_HOST = "mail.pointjig.de";
+        SMTP_FROM = "noreply@pointjig.de";
+        SMTP_FROM_NAME = "Vaultwarden";
+        SMTP_USERNAME = "postman";
       };
     };
     openssh.hostKeys = [
