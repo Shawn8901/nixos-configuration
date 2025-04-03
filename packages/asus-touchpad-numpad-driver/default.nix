@@ -1,10 +1,9 @@
 {
   lib,
-  buildPythonApplication,
   fetchFromGitHub,
   python3,
 }:
-buildPythonApplication {
+python3.pkgs.buildPythonApplication {
   pname = "asus-touchpad-numpad-driver";
   version = "unstable-2022-03-11";
   format = "other";
