@@ -58,6 +58,7 @@ in
       vnstat.enable = true;
       openssh = {
         enable = true;
+        ports = [ 2242 ];
         settings = {
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;

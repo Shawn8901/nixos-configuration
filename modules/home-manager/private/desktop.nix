@@ -347,14 +347,17 @@ in
         matchBlocks = {
           tank = {
             hostname = "tank";
+            port = 2242;
             user = "shawn";
           };
           shelter = {
             hostname = "shelter.pointjig.de";
+            port = 2242;
             user = "shawn";
           };
           watchtower = {
             hostname = "watchtower.pointjig.de";
+            port = 2242;
             user = "shawn";
           };
           sap = {
@@ -363,10 +366,12 @@ in
           };
           next = {
             hostname = "next.clansap.org";
+            port = 2242;
             user = "root";
           };
           pointjig = {
             hostname = "pointjig.de";
+            port = 2242;
             user = "shawn";
           };
           sapsrv01 = {
