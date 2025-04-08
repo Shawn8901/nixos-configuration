@@ -186,6 +186,17 @@ in
       })
     ];
 
+    programs.ssh.extraConfig = ''
+      Host localhost
+      Hostname 127.0.0.1
+      Port 2242
+
+      Host watchtower
+      Hostname watchtower.pointjig.de
+      Port 2242
+      Compression yes
+    '';
+
     nix = {
       buildMachines =
         let
@@ -210,7 +221,7 @@ in
             inherit sshUser sshKey maxJobs;
           }
           {
-            hostName = "watchtower.pointjig.de";
+            hostName = "watchtower";
             systems = [ "aarch64-linux" ];
             inherit
               sshUser
