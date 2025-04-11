@@ -15,10 +15,14 @@ in
 
   imports = [
     "${modulesPath}/profiles/headless.nix"
-    "${modulesPath}/profiles/perlless.nix"
+    # raise error with disko about missing /proc/mounts
+    #"${modulesPath}/profiles/perlless.nix"
+    ./disko-config.nix
   ];
   # We dont build fully perlless yet
   system.forbiddenDependenciesRegexes = lib.mkForce [ ];
+
+  disko.devices.disk.main.device = "/dev/vda";
 
   sops.secrets = {
     zrepl = { };

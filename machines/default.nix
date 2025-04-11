@@ -46,6 +46,7 @@
         input = inputs.home-manager-stable;
         users = [ "shawn" ];
       };
+      extraModules = [ inputs.disko.nixosModules.disko ];
     };
     tank = {
       inherit (inputs) nixpkgs;
