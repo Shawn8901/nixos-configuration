@@ -1,5 +1,4 @@
 {
-  lib,
   withSystem,
   ...
 }:
@@ -10,8 +9,6 @@
       packages = {
         pg-upgrade = pkgs.callPackage ./pg-upgrade { };
         generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
-        # TODO Drop
-        victoriametrics-metrics-datasource = lib.warn "you use shawn8901s victoriametrics-metrics-datasource which is deprecated. please use `pkgs.grafanaPlugins.victoriametrics-metrics-datasource` instead." pkgs.grafanaPlugins.victoriametrics-metrics-datasource;
       };
     in
     {
