@@ -39,12 +39,15 @@ in
       enableDefaultPackages = lib.mkDefault true;
       packages =
         [ pkgs.noto-fonts ]
-        ++ (with pkgs.nerd-fonts; [
-          noto
-          liberation
-          meslo-lg
-          liberation
-        ]);
+        ++ (lib.optionals (!lib.versionOlder config.system.nixos.release "25.05") (
+          with pkgs.nerd-fonts;
+          [
+            noto
+            liberation
+            meslo-lg
+            liberation
+          ]
+        ));
 
     };
 
@@ -169,21 +172,26 @@ in
       };
     };
 
-    nixpkgs.config.packageOverrides = pkgs: {
-      udisks2 = pkgs.udisks2.override {
-        btrfs-progs = null;
-        nilfs-utils = null;
-        xfsprogs = null;
-        f2fs-tools = null;
-      };
-
-      kdePackages = pkgs.kdePackages.overrideScope (
-        self: super: {
-          akonadi = super.akonadi.override {
-            backend = "postgres";
+    nixpkgs.config.packageOverrides =
+      pkgs:
+      lib.mkMerge [
+        {
+          udisks2 = pkgs.udisks2.override {
+            btrfs-progs = null;
+            nilfs-utils = null;
+            xfsprogs = null;
+            f2fs-tools = null;
           };
         }
-      );
-    };
+        (lib.optionalAttrs (!lib.versionOlder config.system.nixos.release "25.05") {
+          kdePackages = pkgs.kdePackages.overrideScope (
+            self: super: {
+              akonadi = super.akonadi.override {
+                backend = "postgres";
+              };
+            }
+          );
+        })
+      ];
   };
 }

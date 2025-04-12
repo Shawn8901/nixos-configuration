@@ -60,9 +60,9 @@
       ];
     };
     zenbook = {
-      inherit (inputs) nixpkgs;
+      nixpkgs = inputs.nixpkgs-stable;
       home-manager = {
-        input = inputs.home-manager;
+        input = inputs.home-manager-stable;
         users = [ "shawn" ];
       };
     };
