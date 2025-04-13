@@ -17,6 +17,12 @@ in
     };
   };
   config = mkIf cfg.enable {
+    # https://gitlab.freedesktop.org/mesa/mesa/-/issues/12809
+    # https://gitlab.freedesktop.org/drm/amd/-/issues/3388
+    boot.kernelParams = [
+      "amdgpu.dcdebugmask=0x10"
+      "amdgpu.sg_display=0"
+    ];
 
     documentation.man = {
       enable = lib.mkDefault true;
