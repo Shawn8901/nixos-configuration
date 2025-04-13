@@ -5,7 +5,10 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    ;
 
   cfg = config.shawn8901.desktop;
 in
@@ -177,27 +180,5 @@ in
         kmail = true;
       };
     };
-
-    nixpkgs.config.packageOverrides =
-      pkgs:
-      lib.mkMerge [
-        {
-          udisks2 = pkgs.udisks2.override {
-            btrfs-progs = null;
-            nilfs-utils = null;
-            xfsprogs = null;
-            f2fs-tools = null;
-          };
-        }
-        (lib.optionalAttrs (!lib.versionOlder config.system.nixos.release "25.05") {
-          kdePackages = pkgs.kdePackages.overrideScope (
-            self: super: {
-              akonadi = super.akonadi.override {
-                backend = "postgres";
-              };
-            }
-          );
-        })
-      ];
   };
 }

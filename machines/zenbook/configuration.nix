@@ -220,4 +220,13 @@ in
   boot.zfs.useKeyringForCredentials = true;
 
   shawn8901.desktop.enable = true;
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    udisks2 = pkgs.udisks2.override {
+      btrfs-progs = null;
+      nilfs-utils = null;
+      xfsprogs = null;
+      f2fs-tools = null;
+    };
+  };
 }
