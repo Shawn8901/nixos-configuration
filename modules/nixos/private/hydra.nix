@@ -213,6 +213,7 @@ in
         [
           {
             hostName = "localhost";
+            protocol = null;
             systems = [
               "x86_64-linux"
               "i686-linux"
