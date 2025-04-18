@@ -45,13 +45,6 @@ in
       plugins = lib.mkForce [ ];
     };
     nftables.enable = true;
-    hosts = {
-      "192.168.11.31" = lib.attrNames hosts.tank.config.services.nginx.virtualHosts;
-      "134.255.226.114" = [ "pointjig" ];
-      "2a05:bec0:1:16::114" = [ "pointjig" ];
-      "78.128.127.235" = [ "shelter" ];
-      "2a01:8740:1:e4::2cd3" = [ "shelter" ];
-    };
     dhcpcd.enable = false;
     useNetworkd = false;
     useDHCP = false;
