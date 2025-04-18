@@ -720,7 +720,7 @@ in
       adminPasswordFile = secrets.nextcloud-admin.path;
       notify_push.package = pkgs.nextcloud-notify_push;
       home = "/persist/var/lib/nextcloud";
-      package = pkgs.nextcloud30;
+      package = pkgs.nextcloud31;
       prometheus.passwordFile = secrets.prometheus-nextcloud.path;
     };
     postgresql = {
