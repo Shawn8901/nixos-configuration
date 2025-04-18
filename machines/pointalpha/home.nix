@@ -13,7 +13,6 @@ in
   home.packages = [
     pkgs.keymapp
     pkgs.teamspeak3
-    pkgs.signal-desktop
     pkgs.portfolio
     pkgs.attic-client
     pkgs.pytr
