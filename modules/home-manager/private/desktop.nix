@@ -350,7 +350,6 @@ in
         matchBlocks = {
           tank = {
             hostname = "tank";
-            port = 2242;
             user = "shawn";
           };
           shelter = {

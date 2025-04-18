@@ -187,10 +187,6 @@ in
     ];
 
     programs.ssh.extraConfig = ''
-      Host localhost
-      Hostname 127.0.0.1
-      Port 2242
-
       Host watchtower
       Hostname watchtower.pointjig.de
       Port 2242
@@ -219,7 +215,7 @@ in
               "i686-linux"
             ];
             supportedFeatures = supportedFeatures ++ [ "gccarch-x86-64-v3" ];
-            inherit sshUser sshKey maxJobs;
+            inherit maxJobs;
           }
           {
             hostName = "watchtower";

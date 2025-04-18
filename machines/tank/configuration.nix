@@ -184,17 +184,20 @@ in
         SMTP_USERNAME = "postman";
       };
     };
-    openssh.hostKeys = [
-      {
-        path = "/persist/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "/persist/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-        bits = 4096;
-      }
-    ];
+    openssh = {
+      ports = lib.mkForce [ 22 ];
+      hostKeys = [
+        {
+          path = "/persist/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+        {
+          path = "/persist/etc/ssh/ssh_host_rsa_key";
+          type = "rsa";
+          bits = 4096;
+        }
+      ];
+    };
     zfs = {
       trim.enable = true;
       autoScrub = {
