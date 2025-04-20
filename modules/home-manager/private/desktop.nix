@@ -165,123 +165,142 @@ in
           };
       };
 
-      vscode = lib.mkMerge [
-        (lib.optionalAttrs (!lib.versionOlder config.home.version.release "25.05") {
-          profiles = {
-            default = {
-              enableExtensionUpdateCheck = false;
-              enableUpdateCheck = false;
-              keybindings = [
-                {
-                  "key" = "ctrl+d";
-                  "command" = "-editor.action.addSelectionToNextFindMatch";
-                  "when" = "editorFocus";
-                }
-                {
-                  "key" = "ctrl+d";
-                  "command" = "editor.action.deleteLines";
-                  "when" = "textInputFocus && !editorReadonly";
-                }
-                {
-                  "key" = "ctrl+shift+k";
-                  "command" = "-editor.action.deleteLines";
-                  "when" = "textInputFocus && !editorReadonly";
-                }
-                {
-                  "key" = "ctrl+shift+l";
-                  "command" = "find-it-faster.findWithinFiles";
-                }
-              ];
-              userSettings = {
-                "[nix]" = {
-                  "editor.insertSpaces" = true;
-                  "editor.tabSize" = 2;
-                  "editor.autoIndent" = "full";
-                  "editor.quickSuggestions" = {
-                    "other" = true;
-                    "comments" = false;
-                    "strings" = true;
-                  };
-                  "editor.formatOnSave" = true;
-                  "editor.formatOnPaste" = true;
-                  "editor.formatOnType" = false;
-                };
-                "[rust]" = {
-                  "editor.defaultFormatter" = "rust-lang.rust-analyzer";
-                };
-                "[python]" = {
-                  "editor.formatOnSave" = true;
-                  "editor.formatOnPaste" = true;
-                  "editor.formatOnType" = false;
-                  "editor.defaultFormatter" = "ms-python.autopep8";
-                };
-                "[typescript]" = {
-                  "editor.defaultFormatter" = "esbenp.prettier-vscode";
-                };
-                "editor.tabSize" = 2;
-                "terminal.integrated.gpuAcceleration" = false;
-                "terminal.integrated.persistentSessionReviveProcess" = "never";
-                "terminal.integrated.enablePersistentSessions" = false;
-                "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
-                "files.trimFinalNewlines" = true;
-                "files.insertFinalNewline" = true;
-                "diffEditor.ignoreTrimWhitespace" = false;
-                "editor.formatOnSave" = true;
-                "nix.enableLanguageServer" = true;
-                "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
-                "nix.serverPath" = "${getExe pkgs.nil}";
-                "nix.serverSettings" = {
-                  "nil" = {
-                    "diagnostics" = {
-                      "ignored" = [ ];
-                    };
-                    "formatting" = {
-                      "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
-                    };
-                    "flake" = {
-                      "autoArchive" = true;
-                      "autoEvalInputs" = true;
-                    };
-                  };
-                };
-                "python.analysis.autoImportCompletions" = true;
-                "python.analysis.typeCheckingMode" = "standard";
-                "find-it-faster.general.useTerminalInEditor" = true;
+      vscode =
+        let
+          enableExtensionUpdateCheck = false;
+          enableUpdateCheck = false;
+          keybindings = [
+            {
+              "key" = "ctrl+d";
+              "command" = "-editor.action.addSelectionToNextFindMatch";
+              "when" = "editorFocus";
+            }
+            {
+              "key" = "ctrl+d";
+              "command" = "editor.action.deleteLines";
+              "when" = "textInputFocus && !editorReadonly";
+            }
+            {
+              "key" = "ctrl+shift+k";
+              "command" = "-editor.action.deleteLines";
+              "when" = "textInputFocus && !editorReadonly";
+            }
+            {
+              "key" = "ctrl+shift+l";
+              "command" = "find-it-faster.findWithinFiles";
+            }
+          ];
+          userSettings = {
+            "[nix]" = {
+              "editor.insertSpaces" = true;
+              "editor.tabSize" = 2;
+              "editor.autoIndent" = "full";
+              "editor.quickSuggestions" = {
+                "other" = true;
+                "comments" = false;
+                "strings" = true;
               };
-              extensions = with pkgs.vscode-extensions; [
-                # general stuff
-                mhutchie.git-graph
-                editorconfig.editorconfig
-                mkhl.direnv
-                usernamehw.errorlens
-                redhat.vscode-yaml
-
-                # nix dev
-                jnoortheen.nix-ide
-
-                # python dev
-                ms-python.python
-                ms-python.vscode-pylance
-                ms-python.debugpy
-                ms-python.isort
-
-                # typescript dev
-                esbenp.prettier-vscode
-                wix.vscode-import-cost
-
-                # rust dev
-                rust-lang.rust-analyzer
-                vadimcn.vscode-lldb
-              ];
+              "editor.formatOnSave" = true;
+              "editor.formatOnPaste" = true;
+              "editor.formatOnType" = false;
             };
+            "[rust]" = {
+              "editor.defaultFormatter" = "rust-lang.rust-analyzer";
+            };
+            "[python]" = {
+              "editor.formatOnSave" = true;
+              "editor.formatOnPaste" = true;
+              "editor.formatOnType" = false;
+              "editor.defaultFormatter" = "ms-python.autopep8";
+            };
+            "[typescript]" = {
+              "editor.defaultFormatter" = "esbenp.prettier-vscode";
+            };
+            "editor.tabSize" = 2;
+            "terminal.integrated.gpuAcceleration" = false;
+            "terminal.integrated.persistentSessionReviveProcess" = "never";
+            "terminal.integrated.enablePersistentSessions" = false;
+            "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
+            "files.trimFinalNewlines" = true;
+            "files.insertFinalNewline" = true;
+            "diffEditor.ignoreTrimWhitespace" = false;
+            "editor.formatOnSave" = true;
+            "nix.enableLanguageServer" = true;
+            "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
+            "nix.serverPath" = "${getExe pkgs.nil}";
+            "nix.serverSettings" = {
+              "nil" = {
+                "diagnostics" = {
+                  "ignored" = [ ];
+                };
+                "formatting" = {
+                  "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
+                };
+                "flake" = {
+                  "autoArchive" = true;
+                  "autoEvalInputs" = true;
+                };
+              };
+            };
+            "python.analysis.autoImportCompletions" = true;
+            "python.analysis.typeCheckingMode" = "standard";
+            "find-it-faster.general.useTerminalInEditor" = true;
           };
-        })
-        {
-          enable = true;
-          mutableExtensionsDir = false;
-          package = pkgs.vscode;
-        }
-      ];
+          extensions = with pkgs.vscode-extensions; [
+            # general stuff
+            mhutchie.git-graph
+            editorconfig.editorconfig
+            mkhl.direnv
+            usernamehw.errorlens
+            redhat.vscode-yaml
+
+            # nix dev
+            jnoortheen.nix-ide
+
+            # python dev
+            ms-python.python
+            ms-python.vscode-pylance
+            ms-python.debugpy
+            ms-python.isort
+
+            # typescript dev
+            esbenp.prettier-vscode
+            wix.vscode-import-cost
+
+            # rust dev
+            rust-lang.rust-analyzer
+            vadimcn.vscode-lldb
+          ];
+        in
+        lib.mkMerge [
+          (lib.optionalAttrs (!lib.versionOlder config.home.version.release "25.05") {
+            profiles = {
+              default = {
+                inherit
+                  enableExtensionUpdateCheck
+                  enableUpdateCheck
+                  keybindings
+                  userSettings
+                  extensions
+                  ;
+              };
+            };
+          })
+          (lib.optionalAttrs (lib.versionOlder config.home.version.release "25.05") {
+            inherit
+              enableExtensionUpdateCheck
+              enableUpdateCheck
+              keybindings
+              userSettings
+              extensions
+              ;
+          })
+          {
+            enable = true;
+            mutableExtensionsDir = false;
+            package = pkgs.vscode;
+          }
+        ];
 
       vim = {
         enable = true;
