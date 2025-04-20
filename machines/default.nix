@@ -65,6 +65,9 @@
         input = inputs.home-manager-stable;
         users = [ "shawn" ];
       };
+      extraModules = [
+        inputs.asus-numberpad-driver.nixosModules.default
+      ];
     };
     trivia-gs = {
       nixpkgs = inputs.nixpkgs-stable;

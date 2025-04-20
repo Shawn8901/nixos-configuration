@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "asus-numberpad-driver": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745176705,
+        "narHash": "sha256-4Z35XonQjtotOHNG8RGpIcejPZsj5SWq0ZzKtbi89Dg=",
+        "owner": "shawn8901",
+        "repo": "asus-numberpad-driver",
+        "rev": "bbe8488582619035b5ca1922014d5b9104e8e829",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shawn8901",
+        "ref": "nixos_improvement",
+        "repo": "asus-numberpad-driver",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -192,6 +213,7 @@
     },
     "root": {
       "inputs": {
+        "asus-numberpad-driver": "asus-numberpad-driver",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",

@@ -1,5 +1,4 @@
 {
-  self',
   self,
   pkgs,
   lib,
@@ -8,7 +7,6 @@
   ...
 }:
 let
-  fPkgs = self'.packages;
   hosts = self.nixosConfigurations;
   inherit (config.sops) secrets;
 
@@ -160,14 +158,24 @@ in
     amdgpu.initrd.enable = true;
     sane.enable = true;
     keyboard.zsa.enable = true;
-    asus-touchpad-numpad = {
-      enable = true;
-      package = fPkgs.asus-touchpad-numpad-driver;
-      model = "ux433fa";
-    };
     asus.battery = {
       enable = true;
       chargeUpto = 80;
+    };
+    asus-numberpad-driver = {
+      enable = true;
+      layout = "up5401ea";
+      config = {
+        main = {
+          "activation_time" = "0.5";
+          "multitouch" = "1";
+          "default_backlight_level" = "0x01";
+          "top_left_icon_brightness_func_max_min_only" = "1";
+          "top_left_icon_activation_time" = "0.5";
+          "top_left_icon_slide_func_activation_radius" = "1200";
+          "top_left_icon_slide_func_activates_numpad" = "1";
+        };
+      };
     };
   };
 

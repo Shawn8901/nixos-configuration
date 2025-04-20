@@ -41,6 +41,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    asus-numberpad-driver = {
+      url = "github:shawn8901/asus-numberpad-driver/nixos_improvement";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
