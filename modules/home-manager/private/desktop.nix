@@ -357,6 +357,13 @@ in
         extraConfig = {
           init.defaultBranch = "main";
           push.autoSetupRemote = "true";
+          core.pager = "${pkgs.delta}/bin/delta";
+          interactive.diffFilter = "${pkgs.delta}/bin/delta --color-only";
+          merge.conflictStyle = "zdiff3";
+          delta = {
+            navigate = true;
+            features = "side-by-side line-numbers decorations";
+          };
         };
       };
 
