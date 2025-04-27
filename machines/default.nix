@@ -16,6 +16,7 @@
       extraModules = [
         ./watchtower/attic-server.nix
         ./watchtower/victoriametrics.nix
+        ./watchtower/victorialogs.nix
         ./watchtower/grafana.nix
       ];
     };
