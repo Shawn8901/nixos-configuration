@@ -29,6 +29,7 @@ in
       group = "grafana";
     };
     victoriametrics = { };
+    victorialogs = { };
   };
 
   networking = {
@@ -129,6 +130,13 @@ in
       package = vmPackage;
       username = "vm";
       credentialsFile = secrets.victoriametrics.path;
+    };
+    victorialogs = {
+      enable = true;
+      hostname = "vl.pointjig.de";
+      package = pkgs.victorialogs;
+      username = "vl";
+      credentialsFile = secrets.victorialogs.path;
     };
     grafana = {
       enable = true;
