@@ -11,7 +11,7 @@ let
   vmPackage = pkgs.victoriametrics.override {
     withBackupTools = false;
     withVmAlert = false;
-    withVictoriaLogs = false;
+    withVictoriaLogs = true;
     withVmctl = false;
     withVmAgent = true;
   };
@@ -30,6 +30,7 @@ in
       group = "grafana";
     };
     victoriametrics = { };
+    victorialogs = { };
   };
 
   networking = {
@@ -130,6 +131,13 @@ in
       package = vmPackage;
       username = "vm";
       credentialsFile = secrets.victoriametrics.path;
+    };
+    victorialogs = {
+      enable = true;
+      hostname = "vl.pointjig.de";
+      package = vmPackage;
+      username = "vl";
+      credentialsFile = secrets.victorialogs.path;
     };
     grafana = {
       enable = true;
