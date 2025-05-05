@@ -183,6 +183,7 @@ in
     };
     nh.flake = "/home/shawn/dev/nixos-configuration";
     kdeconnect.enable = true;
+    droidcam.enable = true;
   };
 
   virtualisation = {
