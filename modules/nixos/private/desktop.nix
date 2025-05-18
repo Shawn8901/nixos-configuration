@@ -42,16 +42,12 @@ in
       enableDefaultPackages = lib.mkDefault true;
       packages =
         [ pkgs.noto-fonts ]
-        ++ (lib.optionals (!lib.versionOlder config.system.nixos.release "25.05") (
-          with pkgs.nerd-fonts;
-          [
-            noto
-            liberation
-            meslo-lg
-            liberation
-          ]
-        ));
-
+        ++ (with pkgs.nerd-fonts; [
+          noto
+          liberation
+          meslo-lg
+          liberation
+        ]);
     };
 
     services = {

@@ -2,23 +2,24 @@ name: Nixpkgs Updater
 
 on:
   schedule:
-    - cron: "12 4 * * *"
+    - cron: "10 4 * * *"
   workflow_dispatch: {}
 
 jobs:
   sync_fork:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-25.04
     steps:
       - name: Sync fork
         shell: bash
         run: |
           gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch master
           gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch nixos-unstable
-          gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch nixos-24.11
+          gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch nixos-25.05
         env:
           GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+
   update-branch:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [sync_fork]
     steps:
       - name: Clone config repo
@@ -50,9 +51,9 @@ jobs:
           release: "unstable"
           working_dir: "nixpkgs"
 
-      - name: Sync 24.11
+      - name: Sync 25.05
         uses: ./config/.github/actions/update-custom-branch
         with:
           gh_token: "${{ secrets.GH_TOKEN }}"
-          release: "24.11"
+          release: "25.05"
           working_dir: "nixpkgs"

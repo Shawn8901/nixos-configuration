@@ -3,13 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:Shawn8901/nixpkgs/nixos-unstable-custom";
-    nixpkgs-stable.url = "github:Shawn8901/nixpkgs/nixos-24.11-custom";
+    nixpkgs-stable.url = "github:Shawn8901/nixpkgs/nixos-25.05-custom";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-stable = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     sops-nix = {

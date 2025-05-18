@@ -43,7 +43,7 @@ in
       };
       gpg-agent = {
         enable = true;
-        pinentryPackage = pkgs.pinentry-qt;
+        pinentry.package = pkgs.pinentry-qt;
       };
     };
     home = {
@@ -85,8 +85,8 @@ in
           vdhcoapp
           keepassxc
         ];
-        profiles."shawn" =
-          let
+        profiles."shawn" = {
+          extensions = {
             packages = with firefox-addon-packages; [
               ublock-origin
               umatrix
@@ -109,203 +109,173 @@ in
                 meta = { };
               })
             ];
-          in
-          {
-            extensions = lib.mkMerge [
-              (lib.mkIf (!lib.versionOlder config.home.version.release "25.05") {
-                inherit packages;
-              })
-              (lib.mkIf (lib.versionOlder config.home.version.release "25.05") packages)
-            ];
-            settings = {
-              "app.update.auto" = false;
-              "browser.crashReports.unsubmittedCheck.enabled" = false;
-              "browser.newtab.preload" = false;
-              "browser.newtabpage.activity-stream.enabled" = false;
-              "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-              "browser.newtabpage.activity-stream.telemetry" = false;
-              "browser.ping-centre.telemetry" = false;
-              "browser.safebrowsing.malware.enabled" = true;
-              "browser.safebrowsing.phishing.enabled" = true;
-              "browser.send_pings" = false;
-              "browser.eme.ui.enabled" = true;
-              "device.sensors.enabled" = false;
-              "dom.battery.enabled" = false;
-              "dom.webaudio.enabled" = false;
-              "dom.private-attribution.submission.enabled" = false;
-              "experiments.enabled" = false;
-              "experiments.supported" = false;
-              "privacy.donottrackheader.enabled" = true;
-              "privacy.firstparty.isolate" = true;
-              "privacy.trackingprotection.cryptomining.enabled" = true;
-              "privacy.trackingprotection.enabled" = true;
-              "privacy.trackingprotection.fingerprinting.enabled" = true;
-              "privacy.trackingprotection.pbmode.enabled" = true;
-              "privacy.trackingprotection.socialtracking.enabled" = true;
-              "security.ssl.errorReporting.automatic" = false;
-              "services.sync.engine.addons" = false;
-              "services.sync.addons.ignoreUserEnabledChanges" = true;
-              "toolkit.telemetry.archive.enabled" = false;
-              "toolkit.telemetry.bhrPing.enabled" = false;
-              "toolkit.telemetry.enabled" = false;
-              "toolkit.telemetry.firstShutdownPing.enabled" = false;
-              "toolkit.telemetry.hybridContent.enabled" = false;
-              "toolkit.telemetry.newProfilePing.enabled" = false;
-              "toolkit.telemetry.reportingpolicy.firstRun" = false;
-              "toolkit.telemetry.server" = "";
-              "toolkit.telemetry.shutdownPingSender.enabled" = false;
-              "toolkit.telemetry.unified" = false;
-              "toolkit.telemetry.updatePing.enabled" = false;
-              "toolkit.telemetry.pioneer-new-studies-available" = false;
-              "gfx.webrender.compositor.force-enabled" = true;
-              "browser.cache.disk.enable" = false;
-              "browser.cache.memory.enable" = true;
-              "extensions.pocket.enabled" = false;
-              "media.ffmpeg.vaapi.enabled" = true;
-              "media.ffvpx.enabled" = false;
-              "media.navigator.mediadatadecoder_vpx_enabled" = true;
-              "media.rdd-vpx.enabled" = false;
-              "media.gmp-widevinecdm.enabled" = true;
-            };
           };
+          settings = {
+            "app.update.auto" = false;
+            "browser.crashReports.unsubmittedCheck.enabled" = false;
+            "browser.newtab.preload" = false;
+            "browser.newtabpage.activity-stream.enabled" = false;
+            "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+            "browser.newtabpage.activity-stream.telemetry" = false;
+            "browser.ping-centre.telemetry" = false;
+            "browser.safebrowsing.malware.enabled" = true;
+            "browser.safebrowsing.phishing.enabled" = true;
+            "browser.send_pings" = false;
+            "browser.eme.ui.enabled" = true;
+            "device.sensors.enabled" = false;
+            "dom.battery.enabled" = false;
+            "dom.webaudio.enabled" = false;
+            "dom.private-attribution.submission.enabled" = false;
+            "experiments.enabled" = false;
+            "experiments.supported" = false;
+            "privacy.donottrackheader.enabled" = true;
+            "privacy.firstparty.isolate" = true;
+            "privacy.trackingprotection.cryptomining.enabled" = true;
+            "privacy.trackingprotection.enabled" = true;
+            "privacy.trackingprotection.fingerprinting.enabled" = true;
+            "privacy.trackingprotection.pbmode.enabled" = true;
+            "privacy.trackingprotection.socialtracking.enabled" = true;
+            "security.ssl.errorReporting.automatic" = false;
+            "services.sync.engine.addons" = false;
+            "services.sync.addons.ignoreUserEnabledChanges" = true;
+            "toolkit.telemetry.archive.enabled" = false;
+            "toolkit.telemetry.bhrPing.enabled" = false;
+            "toolkit.telemetry.enabled" = false;
+            "toolkit.telemetry.firstShutdownPing.enabled" = false;
+            "toolkit.telemetry.hybridContent.enabled" = false;
+            "toolkit.telemetry.newProfilePing.enabled" = false;
+            "toolkit.telemetry.reportingpolicy.firstRun" = false;
+            "toolkit.telemetry.server" = "";
+            "toolkit.telemetry.shutdownPingSender.enabled" = false;
+            "toolkit.telemetry.unified" = false;
+            "toolkit.telemetry.updatePing.enabled" = false;
+            "toolkit.telemetry.pioneer-new-studies-available" = false;
+            "gfx.webrender.compositor.force-enabled" = true;
+            "browser.cache.disk.enable" = false;
+            "browser.cache.memory.enable" = true;
+            "extensions.pocket.enabled" = false;
+            "media.ffmpeg.vaapi.enabled" = true;
+            "media.ffvpx.enabled" = false;
+            "media.navigator.mediadatadecoder_vpx_enabled" = true;
+            "media.rdd-vpx.enabled" = false;
+            "media.gmp-widevinecdm.enabled" = true;
+          };
+        };
       };
 
-      vscode =
-        let
-          enableExtensionUpdateCheck = false;
-          enableUpdateCheck = false;
-          keybindings = [
-            {
-              "key" = "ctrl+d";
-              "command" = "-editor.action.addSelectionToNextFindMatch";
-              "when" = "editorFocus";
-            }
-            {
-              "key" = "ctrl+d";
-              "command" = "editor.action.deleteLines";
-              "when" = "textInputFocus && !editorReadonly";
-            }
-            {
-              "key" = "ctrl+shift+k";
-              "command" = "-editor.action.deleteLines";
-              "when" = "textInputFocus && !editorReadonly";
-            }
-            {
-              "key" = "ctrl+shift+l";
-              "command" = "find-it-faster.findWithinFiles";
-            }
-          ];
-          userSettings = {
-            "[nix]" = {
-              "editor.insertSpaces" = true;
+      vscode = {
+        enable = true;
+        mutableExtensionsDir = false;
+        package = pkgs.vscode;
+        profiles = {
+          default = {
+            enableExtensionUpdateCheck = false;
+            enableUpdateCheck = false;
+            keybindings = [
+              {
+                "key" = "ctrl+d";
+                "command" = "-editor.action.addSelectionToNextFindMatch";
+                "when" = "editorFocus";
+              }
+              {
+                "key" = "ctrl+d";
+                "command" = "editor.action.deleteLines";
+                "when" = "textInputFocus && !editorReadonly";
+              }
+              {
+                "key" = "ctrl+shift+k";
+                "command" = "-editor.action.deleteLines";
+                "when" = "textInputFocus && !editorReadonly";
+              }
+              {
+                "key" = "ctrl+shift+l";
+                "command" = "find-it-faster.findWithinFiles";
+              }
+            ];
+            userSettings = {
+              "[nix]" = {
+                "editor.insertSpaces" = true;
+                "editor.tabSize" = 2;
+                "editor.autoIndent" = "full";
+                "editor.quickSuggestions" = {
+                  "other" = true;
+                  "comments" = false;
+                  "strings" = true;
+                };
+                "editor.formatOnSave" = true;
+                "editor.formatOnPaste" = true;
+                "editor.formatOnType" = false;
+              };
+              "[rust]" = {
+                "editor.defaultFormatter" = "rust-lang.rust-analyzer";
+              };
+              "[python]" = {
+                "editor.formatOnSave" = true;
+                "editor.formatOnPaste" = true;
+                "editor.formatOnType" = false;
+                "editor.defaultFormatter" = "ms-python.autopep8";
+              };
+              "[typescript]" = {
+                "editor.defaultFormatter" = "esbenp.prettier-vscode";
+              };
               "editor.tabSize" = 2;
-              "editor.autoIndent" = "full";
-              "editor.quickSuggestions" = {
-                "other" = true;
-                "comments" = false;
-                "strings" = true;
-              };
+              "terminal.integrated.gpuAcceleration" = false;
+              "terminal.integrated.persistentSessionReviveProcess" = "never";
+              "terminal.integrated.enablePersistentSessions" = false;
+              "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
+              "files.trimFinalNewlines" = true;
+              "files.insertFinalNewline" = true;
+              "diffEditor.ignoreTrimWhitespace" = false;
               "editor.formatOnSave" = true;
-              "editor.formatOnPaste" = true;
-              "editor.formatOnType" = false;
-            };
-            "[rust]" = {
-              "editor.defaultFormatter" = "rust-lang.rust-analyzer";
-            };
-            "[python]" = {
-              "editor.formatOnSave" = true;
-              "editor.formatOnPaste" = true;
-              "editor.formatOnType" = false;
-              "editor.defaultFormatter" = "ms-python.autopep8";
-            };
-            "[typescript]" = {
-              "editor.defaultFormatter" = "esbenp.prettier-vscode";
-            };
-            "editor.tabSize" = 2;
-            "terminal.integrated.gpuAcceleration" = false;
-            "terminal.integrated.persistentSessionReviveProcess" = "never";
-            "terminal.integrated.enablePersistentSessions" = false;
-            "terminal.integrated.fontFamily" = "MesloLGS Nerd Font Mono";
-            "files.trimFinalNewlines" = true;
-            "files.insertFinalNewline" = true;
-            "diffEditor.ignoreTrimWhitespace" = false;
-            "editor.formatOnSave" = true;
-            "nix.enableLanguageServer" = true;
-            "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
-            "nix.serverPath" = "${getExe pkgs.nil}";
-            "nix.serverSettings" = {
-              "nil" = {
-                "diagnostics" = {
-                  "ignored" = [ ];
-                };
-                "formatting" = {
-                  "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
-                };
-                "flake" = {
-                  "autoArchive" = true;
-                  "autoEvalInputs" = true;
+              "nix.enableLanguageServer" = true;
+              "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
+              "nix.serverPath" = "${getExe pkgs.nil}";
+              "nix.serverSettings" = {
+                "nil" = {
+                  "diagnostics" = {
+                    "ignored" = [ ];
+                  };
+                  "formatting" = {
+                    "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
+                  };
+                  "flake" = {
+                    "autoArchive" = true;
+                    "autoEvalInputs" = true;
+                  };
                 };
               };
+              "python.analysis.autoImportCompletions" = true;
+              "python.analysis.typeCheckingMode" = "standard";
+              "find-it-faster.general.useTerminalInEditor" = true;
             };
-            "python.analysis.autoImportCompletions" = true;
-            "python.analysis.typeCheckingMode" = "standard";
-            "find-it-faster.general.useTerminalInEditor" = true;
+            extensions = with pkgs.vscode-extensions; [
+              # general stuff
+              mhutchie.git-graph
+              editorconfig.editorconfig
+              mkhl.direnv
+              usernamehw.errorlens
+              redhat.vscode-yaml
+
+              # nix dev
+              jnoortheen.nix-ide
+
+              # python dev
+              ms-python.python
+              ms-python.vscode-pylance
+              ms-python.debugpy
+              ms-python.isort
+
+              # typescript dev
+              esbenp.prettier-vscode
+              wix.vscode-import-cost
+
+              # rust dev
+              rust-lang.rust-analyzer
+              vadimcn.vscode-lldb
+            ];
           };
-          extensions = with pkgs.vscode-extensions; [
-            # general stuff
-            mhutchie.git-graph
-            editorconfig.editorconfig
-            mkhl.direnv
-            usernamehw.errorlens
-            redhat.vscode-yaml
-
-            # nix dev
-            jnoortheen.nix-ide
-
-            # python dev
-            ms-python.python
-            ms-python.vscode-pylance
-            ms-python.debugpy
-            ms-python.isort
-
-            # typescript dev
-            esbenp.prettier-vscode
-            wix.vscode-import-cost
-
-            # rust dev
-            rust-lang.rust-analyzer
-            vadimcn.vscode-lldb
-          ];
-        in
-        lib.mkMerge [
-          (lib.optionalAttrs (!lib.versionOlder config.home.version.release "25.05") {
-            profiles = {
-              default = {
-                inherit
-                  enableExtensionUpdateCheck
-                  enableUpdateCheck
-                  keybindings
-                  userSettings
-                  extensions
-                  ;
-              };
-            };
-          })
-          (lib.optionalAttrs (lib.versionOlder config.home.version.release "25.05") {
-            inherit
-              enableExtensionUpdateCheck
-              enableUpdateCheck
-              keybindings
-              userSettings
-              extensions
-              ;
-          })
-          {
-            enable = true;
-            mutableExtensionsDir = false;
-            package = pkgs.vscode;
-          }
-        ];
+        };
+      };
 
       vim = {
         enable = true;
