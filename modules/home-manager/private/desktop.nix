@@ -64,7 +64,6 @@ in
           vlc
           kdePackages.plasma-integration
           libreoffice-qt
-          krita
 
           nix-tree
           nixpkgs-review

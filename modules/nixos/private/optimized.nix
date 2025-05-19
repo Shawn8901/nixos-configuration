@@ -45,7 +45,7 @@ in
           };
         };
 
-        inherit (unoptimized) portfolio libreoffice-qt krita;
+        inherit (unoptimized) portfolio libreoffice-qt;
       };
     })
   ];
