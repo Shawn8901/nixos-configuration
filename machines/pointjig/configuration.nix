@@ -154,6 +154,12 @@ in
           cert = "%{file:/var/lib/acme/${mailHostname}/cert.pem}%";
           default = true;
         };
+        spam-filter.resource = "file://${pkgs.stalwart-mail}/etc/stalwart/spamfilter.toml";
+        webadmin = {
+          path = "/var/cache/stalwart-mail";
+          resource = "file://${pkgs.stalwart-mail.webadmin}/webadmin.zip";
+        };
+
         server = {
           http.use-x-forwarded = true;
           tls.enable = true;
