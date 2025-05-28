@@ -68,8 +68,7 @@ in
     }
     (lib.optionalAttrs config.services.stalwart-mail.enable {
       stalwart-fallback-admin = {
-        owner = "stalwart-mail";
-        group = "stalwart-mail";
+        owner = config.systemd.services.stalwart-mail.serviceConfig.User;
       };
     })
   ];
@@ -687,7 +686,6 @@ in
     };
   };
   systemd.services.stalwart-mail.serviceConfig = lib.mkIf config.services.stalwart-mail.enable {
-    User = "stalwart-mail";
     EnvironmentFile = [ secrets.stalwart-fallback-admin.path ];
   };
 
