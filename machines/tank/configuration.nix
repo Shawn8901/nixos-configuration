@@ -29,6 +29,7 @@ in
       ssh-builder-key = {
         owner = "hydra-queue-runner";
       };
+      srv-ssh = { };
       zfs-ztank-key = { };
       zrepl = { };
       ela = {
@@ -306,12 +307,12 @@ in
             root_fs = "ztank/backup/sapsrv01";
             interval = "1h";
             connect = {
-              type = "tls";
-              address = "sapsrv01.clansap.org:8888";
-              ca = ../../files/public_certs/zrepl/sapsrv01.crt;
-              cert = ../../files/public_certs/zrepl/tank.crt;
-              key = secrets.zrepl.path;
-              server_cn = "sapsrv01";
+              type = "ssh+stdinserver";
+              host = "sapsrv01.clansap.org";
+              port = 22;
+              user = "root";
+              identity_file = secrets.srv-ssh.path;
+              options = [ "Compression=yes" ];
             };
             recv.placeholder.encryption = "inherit";
             pruning = {
@@ -337,12 +338,12 @@ in
             root_fs = "ztank/backup/sapsrv02";
             interval = "1h";
             connect = {
-              type = "tls";
-              address = "sapsrv02.clansap.org:8888";
-              ca = ../../files/public_certs/zrepl/sapsrv02.crt;
-              cert = ../../files/public_certs/zrepl/tank.crt;
-              key = secrets.zrepl.path;
-              server_cn = "sapsrv02";
+              type = "ssh+stdinserver";
+              host = "sapsrv02.clansap.org";
+              port = 22;
+              user = "root";
+              identity_file = secrets.srv-ssh.path;
+              options = [ "Compression=yes" ];
             };
             recv.placeholder.encryption = "inherit";
             pruning = {
