@@ -25,6 +25,7 @@ in
     };
     stalwart-env = { };
     vaultwarden = { };
+    maxmind = { };
   };
 
   networking.firewall = {
@@ -118,10 +119,18 @@ in
         }
       ];
     };
+    geoipupdate = {
+      enable = true;
+      settings = {
+        AccountID = 1181822;
+        EditionIDs = [ "GeoLite2-Country" ];
+        LicenseKey = secrets.maxmind.path;
+      };
+    };
     nginx =
       let
         allowedCountries = [ "DE" ];
-        geoDbCountryPath = "/var/lib/geoip-databases/GeoLite2-Country.mmdb";
+        geoDbCountryPath = "${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb";
         geoIpConfig = ''
           set $allow_access 0;
           if ($allowed_country = 1) {
