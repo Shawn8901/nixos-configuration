@@ -2,11 +2,13 @@
   config,
   inputs',
   pkgs,
+  lib,
   ...
 }:
 let
   inherit (config.sops) secrets;
   mailHostname = "mail.pointjig.de";
+  vaultwardenName = "vault.pointjig.de";
 in
 {
   sops.secrets = {
@@ -21,6 +23,7 @@ in
       group = "stfcbot";
     };
     stalwart-env = { };
+    vaultwarden = { };
   };
 
   networking.firewall = {
@@ -60,9 +63,18 @@ in
       };
       wait-online.anyInterface = true;
     };
-    services.stalwart-mail.serviceConfig = {
-      User = "stalwart-mail";
-      EnvironmentFile = [ secrets.stalwart-env.path ];
+    services = {
+      stalwart-mail.serviceConfig = {
+        User = "stalwart-mail";
+        EnvironmentFile = [ secrets.stalwart-env.path ];
+      };
+      vaultwarden = {
+        after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
+        serviceConfig = {
+          StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
+        };
+      };
     };
   };
 
@@ -90,10 +102,17 @@ in
         track_counts = true;
         track_io_timing = true;
       };
-      ensureDatabases = [ "stalwart-mail" ];
+      ensureDatabases = [
+        "stalwart-mail"
+        "vaultwarden"
+      ];
       ensureUsers = [
         {
           name = "stalwart-mail";
+          ensureDBOwnership = true;
+        }
+        {
+          name = "vaultwarden";
           ensureDBOwnership = true;
         }
       ];
@@ -105,16 +124,28 @@ in
         forceSSL = true;
         globalRedirect = mailHostname;
       };
-      virtualHosts."${mailHostname}" = {
-        serverName = "${mailHostname}";
-        forceSSL = true;
-        enableACME = true;
-        http3 = true;
-        kTLS = true;
-        locations = {
-          "/" = {
-            proxyPass = "http://localhost:8080";
-            recommendedProxySettings = true;
+      virtualHosts = {
+        "${mailHostname}" = {
+          serverName = "${mailHostname}";
+          forceSSL = true;
+          enableACME = true;
+          http3 = true;
+          kTLS = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:8080";
+              recommendedProxySettings = true;
+            };
+          };
+        };
+        "${vaultwardenName}" = {
+          serverName = vaultwardenName;
+          forceSSL = true;
+          enableACME = true;
+          http3 = true;
+          kTLS = true;
+          locations."/" = {
+            proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
           };
         };
       };
@@ -187,6 +218,27 @@ in
             };
           };
         };
+      };
+    };
+    vaultwarden = {
+      enable = true;
+      dbBackend = "postgresql";
+      environmentFile = secrets.vaultwarden.path;
+      config = {
+        DATABASE_URL = "postgresql:///vaultwarden?host=/run/postgresql";
+        DOMAIN = "https://${vaultwardenName}";
+        DATA_FOLDER = "/var/lib/vaultwarden";
+        ENABLE_WEBSOCKET = true;
+        LOG_LEVEL = "warn";
+        PASSWORD_ITERATIONS = 600000;
+        ROCKET_ADDRESS = "127.0.0.1";
+        ROCKET_PORT = 8222;
+        SIGNUPS_ALLOWED = false;
+        TRASH_AUTO_DELETE_DAYS = 30;
+        SMTP_HOST = "mail.pointjig.de";
+        SMTP_FROM = "noreply@pointjig.de";
+        SMTP_FROM_NAME = "Vaultwarden";
+        SMTP_USERNAME = "postman";
       };
     };
   };
