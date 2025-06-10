@@ -6,6 +6,7 @@
   ...
 }:
 let
+  inherit (builtins) concatStringsSep;
   inherit (config.sops) secrets;
   mailHostname = "mail.pointjig.de";
   vaultwardenName = "vault.pointjig.de";
@@ -117,39 +118,93 @@ in
         }
       ];
     };
-    nginx = {
-      package = pkgs.nginxQuic;
-      virtualHosts."pointjig.de" = {
-        enableACME = true;
-        forceSSL = true;
-        globalRedirect = mailHostname;
-      };
-      virtualHosts = {
-        "${mailHostname}" = {
-          serverName = "${mailHostname}";
-          forceSSL = true;
+    nginx =
+      let
+        allowedCountries = [ "DE" ];
+        geoDbCountryPath = "/var/lib/geoip-databases/GeoLite2-Country.mmdb";
+        geoIpConfig = ''
+          set $allow_access 0;
+          if ($allowed_country = 1) {
+            set $allow_access 1;
+          }
+          if ($remote_addr ~ ^192\.168\.1\.) {
+            set $allow_access 1;
+          }
+          if ($remote_addr ~ ^172\.16\.\.) {
+            set $allow_access 1;
+          }
+          if ($remote_addr ~ ^10\.\.\.) {
+            set $allow_access 1;
+          }
+          if ($remote_addr ~ ^127\.\.\.) {
+            set $allow_access 1;
+          }
+          if ($allow_access = 0) {
+            return 403;
+          }
+        '';
+      in
+      {
+        package = pkgs.nginxQuic;
+        additionalModules = with pkgs.nginxModules; [
+          geoip2
+        ];
+        virtualHosts."pointjig.de" = {
           enableACME = true;
-          http3 = true;
-          kTLS = true;
-          locations = {
-            "/" = {
-              proxyPass = "http://localhost:8080";
-              recommendedProxySettings = true;
+          forceSSL = true;
+          globalRedirect = mailHostname;
+        };
+        recommendedBrotliSettings = true;
+        recommendedGzipSettings = true;
+        recommendedOptimisation = true;
+        recommendedTlsSettings = true;
+        recommendedZstdSettings = true;
+        enableReload = true;
+        clientMaxBodySize = "40M";
+        mapHashMaxSize = 4096;
+        appendHttpConfig = ''
+          geoip2 ${geoDbCountryPath} {
+            auto_reload 5m;
+            $geoip2_country_code country iso_code;
+          }
+          map $geoip2_country_code $allowed_country {
+            default 0;
+            ${concatStringsSep "\n  " (map (c: "${c} 1;") allowedCountries)}
+          }
+        '';
+
+        virtualHosts = {
+          "${mailHostname}" = {
+            serverName = "${mailHostname}";
+            forceSSL = true;
+            enableACME = true;
+            http3 = true;
+            kTLS = true;
+            locations = {
+              "/" = {
+                proxyPass = "http://localhost:8080";
+                recommendedProxySettings = true;
+                extraConfig = ''
+                  ${geoIpConfig}
+                '';
+              };
+            };
+          };
+          "${vaultwardenName}" = {
+            serverName = vaultwardenName;
+            forceSSL = true;
+            enableACME = true;
+            http3 = true;
+            kTLS = true;
+            locations."/" = {
+              proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+              extraConfig = ''
+                ${geoIpConfig}
+              '';
             };
           };
         };
-        "${vaultwardenName}" = {
-          serverName = vaultwardenName;
-          forceSSL = true;
-          enableACME = true;
-          http3 = true;
-          kTLS = true;
-          locations."/" = {
-            proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-          };
-        };
       };
-    };
     stne-mimir = {
       enable = true;
       domain = "mimir.pointjig.de";

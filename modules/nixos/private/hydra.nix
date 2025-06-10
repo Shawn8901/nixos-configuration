@@ -55,10 +55,12 @@ in
     services = {
       nginx = {
         enable = mkDefault true;
+        recommendedBrotliSettings = true;
         recommendedGzipSettings = true;
         recommendedOptimisation = true;
-        recommendedProxySettings = true;
         recommendedTlsSettings = true;
+        recommendedZstdSettings = true;
+        recommendedProxySettings = true;
         virtualHosts."${cfg.hostName}" = {
           enableACME = true;
           forceSSL = true;

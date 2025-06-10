@@ -40,9 +40,12 @@ in
     services = {
       nginx = {
         enable = mkDefault true;
+        recommendedBrotliSettings = true;
         recommendedGzipSettings = true;
         recommendedOptimisation = true;
         recommendedTlsSettings = true;
+        recommendedZstdSettings = true;
+        recommendedProxySettings = true;
         clientMaxBodySize = "2G";
         virtualHosts = {
           "${cfg.hostName}" = {
