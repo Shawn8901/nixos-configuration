@@ -69,9 +69,6 @@
         inputs.asus-numberpad-driver.nixosModules.default
       ];
     };
-    trivia-gs = {
-      nixpkgs = inputs.nixpkgs-stable;
-    };
   };
 
   config.flake.hydraJobs = {
