@@ -129,26 +129,8 @@ in
     };
     nginx =
       let
-        allowedCountries = [ "DE" ];
-        geoDbCountryPath = "${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb";
-        geoIpConfig = ''
-          set $allow_access 0;
-          if ($allowed_country = 1) {
-            set $allow_access 1;
-          }
-          if ($remote_addr ~ ^192\.168\.1\.) {
-            set $allow_access 1;
-          }
-          if ($remote_addr ~ ^172\.16\.\.) {
-            set $allow_access 1;
-          }
-          if ($remote_addr ~ ^10\.\.\.) {
-            set $allow_access 1;
-          }
-          if ($remote_addr ~ ^127\.\.\.) {
-            set $allow_access 1;
-          }
-          if ($allow_access = 0) {
+        forbidNotAllowedCountries = ''
+          if ($allowed_country = 0) {
             return 403;
           }
         '';
@@ -171,16 +153,21 @@ in
         enableReload = true;
         clientMaxBodySize = "40M";
         mapHashMaxSize = 4096;
-        appendHttpConfig = ''
-          geoip2 ${geoDbCountryPath} {
-            auto_reload 5m;
-            $geoip2_country_code country iso_code;
-          }
-          map $geoip2_country_code $allowed_country {
-            default 0;
-            ${concatStringsSep "\n  " (map (c: "${c} 1;") allowedCountries)}
-          }
-        '';
+        appendHttpConfig =
+          let
+            allowedCountries = [ "DE" ];
+            geoDbCountryPath = "${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb";
+          in
+          ''
+            geoip2 ${geoDbCountryPath} {
+              auto_reload 5m;
+              $geoip2_country_code country iso_code;
+            }
+            map $geoip2_country_code $allowed_country {
+              default 0;
+              ${concatStringsSep "\n  " (map (c: "${c} 1;") allowedCountries)}
+            }
+          '';
 
         virtualHosts = {
           "${mailHostname}" = {
@@ -194,7 +181,7 @@ in
                 proxyPass = "http://localhost:8080";
                 recommendedProxySettings = true;
                 extraConfig = ''
-                  ${geoIpConfig}
+                  ${forbidNotAllowedCountries}
                 '';
               };
             };
@@ -208,7 +195,7 @@ in
             locations."/" = {
               proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
               extraConfig = ''
-                ${geoIpConfig}
+                ${forbidNotAllowedCountries}
               '';
             };
           };
