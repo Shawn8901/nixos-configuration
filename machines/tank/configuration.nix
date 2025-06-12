@@ -139,6 +139,19 @@ in
     };
   };
 
+  programs.ssh = {
+    knownHosts = {
+      sapsrv01 = {
+        hostNames = [ "sapsrv01.clansap.org" ];
+        publicKey = " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkeXDm5GJlVdQBM8Jh43JYi0X0Nf+idqnL4I4Kl1fbF";
+      };
+      sapsrv02 = {
+        hostNames = [ "sapsrv02.clansap.org" ];
+        publicKey = " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdBgG0egUCjainz/4p2f7txbzUeLvtItCowCb2vsZqB";
+      };
+    };
+  };
+
   nix.settings = {
     keep-outputs = true;
     keep-derivations = true;
