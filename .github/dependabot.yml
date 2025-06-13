@@ -1,7 +1,32 @@
 version: 2
 updates:
 - package-ecosystem: github-actions
-  directory: "/"
+  directory: "/.github/actions/setup-env"
+  schedule:
+    interval: daily
+    time: "06:00"
+  open-pull-requests-limit: 5
+  reviewers:
+  - Shawn8901
+  assignees:
+  - Shawn8901
+  labels:
+  - CI
+- package-ecosystem: github-actions
+  directory: "/.github/actions/update-custom-branch"
+  schedule:
+    interval: daily
+    time: "06:00"
+  open-pull-requests-limit: 5
+  reviewers:
+  - Shawn8901
+  assignees:
+  - Shawn8901
+  labels:
+  - CI
+
+- package-ecosystem: github-actions
+  directory: /
   schedule:
     interval: daily
     time: "06:00"
