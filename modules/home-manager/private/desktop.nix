@@ -46,35 +46,29 @@ in
         pinentry.package = pkgs.pinentry-qt;
       };
     };
-    home = {
-      sessionVariables = {
-        # workaround hardware acceleration issue
-        "MOZ_ENABLE_WAYLAND" = "0";
-      };
-      packages =
-        with pkgs;
-        [
-          sops
-          samba
-          keepassxc
-          (discord.override {
-            nss = nss_latest;
-            withOpenASAR = true;
-          })
-          vlc
-          kdePackages.plasma-integration
-          libreoffice-qt
+    home.packages =
+      with pkgs;
+      [
+        sops
+        samba
+        keepassxc
+        (discord.override {
+          nss = nss_latest;
+          withOpenASAR = true;
+        })
+        vlc
+        kdePackages.plasma-integration
+        libreoffice-qt
 
-          nix-tree
-          nixpkgs-review
-          vdhcoapp
-          element-desktop
-        ]
-        ++ (with self'.packages; [
-          nas
-          generate-zrepl-ssl
-        ]);
-    };
+        nix-tree
+        nixpkgs-review
+        vdhcoapp
+        element-desktop
+      ]
+      ++ (with self'.packages; [
+        nas
+        generate-zrepl-ssl
+      ]);
     programs = {
       man.enable = true;
       firefox = {
