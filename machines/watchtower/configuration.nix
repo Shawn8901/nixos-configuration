@@ -11,7 +11,6 @@ let
   vmPackage = pkgs.victoriametrics.override {
     withBackupTools = false;
     withVmAlert = false;
-    withVictoriaLogs = false;
     withVmctl = false;
     withVmAgent = true;
   };
