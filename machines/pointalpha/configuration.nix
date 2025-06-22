@@ -145,7 +145,7 @@ in
         ];
       };
     };
-    teamviewer.enable = false;
+    teamviewer.enable = true;
     smartd = {
       enable = true;
       devices = [ { device = "/dev/nvme1"; } ];
