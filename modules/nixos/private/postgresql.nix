@@ -54,8 +54,8 @@ in
       services = {
         postgresql-vacuum-analyze = {
           description = "Vacuum and analyze all PostgreSQL databases";
-          after = [ "postgresql.service" ];
-          requires = [ "postgresql.service" ];
+          after = [ "postgresql.target" ];
+          requires = [ "postgresql.target" ];
           serviceConfig = {
             ExecStart = "${lib.getExe' cfg.package "psql"} -c 'VACUUM ANALYZE'";
             User = "postgres";

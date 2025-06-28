@@ -71,8 +71,8 @@ in
         EnvironmentFile = [ secrets.stalwart-env.path ];
       };
       vaultwarden = {
-        after = [ "postgresql.service" ];
-        requires = [ "postgresql.service" ];
+        after = [ "postgresql.target" ];
+        requires = [ "postgresql.target" ];
         serviceConfig = {
           StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
         };
