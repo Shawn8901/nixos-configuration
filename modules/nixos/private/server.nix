@@ -85,7 +85,7 @@ in
       journald.upload = {
         enable = true;
         settings.Upload = {
-          URL = "http://vl.pointjig.de/insert/journald";
+          URL = "https://vl.pointjig.de/insert/journald";
           TrustedCertificateFile = "${self}/files/ca/ca.crt";
           ServerKeyFile = config.sops.secrets.vl_priv.path;
           ServerCertificateFile = config.sops.secrets.vl_pub.path;
