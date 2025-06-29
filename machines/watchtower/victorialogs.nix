@@ -56,7 +56,7 @@ in
             recommendedProxySettings = true;
           };
           extraConfig = ''
-            ssl_client_certificate ${cfg.caPubCertFile}
+            ssl_client_certificate ${cfg.caPubCertFile};
             ssl_verify_client on;
           '';
         };
