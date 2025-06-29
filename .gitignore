@@ -3,3 +3,4 @@
 .envrc
 /files/ca/*
 !/files/ca/ca.yaml
+!/files/ca/ca.crt

@@ -144,7 +144,7 @@ in
       credentialsFile = secrets.victorialogs.path;
       nginxPrivCertFile = secrets.vl_nginx.path;
       nginxPubCertFile = "${self}/files/public_certs/nginx/vl.pointjig.de.crt";
-      caPubCertFile = secrets.ca_crt.path;
+      caPubCertFile = "${self}/files/ca/ca.crt";
     };
     grafana = {
       enable = true;
