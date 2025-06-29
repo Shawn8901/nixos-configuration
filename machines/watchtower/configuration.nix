@@ -31,7 +31,10 @@ in
     };
     victoriametrics = { };
     victorialogs = { };
-    vl_nginx = { };
+    vl_nginx = {
+      owner = "nginx";
+      group = "nginx";
+    };
   };
 
   networking = {
