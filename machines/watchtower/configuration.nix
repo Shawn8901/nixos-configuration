@@ -1,4 +1,5 @@
 {
+  self,
   inputs',
   config,
   pkgs,
@@ -30,6 +31,10 @@ in
     };
     victoriametrics = { };
     victorialogs = { };
+    ca_crt = {
+      sopsFile = ../../files/ca/ca.yaml;
+    };
+    vl_nginx = { };
   };
 
   networking = {
@@ -137,6 +142,9 @@ in
       package = pkgs.victorialogs;
       username = "vl";
       credentialsFile = secrets.victorialogs.path;
+      nginxPrivCertFile = secrets.vl_nginx.path;
+      nginxPubCertFile = "${self}/files/public_certs/nginx/vl.pointjig.de.crt";
+      caPubCertFile = secrets.ca_crt.path;
     };
     grafana = {
       enable = true;

@@ -31,7 +31,9 @@ in
       };
       username = mkOption { type = types.str; };
       credentialsFile = mkOption { type = types.path; };
-      datasources = mkOption { type = types.listOf types.raw; };
+      nginxPrivCertFile = mkOption { type = types.path; };
+      nginxPubCertFile = mkOption { type = types.path; };
+      caPubCertFile = mkOption { type = types.path; };
     };
   };
   config = mkIf cfg.enable {
@@ -42,15 +44,21 @@ in
         recommendedOptimisation = true;
         recommendedTlsSettings = true;
         virtualHosts."${cfg.hostname}" = {
-          enableACME = true;
+          enableACME = false;
           forceSSL = true;
           http3 = true;
           kTLS = true;
+          sslCertificate = cfg.nginxPubCertFile;
+          sslCertificateKey = cfg.nginxPrivCertFile;
           locations."/" = {
             proxyPass = "http://127.0.0.1:${toString cfg.port}";
             proxyWebsockets = true;
             recommendedProxySettings = true;
           };
+          extraConfig = ''
+            ssl_client_certificate ${cfg.caPubCertFile}
+            ssl_verify_client on;
+          '';
         };
       };
       victorialogs = {

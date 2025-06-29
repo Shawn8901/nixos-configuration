@@ -1,3 +1,5 @@
 /result*
 .direnv
 .envrc
+/files/ca/*
+!/files/ca/ca.yaml
