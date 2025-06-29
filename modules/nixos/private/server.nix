@@ -20,9 +20,11 @@ in
 
     sops.secrets = {
       vl_priv = {
+        mode = "444";
         sopsFile = ../../../files/secrets-base.yaml;
       };
       vl_pub = {
+        mode = "444";
         sopsFile = ../../../files/secrets-base.yaml;
       };
     };
