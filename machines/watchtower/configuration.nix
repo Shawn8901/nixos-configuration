@@ -31,9 +31,6 @@ in
     };
     victoriametrics = { };
     victorialogs = { };
-    ca_crt = {
-      sopsFile = ../../files/ca/ca.yaml;
-    };
     vl_nginx = { };
   };
 
