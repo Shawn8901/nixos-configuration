@@ -1,4 +1,5 @@
 {
+  self,
   config,
   lib,
   pkgs,
@@ -16,6 +17,16 @@ in
     };
   };
   config = mkIf cfg.enable {
+
+    sops.secrets = {
+      vl_priv = {
+        sopsFile = ../../../files/secrets-base.yaml;
+      };
+      vl_pub = {
+        sopsFile = ../../../files/secrets-base.yaml;
+      };
+    };
+
     environment = {
       systemPackages = [
         pkgs.gitMinimal
@@ -70,6 +81,14 @@ in
         bantime = "1h";
         bantime-increment.enable = true;
         ignoreIP = [ "192.168.11.0/24" ];
+      };
+      journald.upload = {
+        enable = true;
+        settings.Upload = {
+          TrustedCertificateFile = "${self}/files/ca/ca.crt";
+          ServerKeyFile = config.sops.secrets.vl_priv.path;
+          ServerCertificateFile = config.sops.secrets.vl_pub.path;
+        };
       };
     };
   };
