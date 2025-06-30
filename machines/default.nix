@@ -6,19 +6,19 @@
 }:
 {
   config.fp-lib.nixosConfigurations = {
-    watchtower = {
-      hostPlatform.system = "aarch64-linux";
-      nixpkgs = inputs.nixpkgs;
-      home-manager = {
-        input = inputs.home-manager;
-        users = [ "shawn" ];
-      };
-      extraModules = [
-        ./watchtower/attic-server.nix
-        ./watchtower/victoriametrics.nix
-        ./watchtower/grafana.nix
-      ];
-    };
+    # watchtower = {
+    #   hostPlatform.system = "aarch64-linux";
+    #   nixpkgs = inputs.nixpkgs;
+    #   home-manager = {
+    #     input = inputs.home-manager;
+    #     users = [ "shawn" ];
+    #   };
+    #   extraModules = [
+    #     ./watchtower/attic-server.nix
+    #     ./watchtower/victoriametrics.nix
+    #     ./watchtower/grafana.nix
+    #   ];
+    # };
     next = {
       nixpkgs = inputs.nixpkgs-stable;
     };

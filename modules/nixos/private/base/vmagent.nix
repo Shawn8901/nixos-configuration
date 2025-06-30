@@ -16,7 +16,7 @@ in
 
   services = {
     vmagent = {
-      enable = true;
+      enable = false;
       prometheusConfig = {
         global = {
           scrape_interval = "1m";

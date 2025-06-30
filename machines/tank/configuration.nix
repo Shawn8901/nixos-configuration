@@ -710,7 +710,7 @@ in
       mailAdress = "hydra@pointjig.de";
       writeTokenFile = secrets.github-write-token.path;
       builder.sshKeyFile = secrets.ssh-builder-key.path;
-      attic.enable = true;
+      attic.enable = false;
     };
     server.enable = true;
   };

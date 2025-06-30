@@ -219,16 +219,16 @@ in
             supportedFeatures = supportedFeatures ++ [ "gccarch-x86-64-v3" ];
             inherit maxJobs;
           }
-          {
-            hostName = "watchtower";
-            systems = [ "aarch64-linux" ];
-            inherit
-              sshUser
-              sshKey
-              supportedFeatures
-              maxJobs
-              ;
-          }
+          # {
+          #   hostName = "watchtower";
+          #   systems = [ "aarch64-linux" ];
+          #   inherit
+          #     sshUser
+          #     sshKey
+          #     supportedFeatures
+          #     maxJobs
+          #     ;
+          # }
         ];
       settings = {
         keep-outputs = mkDefault true;
