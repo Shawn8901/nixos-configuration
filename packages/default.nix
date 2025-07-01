@@ -3,23 +3,27 @@
   ...
 }:
 {
-  perSystem =
-    { pkgs, system, ... }:
-    let
-      packages = {
-        pg-upgrade = pkgs.callPackage ./pg-upgrade { };
-        generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
-      };
-    in
-    {
-      inherit packages;
-      hydraJobs = packages;
-    };
+  # perSystem =
+  #   { pkgs, system, ... }:
+  #   let
+  #     packages = {
+  #       pg-upgrade = pkgs.callPackage ./pg-upgrade { };
+  #       generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
+  #     };
+  #   in
+  #   {
+  #     inherit packages;
+  #     hydraJobs = packages;
+  #   };
 
   flake = withSystem "x86_64-linux" (
     { system, pkgs, ... }:
     let
       packages = {
+
+        pg-upgrade = pkgs.callPackage ./pg-upgrade { };
+        generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
+
         rtc-helper = pkgs.callPackage ./shellscripts/rtc-helper.nix { };
         nas = pkgs.callPackage ./shellscripts/nas.nix { };
         backup-usb = pkgs.callPackage ./shellscripts/backup-usb.nix { };
