@@ -31,6 +31,16 @@ in
         enable = mkEnableOption "Enables usage of attic as binary cache";
         package = mkPackageOption pkgs "attic-client" { };
       };
+      cachix = {
+        enable = mkEnableOption "Enables usage of cachix as binary cache";
+        cacheName = mkOption {
+          type = types.str;
+          description = "Name of the cachix cache";
+        };
+        cachixTokenFile = mkOption { type = types.path; };
+        signingKeyFile = mkOption { type = types.path; };
+      };
+
       builder = {
         sshKeyFile = mkOption { type = types.path; };
         userName = mkOption {
@@ -53,6 +63,17 @@ in
     systemd.tmpfiles.rules = [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ];
 
     services = {
+
+      cachix-watch-store = {
+        enable = cfg.cachix.enable;
+        compressionLevel = 10;
+        inherit (cfg.cachix)
+          cacheName
+          cachixTokenFile
+          signingKeyFile
+          ;
+      };
+
       nginx = {
         enable = mkDefault true;
         recommendedBrotliSettings = true;
@@ -198,8 +219,8 @@ in
     nix = {
       buildMachines =
         let
-          sshUser = cfg.builder.userName;
-          sshKey = cfg.builder.sshKeyFile;
+          #sshUser = cfg.builder.userName;
+          #sshKey = cfg.builder.sshKeyFile;
           maxJobs = 1;
           supportedFeatures = [
             "benchmark"

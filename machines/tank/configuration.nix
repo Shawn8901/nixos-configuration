@@ -64,6 +64,8 @@ in
       #   owner = lib.mkIf config.services.stfc-bot.enable "stfcbot";
       #   group = lib.mkIf config.services.stfc-bot.enable "stfcbot";
       # };
+      cachix_token_file = { };
+      cachix_signing_key = { };
     }
     (lib.optionalAttrs config.services.stalwart-mail.enable {
       stalwart-fallback-admin = {
@@ -711,6 +713,12 @@ in
       writeTokenFile = secrets.github-write-token.path;
       builder.sshKeyFile = secrets.ssh-builder-key.path;
       attic.enable = false;
+      cachix = {
+        enable = true;
+        cacheName = "shawn8901";
+        signingKeyFile = secrets.cachix_signing_key.path;
+        cachixTokenFile = secrets.cachix_token_file.path;
+      };
     };
     server.enable = true;
   };

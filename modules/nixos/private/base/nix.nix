@@ -32,11 +32,13 @@ in
       allow-import-from-derivation = false;
       substituters = [
         "https://nix-community.cachix.org"
-        "https://cache.pointjig.de/nixos"
+        #"https://cache.pointjig.de/nixos"
+        "https://shawn8901.cachix.org"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "nixos:5axzveeiERb8xAeioBUHNHq4SVLvwDcJkLMFsWq0l1E="
+        #"nixos:5axzveeiERb8xAeioBUHNHq4SVLvwDcJkLMFsWq0l1E="
+        "shawn8901.cachix.org-1:XNCe1k4O+gQbithVgUERo6b/B5UtgKU689b0VbKnfDc="
       ];
       cores = mkDefault 4;
       max-jobs = mkDefault 2;
