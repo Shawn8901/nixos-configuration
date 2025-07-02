@@ -14,6 +14,7 @@
         users = [ "shawn" ];
       };
       extraModules = [
+        inputs.disko.nixosModules.disko
         ./watchtower/attic-server.nix
         ./watchtower/victoriametrics.nix
         ./watchtower/grafana.nix

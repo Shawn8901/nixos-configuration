@@ -6,10 +6,9 @@ keys:
   - &tank age1ejf78m4mn8ch2lusuwn3gwqkpz45n03368sf78ce2nunzxlgduuqlme66d
   - &pointjig age1wlznz542ulyhjvp9zxe57z5rgy738wt6ygy6qsgjyavl5e9vcd0q27mu3n
   - &shelter age1qx60k4ft2lvs9qa3s0xqhpkdf26zdc8yw4vr7a7424ta9mcq9g8qrseqv3
-  - &watchtower age13gpwm947w05n65cz22pxyevml9sd80lq944d47glhw4lkvqulg4sqlccyq
+  - &watchtower age1ctzz6yc073qv2sp8gtq3meeuaq8kcsw0aujaq3s5ecf7jsu8sudsmchn3v
 
   - &next age1uq4qun60snrl3t3yjqagrnjhsjma36kkdw3ypj9sntccwlgplfgq4ytdtj
-  - &triva-gs age1q6kuyae4tgdgtjy7syfhkj5tlgpxtyf66kkulm7h5c74az3uu5rqwvgca5
 
 all: &all
   - *shawn
@@ -20,7 +19,6 @@ all: &all
   - *watchtower
   - *shelter
   - *next
-  - *triva-gs
 
 creation_rules:
   - path_regex: files/secrets-desktop.yaml
@@ -77,9 +75,3 @@ creation_rules:
       - age:
           - *shawn
           - *watchtower
-
-  - path_regex: machines/trivia-gs/[^/]+\.yaml$
-    key_groups:
-      - age:
-          - *shawn
-          - *triva-gs

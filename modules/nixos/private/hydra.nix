@@ -219,8 +219,8 @@ in
     nix = {
       buildMachines =
         let
-          #sshUser = cfg.builder.userName;
-          #sshKey = cfg.builder.sshKeyFile;
+          sshUser = cfg.builder.userName;
+          sshKey = cfg.builder.sshKeyFile;
           maxJobs = 1;
           supportedFeatures = [
             "benchmark"

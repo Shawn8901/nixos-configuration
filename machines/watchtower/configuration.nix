@@ -17,7 +17,10 @@ let
 in
 {
 
-  imports = [ "${modulesPath}/profiles/headless.nix" ];
+  imports = [
+    "${modulesPath}/profiles/headless.nix"
+    ./disko-config.nix
+  ];
 
   sops.secrets = {
     root = {
