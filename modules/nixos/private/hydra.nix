@@ -217,6 +217,7 @@ in
     '';
 
     nix = {
+      package = lib.mkForce pkgs.hydra.nix;
       buildMachines =
         let
           sshUser = cfg.builder.userName;
