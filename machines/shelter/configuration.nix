@@ -22,8 +22,6 @@ in
   # We dont build fully perlless yet
   system.forbiddenDependenciesRegexes = lib.mkForce [ ];
 
-  disko.devices.disk.main.device = "/dev/vda";
-
   sops.secrets = {
     zrepl = { };
   };
