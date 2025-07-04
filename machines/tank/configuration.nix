@@ -714,7 +714,7 @@ in
       builder.sshKeyFile = secrets.ssh-builder-key.path;
       attic.enable = true;
       cachix = {
-        enable = true;
+        enable = false;
         cacheName = "shawn8901";
         signingKeyFile = secrets.cachix_signing_key.path;
         cachixTokenFile = secrets.cachix_token_file.path;
