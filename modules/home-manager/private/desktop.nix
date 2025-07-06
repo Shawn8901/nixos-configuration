@@ -54,7 +54,6 @@ in
         keepassxc
         (discord.override {
           nss = nss_latest;
-          withOpenASAR = true;
         })
         vlc
         kdePackages.plasma-integration
