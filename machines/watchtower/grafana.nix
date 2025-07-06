@@ -104,25 +104,46 @@ in
         };
         provision = {
           enable = true;
-          alerting.contactPoints.settings = {
-            apiVersion = 1;
-            contactPoints = [
-              {
-                orgId = 1;
-                name = "HomeDiscord";
-                receivers = [
-                  {
-                    uid = "b7e00da1-b9c7-4f72-bc95-1ef3e7e5b4cf";
-                    type = "discord";
-                    settings = {
-                      url = "$__env{DISCORD_HOOK}";
-                      use_discord_username = false;
-                    };
-                    disableResolveMessage = false;
-                  }
-                ];
-              }
-            ];
+
+          alerting = {
+            contactPoints.settings = {
+              apiVersion = 1;
+              contactPoints = [
+                {
+                  orgId = 1;
+                  name = "HomeDiscord";
+                  receivers = [
+                    {
+                      uid = "b7e00da1-b9c7-4f72-bc95-1ef3e7e5b4cf";
+                      type = "discord";
+                      settings = {
+                        url = "$__env{DISCORD_HOOK}";
+                        use_discord_username = false;
+                      };
+                      disableResolveMessage = false;
+                    }
+                  ];
+                }
+              ];
+            };
+            policies.settings = {
+              apiVersion = 1;
+              policies = [
+                {
+                  orgId = 1;
+                  receiver = "HomeDiscord";
+                  group_by = [
+                    "grafana_folder"
+                    "alertname"
+                  ];
+                  group_wait = "30s";
+                  group_interval = "5m";
+                  repeat_interval = "4h";
+                }
+              ];
+              # resetPolicies seems to happen after setting the above policies, effectively rolling back
+              # any updates.
+            };
           };
 
           datasources.settings.datasources = cfg.datasources;
