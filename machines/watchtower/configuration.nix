@@ -14,6 +14,9 @@ let
     withVmctl = false;
     withVmAgent = true;
   };
+  vlPackage = pkgs.victorialogs.override {
+    withVlAgent = true;
+  };
 in
 {
 
@@ -32,6 +35,7 @@ in
       group = "grafana";
     };
     victoriametrics = { };
+    victorialogs = { };
   };
 
   networking = {
@@ -46,6 +50,7 @@ in
 
   services = {
     nginx.package = pkgs.nginxQuic;
+    vlagent.package = vlPackage;
     vmagent = {
       package = vmPackage;
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
@@ -133,6 +138,13 @@ in
       username = "vm";
       credentialsFile = secrets.victoriametrics.path;
     };
+    victorialogs = {
+      enable = true;
+      hostname = "vl.pointjig.de";
+      package = vlPackage;
+      username = "vl";
+      credentialsFile = secrets.victorialogs.path;
+    };
     grafana = {
       enable = true;
       hostname = "grafana.pointjig.de";
@@ -149,13 +161,15 @@ in
           basicAuth = true;
           basicAuthUser = "vm";
           isDefault = true;
-          secureJsonData.basicAuthPassword = "$DATASOURCE_PASSWORD";
+          secureJsonData.basicAuthPassword = "$VM_DATASOURCE_PASSWORD";
         }
-      ];
-      deleteDatasources = [
         {
-          name = "VictoriaMetrics";
-          orgId = 1;
+          name = "VictoriaLogs";
+          type = "victoriametrics-logs-datasource";
+          url = "http://${config.services.victorialogs.listenAddress}";
+          basicAuth = true;
+          basicAuthUser = "vl";
+          secureJsonData.basicAuthPassword = "$VL_DATASOURCE_PASSWORD";
         }
       ];
     };
