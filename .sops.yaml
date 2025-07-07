@@ -24,54 +24,54 @@ creation_rules:
   - path_regex: files/secrets-desktop.yaml
     key_groups:
       - age:
-          - *shawn
-          - *pointalpha
-          - *zenbook
+        - *shawn
+        - *pointalpha
+        - *zenbook
   - path_regex: files/secrets-managed.yaml
     key_groups:
       - age:
-          - *shawn
-          - *watchtower
-          - *pointalpha
-          - *pointjig
-          - *shelter
-          - *tank
-          - *zenbook
+        - *shawn
+        - *watchtower
+        - *pointalpha
+        - *pointjig
+        - *shelter
+        - *tank
+        - *zenbook
   - path_regex: files/secrets-base.yaml
     key_groups:
       - age: *all
   - path_regex: machines/next/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *next
+        - *shawn
+        - *next
   - path_regex: machines/pointalpha/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *pointalpha
+        - *shawn
+        - *pointalpha
   - path_regex: machines/pointjig/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *pointjig
+        - *shawn
+        - *pointjig
   - path_regex: machines/shelter/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *shelter
+        - *shawn
+        - *shelter
   - path_regex: machines/tank/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *tank
+        - *shawn
+        - *tank
   - path_regex: machines/zenbook/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *zenbook
+        - *shawn
+        - *zenbook
   - path_regex: machines/watchtower/[^/]+\.yaml$
     key_groups:
       - age:
-          - *shawn
-          - *watchtower
+        - *shawn
+        - *watchtower
