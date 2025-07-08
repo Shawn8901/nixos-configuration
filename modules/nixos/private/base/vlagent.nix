@@ -16,8 +16,8 @@
         enable = true;
         remoteWrite = {
           url = lib.mkDefault "https://vl.pointjig.de/internal/insert";
-          basicAuthUsername = "vm";
-          basicAuthPasswordFile = config.sops.secrets.vmagent.path;
+          basicAuthUsername = "vl";
+          basicAuthPasswordFile = config.sops.secrets.vlagent.path;
         };
       };
       journald.upload = {
