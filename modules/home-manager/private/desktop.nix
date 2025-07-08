@@ -264,6 +264,9 @@ in
               # rust dev
               rust-lang.rust-analyzer
               vadimcn.vscode-lldb
+
+              # go dev
+              golang.go
             ];
           };
         };
