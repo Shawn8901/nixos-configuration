@@ -70,7 +70,10 @@ in
 
   services = {
     resolved.enable = false;
-    udev.packages = [ pkgs.libmtp.out ];
+    udev.packages = [
+      pkgs.libmtp.out
+      pkgs.logitech-udev-rules
+    ];
     udev.extraRules = ''
       # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
@@ -200,7 +203,10 @@ in
     cores = 7;
   };
   environment = {
-    systemPackages = [ pkgs.cifs-utils ];
+    systemPackages = [
+      pkgs.cifs-utils
+      pkgs.solaar
+    ];
     etc = {
       "samba/credentials_ela".source = secrets.samba-ela.path;
       "samba/credentials_shawn".source = secrets.samba.path;
