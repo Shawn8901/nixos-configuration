@@ -123,14 +123,20 @@ in
     };
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     environment = {
-      sessionVariables = {
-        AMD_VULKAN_ICD = "RADV";
-        MOZ_ENABLE_WAYLAND = "1";
-        NIXOS_OZONE_WL = "1";
-        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
-        GTK_USE_PORTAL = "1";
-      };
+      sessionVariables = lib.mkMerge [
+        {
+          AMD_VULKAN_ICD = "RADV";
+          MOZ_ENABLE_WAYLAND = "1";
+          NIXOS_OZONE_WL = "1";
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+          _JAVA_AWT_WM_NONREPARENTING = "1";
+          GTK_USE_PORTAL = "1";
+          PROTON_ENABLE_WAYLAND = "1";
+        }
+        (lib.optionalAttrs (lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.15") {
+          PROTON_USE_NTSYNC = "1";
+        })
+      ];
       systemPackages =
         [
           pkgs.git
@@ -192,5 +198,8 @@ in
         kmail = true;
       };
     };
+    boot.kernelModules = (
+      lib.optionals (lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.15") [ "ntsync" ]
+    );
   };
 }
