@@ -16,9 +16,6 @@ in
   ];
 
   sops.secrets = {
-    root = {
-      neededForUsers = true;
-    };
     attic-env = { };
     grafana-env = {
       owner = "grafana";
@@ -99,14 +96,10 @@ in
     };
   };
 
-  users.mutableUsers = false;
-  users.users.root = {
-    hashedPasswordFile = secrets.root.path;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMguHbKev03NMawY9MX6MEhRhd6+h2a/aPIOorgfB5oM"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsHm9iUQIJVi/l1FTCIFwGxYhCOv23rkux6pMStL49N"
-    ];
-  };
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMguHbKev03NMawY9MX6MEhRhd6+h2a/aPIOorgfB5oM"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsHm9iUQIJVi/l1FTCIFwGxYhCOv23rkux6pMStL49N"
+  ];
 
   shawn8901 = {
     postgresql = {
