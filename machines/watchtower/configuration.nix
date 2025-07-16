@@ -7,16 +7,6 @@
 }:
 let
   inherit (config.sops) secrets;
-
-  vmPackage = pkgs.victoriametrics.override {
-    withBackupTools = false;
-    withVmAlert = false;
-    withVmctl = false;
-    withVmAgent = true;
-  };
-  vlPackage = pkgs.victorialogs.override {
-    withVlAgent = true;
-  };
 in
 {
 
@@ -50,9 +40,7 @@ in
 
   services = {
     nginx.package = pkgs.nginxQuic;
-    vlagent.package = vlPackage;
     vmagent = {
-      package = vmPackage;
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
       prometheusConfig.scrape_configs = [
         {
@@ -134,14 +122,12 @@ in
     victoriametrics = {
       enable = true;
       hostname = "vm.pointjig.de";
-      package = vmPackage;
       username = "vm";
       credentialsFile = secrets.victoriametrics.path;
     };
     victorialogs = {
       enable = true;
       hostname = "vl.pointjig.de";
-      package = vlPackage;
       username = "vl";
       credentialsFile = secrets.victorialogs.path;
     };
