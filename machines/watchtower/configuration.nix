@@ -12,6 +12,7 @@ in
 
   imports = [
     "${modulesPath}/profiles/headless.nix"
+    "${modulesPath}/profiles/perlless.nix"
     ./disko-config.nix
   ];
 
@@ -36,6 +37,17 @@ in
   systemd.network.wait-online.anyInterface = true;
 
   services = {
+    openssh.hostKeys = [
+      {
+        path = "/static/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+      {
+        path = "/static/etc/ssh/ssh_host_rsa_key";
+        type = "rsa";
+        bits = 4096;
+      }
+    ];
     nginx.package = pkgs.nginxQuic;
     vmagent = {
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
