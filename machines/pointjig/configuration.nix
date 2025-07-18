@@ -154,11 +154,9 @@ in
           forceSSL = true;
           globalRedirect = mailHostname;
         };
-        recommendedBrotliSettings = true;
         recommendedGzipSettings = true;
         recommendedOptimisation = true;
         recommendedTlsSettings = true;
-        recommendedZstdSettings = true;
         enableReload = true;
         clientMaxBodySize = "40M";
         mapHashMaxSize = 4096;

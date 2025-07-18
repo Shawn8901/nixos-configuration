@@ -43,11 +43,9 @@ in
     services = {
       nginx = {
         enable = mkDefault true;
-        recommendedBrotliSettings = true;
         recommendedGzipSettings = true;
         recommendedOptimisation = true;
         recommendedTlsSettings = true;
-        recommendedZstdSettings = true;
         recommendedProxySettings = true;
         virtualHosts."${cfg.hostname}" = {
           enableACME = true;
