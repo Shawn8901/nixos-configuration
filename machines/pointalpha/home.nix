@@ -20,6 +20,7 @@ in
     pkgs.makemkv
     pkgs.libation
     (pkgs.asunder.override { mp3Support = true; })
+    pkgs.deezer-enhanced
   ];
 
   systemd.user.services.attic-watch-store = {
