@@ -105,14 +105,13 @@ in
       };
       pointalpha-online =
         let
-          maxJobs = hosts.pointalpha.config.nix.settings.max-jobs;
           systemFeatures = hosts.pointalpha.config.nix.settings.system-features;
         in
         {
           script = ''
             if ${pkgs.iputils}/bin/ping -c1 -w 1 pointalpha > /dev/null; then
               if ! grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
-                echo "ssh://root@pointalpha x86_64-linux,i686-linux ${secrets.ssh-builder-key.path} ${toString maxJobs} 4 ${concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines \
+                echo "ssh://root@pointalpha x86_64-linux,i686-linux ${secrets.ssh-builder-key.path} 1 4 ${concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines \
                 echo "Added pointalpha to dynamic build machines"
               fi
             else
