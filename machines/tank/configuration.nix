@@ -150,7 +150,7 @@ in
   };
   services = {
     immich = {
-      enable = true;
+      enable = false;
       settings = {
         server.externalDomain = "https://${immichName}";
         notifications.smtp.enabled = false;
