@@ -60,6 +60,8 @@ in
       ];
     };
 
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     systemd.tmpfiles.rules = [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ];
 
     services = {
@@ -235,6 +237,7 @@ in
             systems = [
               "x86_64-linux"
               "i686-linux"
+              "aarch64-linux"
             ];
             supportedFeatures = supportedFeatures ++ [ "gccarch-x86-64-v3" ];
             inherit maxJobs;
