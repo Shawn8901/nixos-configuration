@@ -15,11 +15,11 @@ let
     type = 1;
     flake = "github:shawn8901/nixos-configuration/pull/${num}/head";
   }) prs;
-  mkFlakeJobset = branch: {
+  mkFlakeJobset = branch: schedulingshares: {
+    inherit schedulingshares;
     description = "Build ${branch}";
     checkinterval = "3600";
     enabled = "1";
-    schedulingshares = 100;
     enableemail = false;
     emailoverride = "";
     keepnr = 3;
@@ -28,9 +28,14 @@ let
     flake = "github:shawn8901/nixos-configuration/${branch}";
   };
 
-  desc = prJobsets // {
-    "main" = mkFlakeJobset "main";
-  };
+  desc =
+    prJobsets
+    // {
+      "main" = mkFlakeJobset "main" 100;
+    }
+    // {
+      "staging-next" = mkFlakeJobset "staging-next-custom" 10;
+    };
 
   log = {
     pulls = prs;
