@@ -40,14 +40,15 @@ in
         };
       };
       enableDefaultPackages = lib.mkDefault true;
-      packages =
-        [ pkgs.noto-fonts ]
-        ++ (with pkgs.nerd-fonts; [
-          noto
-          liberation
-          meslo-lg
-          liberation
-        ]);
+      packages = [
+        pkgs.noto-fonts
+      ]
+      ++ (with pkgs.nerd-fonts; [
+        noto
+        liberation
+        meslo-lg
+        liberation
+      ]);
     };
 
     services = {
@@ -137,27 +138,31 @@ in
           PROTON_USE_NTSYNC = "1";
         })
       ];
-      systemPackages =
-        [
-          pkgs.git
-          #pkgs.btop-rocm
-          pkgs.btop
-        ]
-        ++ (with pkgs.kdePackages; [
-          ark
-          print-manager
-          kate
-          skanlite
-          kalk
-          kleopatra
-        ]);
-
-      plasma6.excludePackages = with pkgs.kdePackages; [
-        elisa
-        khelpcenter
+      systemPackages = [
+        pkgs.git
+        #pkgs.btop-rocm
+        pkgs.btop
+      ]
+      ++ (with pkgs.kdePackages; [
+        ark
+        print-manager
         kate
-        gwenview
-      ];
+        skanlite
+        kalk
+        kleopatra
+      ]);
+
+      plasma6.excludePackages =
+        with pkgs.kdePackages;
+        [
+          elisa
+          khelpcenter
+          kate
+          gwenview
+        ]
+        ++ lib.optionals (!lib.versionOlder config.system.nixos.release "25.11") [
+          pkgs.kdePackages.kwin-x11
+        ];
     };
 
     boot.kernel.sysctl = {
