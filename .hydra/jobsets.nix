@@ -28,9 +28,14 @@ let
     flake = "github:shawn8901/nixos-configuration/${branch}";
   };
 
-  desc = prJobsets // {
-    "main" = mkFlakeJobset "main";
-  };
+  desc =
+    prJobsets
+    // {
+      "main" = mkFlakeJobset "main";
+    }
+    // {
+      "staging-next" = mkFlakeJobset "staging-next";
+    };
 
   log = {
     pulls = prs;
