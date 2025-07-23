@@ -44,16 +44,24 @@ jobs:
           git config user.name "Git Bot"
         working-directory: "nixpkgs"
 
+      - name: Sync staging-next
+        uses: ./config/.github/actions/update-custom-branch
+        with:
+          gh_token: "${{ secrets.GH_TOKEN }}"
+          base_branch: "staging-next"
+          working_dir: "nixpkgs"
+
+
       - name: Sync Unstable
         uses: ./config/.github/actions/update-custom-branch
         with:
           gh_token: "${{ secrets.GH_TOKEN }}"
-          release: "unstable"
+          base_branch: "nixos-unstable"
           working_dir: "nixpkgs"
 
       - name: Sync 25.05
         uses: ./config/.github/actions/update-custom-branch
         with:
           gh_token: "${{ secrets.GH_TOKEN }}"
-          release: "25.05"
+          base_branch: "nixos-25.05"
           working_dir: "nixpkgs"
