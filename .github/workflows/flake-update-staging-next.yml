@@ -1,0 +1,47 @@
+name: Flake Updater (staging-next)
+
+on:
+  schedule:
+    - cron: "30 10 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  update_flake:
+    runs-on: ubuntu-24.04
+    outputs:
+      packages: ${{ steps.gen_packages.outputs.packages }}
+      machines: ${{ steps.gen_machines.outputs.machines }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          token: "${{ secrets.GH_TOKEN }}"
+          ref: "staging-next-custom"
+          fetch-depth: 0
+      - name: Set up git
+        shell: bash
+        run: |
+          git config user.email git@pointjig.de
+          git config user.name "Git Bot"
+      - name: Install nix
+        uses: ./.github/actions/setup-env
+        with:
+          github_token: "${{ secrets.GH_TOKEN }}"
+          netrc_content: "${{ secrets.NETRC_CONTENT }}"
+      - name: Update flake
+        shell: bash
+        run: |
+
+          git rebase origin/main
+
+          nix flake lock --override-input nixpkgs github:shawn8901/nixpkgs/staging-next-custom
+
+          git diff-index --quiet HEAD -- && echo "no changes" && exit 0
+
+          git add flake.lock
+
+          git commit --amend --no-edit
+
+          git push --force-with-lease
+        env:
+          GH_TOKEN: ${{ github.token }}
