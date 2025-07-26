@@ -48,7 +48,7 @@
 
         };
 
-        jameica-fhs = pkgs.callPackage ./jameica/fhsenv.nix { };
+        #jameica-fhs = pkgs.callPackage ./jameica/fhsenv.nix { };
       };
     in
     {

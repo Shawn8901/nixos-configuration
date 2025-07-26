@@ -16,7 +16,8 @@ in
     pkgs.portfolio
     pkgs.attic-client
     fPkgs.pytr
-    fPkgs.jameica-fhs
+    #fPkgs.jameica-fhs
+    pkgs.jameica
     pkgs.makemkv
     pkgs.libation
     (pkgs.asunder.override { mp3Support = true; })
