@@ -32,6 +32,8 @@ jobs:
         shell: bash
         run: |
 
+          git reset --hard HEAD~1
+
           git rebase origin/main
 
           nix flake lock --override-input nixpkgs github:shawn8901/nixpkgs/staging-next-custom
