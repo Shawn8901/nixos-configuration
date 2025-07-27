@@ -15,6 +15,7 @@ jobs:
           gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch master
           gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch nixos-unstable
           gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch nixos-25.05
+          gh repo sync Shawn8901/nixpkgs --source NixOS/nixpkgs --branch staging-next
         env:
           GH_TOKEN: "${{ secrets.GH_TOKEN }}"
 
