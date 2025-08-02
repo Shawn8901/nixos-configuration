@@ -31,7 +31,7 @@ in
       "ntsync"
       "sg"
     ];
-    kernelPackages = pkgs.linuxPackages_6_15;
+    kernelPackages = pkgs.linuxPackages;
     extraModprobeConfig = ''
       options zfs zfs_arc_max=4294967296
       options nct6775 force_id=0xd420

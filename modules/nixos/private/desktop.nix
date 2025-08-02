@@ -134,9 +134,6 @@ in
           GTK_USE_PORTAL = "1";
           PROTON_ENABLE_WAYLAND = "1";
         }
-        (lib.optionalAttrs (lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.15") {
-          PROTON_USE_NTSYNC = "1";
-        })
       ];
       systemPackages = [
         pkgs.git
