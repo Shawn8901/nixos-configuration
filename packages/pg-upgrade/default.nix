@@ -1,4 +1,8 @@
-{ pkgs }:
+{
+  pkgs,
+  oldPostgres,
+  newPostgres,
+}:
 pkgs.writeScriptBin "upgrade-pg" ''
   set -eux
   systemctl stop postgresql
@@ -6,13 +10,13 @@ pkgs.writeScriptBin "upgrade-pg" ''
   BASE_DIR=''${1:-}
 
   # XXX replace `<new version>` with the psqlSchema here
-  export NEWDATA="$BASE_DIR/var/lib/postgresql/${pkgs.postgresql_16.psqlSchema}"
+  export NEWDATA="$BASE_DIR/var/lib/postgresql/${newPostgres.psqlSchema}"
 
   # XXX specify the postgresql package you'd like to upgrade to
-  export NEWBIN="${pkgs.postgresql_16}/bin"
+  export NEWBIN="${newPostgres}/bin"
 
-  export OLDDATA="$BASE_DIR/var/lib/postgresql/${pkgs.postgresql_15.psqlSchema}"
-  export OLDBIN="${pkgs.postgresql_15}/bin"
+  export OLDDATA="$BASE_DIR/var/lib/postgresql/${oldPostgres.psqlSchema}"
+  export OLDBIN="${oldPostgres}/bin"
 
   echo "\$NEWDATA=$NEWDATA"
   echo "\$OLDDATA=$OLDDATA"

@@ -3,25 +3,26 @@
   ...
 }:
 {
-  # perSystem =
-  #   { pkgs, system, ... }:
-  #   let
-  #     packages = {
-  #       pg-upgrade = pkgs.callPackage ./pg-upgrade { };
-  #       generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
-  #     };
-  #   in
-  #   {
-  #     inherit packages;
-  #     hydraJobs = packages;
-  #   };
+  perSystem =
+    { pkgs, system, ... }:
+    let
+      packages = {
+        pg-upgrade = pkgs.callPackage ./pg-upgrade {
+          oldPostgres = pkgs.postgresql_16;
+          newPostgres = pkgs.postgresql_17;
+        };
+      };
+    in
+    {
+      inherit packages;
+      hydraJobs = packages;
+    };
 
   flake = withSystem "x86_64-linux" (
     { system, pkgs, ... }:
     let
       packages = {
 
-        pg-upgrade = pkgs.callPackage ./pg-upgrade { };
         generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
 
         rtc-helper = pkgs.callPackage ./shellscripts/rtc-helper.nix { };
