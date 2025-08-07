@@ -4,9 +4,6 @@
   lib,
   ...
 }:
-let
-  fPkgs = self'.packages;
-in
 {
   shawn8901.desktop.enable = true;
 
@@ -15,7 +12,7 @@ in
     pkgs.teamspeak3
     pkgs.portfolio
     pkgs.attic-client
-    fPkgs.pytr
+    pkgs.pytr
     #fPkgs.jameica-fhs
     pkgs.jameica
     pkgs.makemkv
