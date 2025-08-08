@@ -82,7 +82,6 @@ in
             packages = with firefox-addon-packages; [
               ublock-origin
               umatrix
-              keepassxc-browser
               plasma-integration
               h264ify
               bitwarden
