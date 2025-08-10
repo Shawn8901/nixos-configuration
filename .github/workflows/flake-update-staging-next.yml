@@ -42,7 +42,7 @@ jobs:
 
           git add flake.lock
 
-          git commit --amend --no-edit
+          git commit -m"staging-next override"
 
           git push --force-with-lease
         env:
