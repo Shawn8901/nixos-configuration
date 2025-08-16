@@ -41,7 +41,7 @@ in
         #"shawn8901.cachix.org-1:XNCe1k4O+gQbithVgUERo6b/B5UtgKU689b0VbKnfDc="
       ];
       cores = mkDefault 4;
-      max-jobs = mkDefault 2;
+      max-jobs = mkDefault 1;
       experimental-features = [
         "nix-command"
         "flakes"
