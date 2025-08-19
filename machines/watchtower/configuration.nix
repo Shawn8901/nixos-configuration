@@ -50,6 +50,7 @@ in
     ];
     nginx.package = pkgs.nginxQuic;
     vmagent = {
+      package = pkgs.victoriametrics;
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
       prometheusConfig.scrape_configs = [
         {
