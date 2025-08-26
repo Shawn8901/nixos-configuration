@@ -157,6 +157,7 @@ in
       database = {
         enable = true;
         enableVectorChord = true;
+        enableVectors = false;
       };
       settings = {
         server.externalDomain = "https://${immichName}";
