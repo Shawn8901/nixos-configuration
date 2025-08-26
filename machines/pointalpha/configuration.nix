@@ -72,6 +72,7 @@ in
     udev.packages = [
       pkgs.libmtp.out
       pkgs.logitech-udev-rules
+      pkgs.android-udev-rules
     ];
     udev.extraRules = ''
       # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
@@ -186,6 +187,7 @@ in
     nh.flake = "/home/shawn/dev/nixos-configuration";
     kdeconnect.enable = true;
     droidcam.enable = true;
+    adb.enable = true;
   };
 
   virtualisation = {
@@ -224,6 +226,8 @@ in
     "scanner"
     "lp"
     "networkmanager"
+    "adbusers"
+    "kvm"
   ];
 
   shawn8901.desktop.enable = true;
