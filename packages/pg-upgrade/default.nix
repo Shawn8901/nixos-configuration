@@ -1,22 +1,21 @@
 {
   pkgs,
-  oldPostgres,
-  newPostgres,
+  oldPackage,
+  oldBin,
+  newPackage,
+  newBin,
 }:
-pkgs.writeScriptBin "upgrade-pg" ''
-  set -eux
-  systemctl stop postgresql
+pkgs.writeShellScriptBin "pg_upgrade_version" ''
+  set -eu
 
   BASE_DIR=''${1:-}
 
   # XXX replace `<new version>` with the psqlSchema here
-  export NEWDATA="$BASE_DIR/var/lib/postgresql/${newPostgres.psqlSchema}"
+  export NEWDATA="$BASE_DIR/var/lib/postgresql/${newPackage.psqlSchema}"
 
   # XXX specify the postgresql package you'd like to upgrade to
-  export NEWBIN="${newPostgres}/bin"
 
-  export OLDDATA="$BASE_DIR/var/lib/postgresql/${oldPostgres.psqlSchema}"
-  export OLDBIN="${oldPostgres}/bin"
+  export OLDDATA="$BASE_DIR/var/lib/postgresql/${oldPackage.psqlSchema}"
 
   echo "\$NEWDATA=$NEWDATA"
   echo "\$OLDDATA=$OLDDATA"
@@ -29,10 +28,12 @@ pkgs.writeScriptBin "upgrade-pg" ''
   then
     install -d -m 0700 -o postgres -g postgres "$NEWDATA"
     cd "$NEWDATA"
+    sudo -u postgres ${newBin}/initdb -D "$NEWDATA"
 
-    sudo -u postgres $NEWBIN/initdb -D "$NEWDATA"
-    sudo -u postgres $NEWBIN/pg_upgrade \
+    cp $OLDDATA/postgresql.conf $NEWDATA
+
+    sudo -u postgres ${newBin}/pg_upgrade \
       --old-datadir "$OLDDATA" --new-datadir "$NEWDATA" \
-      --old-bindir $OLDBIN --new-bindir $NEWBIN
+      --old-bindir ${oldBin} --new-bindir ${newBin}
   fi
 ''

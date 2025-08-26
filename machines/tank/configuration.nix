@@ -730,5 +730,26 @@ in
     server.enable = true;
   };
 
-  environment.etc.".ztank_key".source = secrets.zfs-ztank-key.path;
+  environment = {
+    etc.".ztank_key".source = secrets.zfs-ztank-key.path;
+    systemPackages =
+      let
+        extensions = config.services.postgresql.extensions;
+        newPackage = pkgs.postgresql_17;
+        newBin = "${if extensions == [ ] then newPackage else newPackage.withPackages extensions}/bin";
+        oldPackage = config.services.postgresql.package;
+        oldBin = "${if extensions == [ ] then oldPackage else oldPackage.withPackages extensions}/bin";
+
+      in
+      [
+        (pkgs.callPackage ../../packages/pg-upgrade {
+          inherit
+            oldPackage
+            oldBin
+            newPackage
+            newBin
+            ;
+        })
+      ];
+  };
 }

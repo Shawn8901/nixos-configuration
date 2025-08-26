@@ -3,21 +3,6 @@
   ...
 }:
 {
-  perSystem =
-    { pkgs, system, ... }:
-    let
-      packages = {
-        pg-upgrade = pkgs.callPackage ./pg-upgrade {
-          oldPostgres = pkgs.postgresql_16;
-          newPostgres = pkgs.postgresql_17;
-        };
-      };
-    in
-    {
-      inherit packages;
-      hydraJobs = packages;
-    };
-
   flake = withSystem "x86_64-linux" (
     { system, pkgs, ... }:
     let
