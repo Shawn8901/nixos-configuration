@@ -710,8 +710,8 @@ in
     };
     postgresql = {
       enable = true;
-      package = pkgs.postgresql_16;
-      dataDir = "/persist/var/lib/postgresql/16";
+      package = pkgs.postgresql_17;
+      dataDir = "/persist/var/lib/postgresql/17";
     };
     hydra = {
       enable = true;
