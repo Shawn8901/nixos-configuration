@@ -50,6 +50,11 @@ in
       # but hydra-queue-runner has to be able to read them but can not be added
       # to nixbld (it then crashes as soon as its writing to the store).
       nix-gh-token-ro.mode = lib.mkForce "0777";
+      github-hook = {
+        owner = "hydra-www";
+        group = "hydra";
+        mode = "0660";
+      };
       github-write-token = {
         owner = "hydra-queue-runner";
         group = "hydra";
@@ -717,6 +722,7 @@ in
       enable = true;
       hostName = "hydra.pointjig.de";
       mailAdress = "hydra@pointjig.de";
+      githubHookFile = secrets.github-hook.path;
       writeTokenFile = secrets.github-write-token.path;
       builder.sshKeyFile = secrets.ssh-builder-key.path;
       attic.enable = true;
