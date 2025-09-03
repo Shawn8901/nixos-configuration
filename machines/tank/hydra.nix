@@ -27,6 +27,7 @@ in
         description = "Adress to send notifications to";
       };
       writeTokenFile = mkOption { type = types.path; };
+      githubHookFile = mkOption { type = types.path; };
       attic = {
         enable = mkEnableOption "Enables usage of attic as binary cache";
         package = mkPackageOption pkgs "attic-client" { };
@@ -163,6 +164,9 @@ in
             <github_authorization>
               shawn8901 = Bearer #github_token#
             </github_authorization>
+            <webhooks>
+              Include ${cfg.githubHookFile}
+            </webhooks>
             <runcommand>
               job = *:*:merge-pr
               command = ${lib.getExe merge_pr}
