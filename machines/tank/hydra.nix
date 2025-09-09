@@ -224,7 +224,6 @@ in
         let
           sshUser = cfg.builder.userName;
           sshKey = cfg.builder.sshKeyFile;
-          maxJobs = 1;
           supportedFeatures = [
             "benchmark"
             "big-parallel"
@@ -241,16 +240,16 @@ in
               "i686-linux"
             ];
             supportedFeatures = supportedFeatures ++ [ "gccarch-x86-64-v3" ];
-            inherit maxJobs;
+            maxJobs = 2;
           }
           {
             hostName = "watchtower";
             systems = [ "aarch64-linux" ];
+            maxJobs = 1;
             inherit
               sshUser
               sshKey
               supportedFeatures
-              maxJobs
               ;
           }
         ];
