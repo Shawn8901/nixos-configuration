@@ -12,13 +12,18 @@
   "type": 0,
   "inputs": {
     "nixexpr": {
-      "value": "https://github.com/shawn8901/nixos-configuration main",
+      "value": "https://github.com/Shawn8901/nixos-configuration main",
       "type": "git",
       "emailresponsible": false
     },
     "nixpkgs": {
       "value": "https://github.com/NixOS/nixpkgs 641d909c4a7538f1539da9240dedb1755c907e40",
       "type": "git",
+      "emailresponsible": false
+    },
+    "refs": {
+      "type": "github_refs",
+      "value": "shawn8901 nixos-configuration heads",
       "emailresponsible": false
     },
     "pulls": {
