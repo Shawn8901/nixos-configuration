@@ -23,61 +23,76 @@ in
   # We dont build fully perlless yet
   system.forbiddenDependenciesRegexes = lib.mkForce [ ];
 
-  sops.secrets = lib.mkMerge [
-    {
-      ssh-builder-key = {
-        owner = "hydra-queue-runner";
-      };
-      srv-ssh = { };
-      zfs-ztank-key = { };
-      zrepl = { };
-      ela = {
-        neededForUsers = true;
-      };
-      nextcloud-admin = {
-        owner = "nextcloud";
-        group = "nextcloud";
-      };
-      prometheus-nextcloud = {
-        owner = config.services.prometheus.exporters.nextcloud.user;
-        inherit (config.services.prometheus.exporters.nextcloud) group;
-      };
-      prometheus-fritzbox = {
-        owner = config.services.prometheus.exporters.fritz.user;
-        inherit (config.services.prometheus.exporters.fritz) group;
-      };
-      # GitHub access token is stored on all systems with group right for nixbld
-      # but hydra-queue-runner has to be able to read them but can not be added
-      # to nixbld (it then crashes as soon as its writing to the store).
-      nix-gh-token-ro.mode = lib.mkForce "0777";
-      github-hook = {
-        owner = "hydra-www";
-        group = "hydra";
-        mode = "0660";
-      };
-      github-write-token = {
-        owner = "hydra-queue-runner";
-        group = "hydra";
-      };
-      # mimir-env-dev = {
-      #   file = ../../secrets/mimir-env-dev.age;
-      #   owner = lib.mkIf config.services.stne-mimir.enable "mimir";
-      #   group = lib.mkIf config.services.stne-mimir.enable "mimir";
-      # };
-      #  stfc-env-dev = {
-      #   file = ../../secrets/stfc-env-dev.age;
-      #   owner = lib.mkIf config.services.stfc-bot.enable "stfcbot";
-      #   group = lib.mkIf config.services.stfc-bot.enable "stfcbot";
-      # };
-      cachix_token_file = { };
-      cachix_signing_key = { };
-    }
-    (lib.optionalAttrs config.services.stalwart-mail.enable {
-      stalwart-fallback-admin = {
-        owner = config.systemd.services.stalwart-mail.serviceConfig.User;
-      };
-    })
-  ];
+  sops = {
+    secrets = lib.mkMerge [
+      {
+        ssh-builder-key = {
+          owner = "hydra-queue-runner";
+        };
+        srv-ssh = { };
+        zfs-ztank-key = { };
+        zrepl = { };
+        ela = {
+          neededForUsers = true;
+        };
+        nextcloud-admin = {
+          owner = "nextcloud";
+          group = "nextcloud";
+        };
+        prometheus-nextcloud = {
+          owner = config.services.prometheus.exporters.nextcloud.user;
+          inherit (config.services.prometheus.exporters.nextcloud) group;
+        };
+        prometheus-fritzbox = {
+          owner = config.services.prometheus.exporters.fritz.user;
+          inherit (config.services.prometheus.exporters.fritz) group;
+        };
+        # GitHub access token is stored on all systems with group right for nixbld
+        # but hydra-queue-runner has to be able to read them but can not be added
+        # to nixbld (it then crashes as soon as its writing to the store).
+        nix-gh-token-ro.mode = lib.mkForce "0777";
+        hydra-github-hook = { };
+        hydra-github-auth = { };
+        # mimir-env-dev = {
+        #   file = ../../secrets/mimir-env-dev.age;
+        #   owner = lib.mkIf config.services.stne-mimir.enable "mimir";
+        #   group = lib.mkIf config.services.stne-mimir.enable "mimir";
+        # };
+        #  stfc-env-dev = {
+        #   file = ../../secrets/stfc-env-dev.age;
+        #   owner = lib.mkIf config.services.stfc-bot.enable "stfcbot";
+        #   group = lib.mkIf config.services.stfc-bot.enable "stfcbot";
+        # };
+        cachix_token_file = { };
+        cachix_signing_key = { };
+      }
+      (lib.optionalAttrs config.services.stalwart-mail.enable {
+        stalwart-fallback-admin = {
+          owner = config.systemd.services.stalwart-mail.serviceConfig.User;
+        };
+      })
+    ];
+    templates."hydra-write-token.conf" = {
+      content = ''
+        <github_authorization>
+          Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
+        </github_authorization>
+      '';
+      owner = "hydra-queue-runner";
+      group = "hydra";
+      mode = "0660";
+    };
+    templates."hydra-hook-token.conf" = {
+      content = ''
+        <github>
+          secret = ${config.sops.placeholder.hydra-github-hook}
+        </github>
+      '';
+      owner = "hydra-www";
+      group = "hydra";
+      mode = "0660";
+    };
+  };
 
   networking = {
     firewall.allowedTCPPorts = (flakeConfig.shawn8901.zrepl.servePorts config.services.zrepl) ++ [
@@ -722,8 +737,8 @@ in
       enable = true;
       hostName = "hydra.pointjig.de";
       mailAdress = "hydra@pointjig.de";
-      githubHookFile = secrets.github-hook.path;
-      writeTokenFile = secrets.github-write-token.path;
+      githubHookFile = config.sops.templates."hydra-hook-token.conf".path;
+      writeTokenFile = config.sops.templates."hydra-write-token.conf".path;
       builder.sshKeyFile = secrets.ssh-builder-key.path;
       attic.enable = true;
       cachix = {

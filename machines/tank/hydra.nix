@@ -161,9 +161,6 @@ in
             max_output_size = ${toString (5 * 1024 * 1024 * 1024)}
             max_db_connections = 150
             compress_build_logs = 1
-            <github_authorization>
-              shawn8901 = Bearer #github_token#
-            </github_authorization>
             <webhooks>
               Include ${cfg.githubHookFile}
             </webhooks>
@@ -180,23 +177,19 @@ in
             <githubstatus>
               jobs = .*
               useShortContext = true
-              excludeBuildFromContext = 1
             </githubstatus>
+          ''
+          + lib.optionalString (cfg.writeTokenFile != null) ''
+            Include ${cfg.writeTokenFile}
+          ''
+          + lib.optionalString (cfg.githubHookFile != null) ''
+            Include ${cfg.githubHookFile}
           '';
         };
     };
 
-    systemd.services = lib.mkMerge [
-      {
-        hydra-init = {
-          after = [ "network-online.target" ];
-          requires = [ "network-online.target" ];
-          preStart = lib.mkAfter ''
-            sed -i -e "s|#github_token#|$(<${cfg.writeTokenFile})|" ${config.systemd.services.hydra-init.environment.HYDRA_DATA}/hydra.conf
-          '';
-        };
-      }
-      (lib.optionalAttrs cfg.attic.enable {
+    systemd.services = (
+      lib.optionalAttrs cfg.attic.enable {
         attic-watch-store = {
           wantedBy = [ "multi-user.target" ];
           after = [ "network-online.target" ];
@@ -208,8 +201,8 @@ in
             ExecStart = "${cfg.attic.package}/bin/attic watch-store nixos";
           };
         };
-      })
-    ];
+      }
+    );
 
     programs.ssh.extraConfig = ''
       Host watchtower
