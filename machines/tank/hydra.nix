@@ -27,7 +27,8 @@ in
         description = "Adress to send notifications to";
       };
       writeTokenFile = mkOption { type = types.path; };
-      githubHookFile = mkOption { type = types.path; };
+      writeTokenIncludeFile = mkOption { type = types.path; };
+      githubHookIncludeFile = mkOption { type = types.path; };
       attic = {
         enable = mkEnableOption "Enables usage of attic as binary cache";
         package = mkPackageOption pkgs "attic-client" { };
@@ -161,9 +162,6 @@ in
             max_output_size = ${toString (5 * 1024 * 1024 * 1024)}
             max_db_connections = 150
             compress_build_logs = 1
-            <webhooks>
-              Include ${cfg.githubHookFile}
-            </webhooks>
             <runcommand>
               job = *:*:merge-pr
               command = ${lib.getExe merge_pr}
@@ -179,11 +177,11 @@ in
               useShortContext = true
             </githubstatus>
           ''
-          + lib.optionalString (cfg.writeTokenFile != null) ''
-            Include ${cfg.writeTokenFile}
+          + lib.optionalString (cfg.writeTokenIncludeFile != null) ''
+            Include ${cfg.writeTokenIncludeFile}
           ''
-          + lib.optionalString (cfg.githubHookFile != null) ''
-            Include ${cfg.githubHookFile}
+          + lib.optionalString (cfg.githubHookIncludeFile != null) ''
+            Include ${cfg.githubHookIncludeFile}
           '';
         };
     };
