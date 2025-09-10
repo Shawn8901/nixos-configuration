@@ -737,8 +737,9 @@ in
       enable = true;
       hostName = "hydra.pointjig.de";
       mailAdress = "hydra@pointjig.de";
-      githubHookFile = config.sops.templates."hydra-hook-token.conf".path;
-      writeTokenFile = config.sops.templates."hydra-write-token.conf".path;
+      githubHookIncludeFile = config.sops.templates."hydra-hook-token.conf".path;
+      writeTokenIncludeFile = config.sops.templates."hydra-write-token.conf".path;
+      writeTokenFile = secrets.hydra-github-auth.path;
       builder.sshKeyFile = secrets.ssh-builder-key.path;
       attic.enable = true;
       cachix = {
