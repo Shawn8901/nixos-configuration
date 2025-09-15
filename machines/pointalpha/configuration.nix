@@ -201,7 +201,7 @@ in
   nix.settings = {
     keep-outputs = true;
     keep-derivations = true;
-    cores = 6;
+    cores = 8;
   };
   environment = {
     systemPackages = [
