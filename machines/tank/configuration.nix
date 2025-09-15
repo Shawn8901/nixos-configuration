@@ -56,16 +56,6 @@ in
           owner = "hydra-queue-runner";
           group = "hydra";
         };
-        # mimir-env-dev = {
-        #   file = ../../secrets/mimir-env-dev.age;
-        #   owner = lib.mkIf config.services.stne-mimir.enable "mimir";
-        #   group = lib.mkIf config.services.stne-mimir.enable "mimir";
-        # };
-        #  stfc-env-dev = {
-        #   file = ../../secrets/stfc-env-dev.age;
-        #   owner = lib.mkIf config.services.stfc-bot.enable "stfcbot";
-        #   group = lib.mkIf config.services.stfc-bot.enable "stfcbot";
-        # };
         cachix_token_file = { };
         cachix_signing_key = { };
       }
