@@ -115,6 +115,7 @@ in
           uid = 1000;
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMguHbKev03NMawY9MX6MEhRhd6+h2a/aPIOorgfB5oM shawn"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmwxYRglh8MIGWZvQR/6mYCO7NTTJFnrQq7j5pjfkvZ smartphone"
           ];
           hashedPasswordFile = config.sops.secrets.shawn.path;
         };
