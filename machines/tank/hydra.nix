@@ -230,7 +230,10 @@ in
               "x86_64-linux"
               "i686-linux"
             ];
-            supportedFeatures = supportedFeatures ++ [ "gccarch-x86-64-v3" ];
+            supportedFeatures = supportedFeatures ++ [
+              "gccarch-x86-64-v3"
+              "aggregate"
+            ];
             maxJobs = 2;
           }
           {

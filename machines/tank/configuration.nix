@@ -120,13 +120,13 @@ in
         let
           systemFeatures = hosts.pointalpha.config.nix.settings.system-features;
           jobs = hosts.pointalpha.config.nix.settings.max-jobs;
-          cores = hosts.pointalpha.config.nix.settings.cores;
+          speedFactor = 1;
         in
         {
           script = ''
             if ${pkgs.iputils}/bin/ping -c1 -w 1 pointalpha > /dev/null; then
               if ! grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
-                echo "ssh://root@pointalpha x86_64-linux,i686-linux ${secrets.ssh-builder-key.path} ${toString jobs} ${toString cores} ${concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines
+                echo "ssh://root@pointalpha x86_64-linux,i686-linux ${secrets.ssh-builder-key.path} ${toString jobs} ${toString speedFactor} ${concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines
                 echo "Added pointalpha to dynamic build machines"
               fi
             else
