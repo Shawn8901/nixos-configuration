@@ -101,6 +101,8 @@ in
     };
   };
 
+  swapDevices = [ { device = "/dev/disk/by-uuid/1800b5cc-a89b-4b1c-b711-70959c722616"; } ];
+
   hardware.cpu.amd.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 }
