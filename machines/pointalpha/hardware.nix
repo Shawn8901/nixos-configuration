@@ -33,7 +33,7 @@ in
     ];
     kernelPackages = pkgs.linuxPackages;
     extraModprobeConfig = ''
-      options zfs zfs_arc_max=4294967296
+      options zfs zfs_arc_max=${toString (6 * 1024 * 1024 * 1024)}
       options nct6775 force_id=0xd420
     '';
     supportedFilesystems = [
