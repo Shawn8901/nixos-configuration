@@ -89,7 +89,6 @@
               schedulingPriority = 10;
             };
             constituents = map (n: "nixos." + n) (nixpkgs.lib.attrNames self.nixosConfigurations);
-            requiredSystemFeatures = [ "aggregate" ];
           };
         };
 

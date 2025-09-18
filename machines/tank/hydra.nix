@@ -232,7 +232,6 @@ in
             ];
             supportedFeatures = supportedFeatures ++ [
               "gccarch-x86-64-v3"
-              "aggregate"
             ];
             maxJobs = 2;
           }
