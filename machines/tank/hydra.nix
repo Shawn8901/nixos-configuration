@@ -233,7 +233,7 @@ in
             supportedFeatures = supportedFeatures ++ [
               "gccarch-x86-64-v3"
             ];
-            maxJobs = 2;
+            maxJobs = 4;
           }
           {
             hostName = "watchtower";
