@@ -53,11 +53,15 @@ jobs:
 
           fi
 
-          nix flake update
-
-          git diff-index --quiet HEAD -- && echo "no changes" && exit 0
           git switch -c update-flake_$(date -I)
-          git commit -am "flake.lock: Update $(date -I)"
+
+          nix flake update --commit-lock-file
+          has_updates=$(git rev-list --count origin/main..HEAD)
+          if [ $has_updates -eq 0 ]
+          then
+            echo "no changes"
+            exit 0
+          fi
 
           nix flake check --show-trace
 
