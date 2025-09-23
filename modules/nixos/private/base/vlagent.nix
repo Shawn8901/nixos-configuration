@@ -10,6 +10,10 @@
     };
   };
 
+  systemd.services.vlagent.before = lib.mkIf (!lib.versionOlder config.system.nixos.release "25.11") [
+    "systemd-journal-upload.service"
+  ];
+
   services = lib.mkMerge [
     (lib.optionalAttrs (!lib.versionOlder config.system.nixos.release "25.11") {
       vlagent = {
