@@ -137,7 +137,6 @@ in
             fi
           '';
         };
-      userborn.before = [ "systemd-oomd.socket" ];
     };
     timers.pointalpha-online = {
       wantedBy = [ "timers.target" ];
