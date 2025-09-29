@@ -25,11 +25,15 @@ in
   programs.command-not-found.enable = false;
 
   boot = {
-    tmp.useTmpfs = mkDefault true;
-    tmp.cleanOnBoot = true;
-    swraid.enable = mkDefault false;
+    bcache.enable = false;
     enableContainers = false;
+    tmp = {
+      useTmpfs = mkDefault true;
+      cleanOnBoot = true;
+    };
+    swraid.enable = mkDefault false;
   };
+
   environment = {
     systemPackages = [ pkgs.vim ];
     defaultPackages = mkForce [ ];
