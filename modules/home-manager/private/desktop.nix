@@ -249,6 +249,7 @@ in
 
               # nix dev
               jnoortheen.nix-ide
+              jeff-hykin.better-nix-syntax
 
               # python dev
               # ms-python.python
