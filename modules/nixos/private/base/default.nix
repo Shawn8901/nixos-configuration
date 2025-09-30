@@ -49,5 +49,4 @@ in
     '';
     dbus.implementation = "broker";
   };
-  security.wrapperDirSize = "10M";
 }
