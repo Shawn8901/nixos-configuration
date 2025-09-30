@@ -5,8 +5,10 @@ in
 {
   documentation = {
     doc.enable = mkDefault false;
-    nixos.enable = mkDefault false;
+    dev.enable = mkDefault false;
     info.enable = mkDefault false;
+    nixos.enable = mkDefault false;
+    man.enable = mkDefault false;
   };
 
   system = {

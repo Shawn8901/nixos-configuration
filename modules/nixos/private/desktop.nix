@@ -20,12 +20,6 @@ in
     };
   };
   config = mkIf cfg.enable {
-
-    documentation.man = {
-      enable = lib.mkDefault true;
-      generateCaches = lib.mkDefault true;
-    };
-
     fonts = {
       fontconfig = {
         enable = lib.mkDefault true;
