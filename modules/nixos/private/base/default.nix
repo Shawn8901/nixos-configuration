@@ -44,8 +44,8 @@ in
   services = {
     lvm.enable = false;
     journald.extraConfig = ''
-      SystemMaxUse=100M
-      SystemMaxFileSize=50M
+      SystemMaxUse=75M
+      SystemMaxFileSize=25M
     '';
     dbus.implementation = "broker";
   };
