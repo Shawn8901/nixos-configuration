@@ -1,8 +1,7 @@
-# https://github.com/SuperSandro2000/nixos-modules/blob/master/modules/nextcloud.nix
+# https://github.com/NuschtOS/nixos-modules/blob/main/modules/nextcloud.nix
 {
   config,
   lib,
-  options,
   pkgs,
   ...
 }:
@@ -16,6 +15,7 @@ let
       default = false;
       description = lib.mdDoc "Whether to ${text}.";
     };
+  inherit (pkgs."nextcloud${lib.versions.major cfg.package.version}Packages") apps;
 in
 {
   options = {
@@ -57,6 +57,14 @@ in
       };
 
       nextcloud = {
+        extraApps = lib.mkMerge [
+          (lib.mkIf cfg.configureMemories {
+            inherit (apps) memories;
+          })
+          (lib.mkIf cfg.configurePreviewSettings {
+            inherit (apps) previewgenerator;
+          })
+        ];
 
         phpOptions = lib.mkIf cfg.recommendedDefaults {
           # https://docs.nextcloud.com/server/latest/admin_manual/installation/server_tuning.html#:~:text=opcache.jit%20%3D%201255%20opcache.jit_buffer_size%20%3D%20128m
@@ -64,8 +72,7 @@ in
           "opcache.jit_buffer_size" = "128M";
         };
 
-        # TODO: drop when 23.11 support is not longer required
-        ${if options.services.nextcloud ? settings then "settings" else "extraOptions"} = lib.mkMerge [
+        settings = lib.mkMerge [
           (lib.mkIf cfg.recommendedDefaults {
             # otherwise the Logging App does not function
             log_type = "file";
@@ -73,7 +80,7 @@ in
 
           (lib.mkIf cfg.configureImaginary {
             enabledPreviewProviders = [
-              # default from https://github.com/nextcloud/server/blob/master/config/config.sample.php#L1295-L1304
+              # default from https://github.com/nextcloud/server/blob/master/config/config.sample.php#L1494-L1505
               ''OC\Preview\BMP''
               ''OC\Preview\GIF''
               ''OC\Preview\JPEG''
@@ -84,12 +91,14 @@ in
               ''OC\Preview\PNG''
               ''OC\Preview\TXT''
               ''OC\Preview\XBitmap''
-              # https://docs.nextcloud.com/server/24/admin_manual/installation/server_tuning.html#previews
+              # https://docs.nextcloud.com/server/latest/admin_manual/installation/server_tuning.html#previews
               ''OC\Preview\Imaginary''
             ];
+
+            preview_imaginary_url = "http://127.0.0.1:${toString config.services.imaginary.port}/";
           })
 
-          (lib.mkIf cfg.configureMemories {
+          (lib.mkIf (cfg.configurePreviewSettings || cfg.configureMemories) {
             enabledPreviewProviders = [
               # https://memories.gallery/file-types/
               ''OC\Preview\Image'' # alias for png,jpeg,gif,bmp
@@ -97,12 +106,15 @@ in
               ''OC\Preview\TIFF''
               ''OC\Preview\Movie''
             ];
+          })
 
-            "memories.exiftool" = lib.getExe pkgs.exiftool;
+          (lib.mkIf cfg.configureMemories {
+            "memories.exiftool_no_local" = false;
+            "memories.exiftool" = "${apps.memories}/bin-ext/exiftool/exiftool";
+            "memories.vod.ffmpeg" = "${apps.memories}/bin-ext/ffmpeg";
+            "memories.vod.ffprobe" = "${apps.memories}/bin-ext/ffprobe";
+            "memories.vod.path" = "${apps.memories}/bin-ext/go-vod";
             "memories.vod.vaapi" = lib.mkIf cfg.configureMemoriesVaapi true;
-            "memories.vod.ffmpeg" = lib.getExe pkgs.ffmpeg-headless;
-            "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
-            "preview_ffmpeg_path" = lib.getExe pkgs.ffmpeg-headless;
           })
 
           (lib.mkIf cfg.configurePreviewSettings {
@@ -114,6 +126,7 @@ in
               ''OC\Preview\WebP''
             ];
 
+            enable_previews = true;
             jpeg_quality = 60;
             preview_max_filesize_image = 128; # MB
             preview_max_memory = 512; # MB
@@ -131,84 +144,68 @@ in
     };
 
     systemd = {
-      services = {
-        nextcloud-cron = lib.mkIf cfg.configureMemories {
-          # required for memories
-          # see https://github.com/pulsejet/memories/blob/master/docs/troubleshooting.md#issues-with-nixos
-          path = with pkgs; [ perl ];
-          # fix memories app being unpacked without the x-bit on binaries
-          # could be done in nextcloud-update-plugins but then manually updates would be broken until the next auto update
-          preStart = "${pkgs.coreutils}/bin/chmod +x ${cfg.home}/store-apps/memories/bin-ext/*";
-        };
+      services =
+        let
+          occ = "/run/current-system/sw/bin/nextcloud-occ";
+          inherit (config.systemd.services.nextcloud-setup.serviceConfig) LoadCredential;
+        in
+        {
+          nextcloud-cron-preview-generator = lib.mkIf cfg.configurePreviewSettings {
+            environment.NEXTCLOUD_CONFIG_DIR = "${cfg.datadir}/config";
+            serviceConfig = {
+              inherit LoadCredential;
+              ExecStart = "${occ} preview:pre-generate";
+              Type = "oneshot";
+              User = "nextcloud";
+            };
+          };
 
-        nextcloud-cron-preview-generator = lib.mkIf cfg.configurePreviewSettings {
-          environment.NEXTCLOUD_CONFIG_DIR = "${config.services.nextcloud.datadir}/config";
-          serviceConfig = {
-            ExecStart = "/run/current-system/sw/bin/nextcloud-occ preview:pre-generate";
-            Type = "oneshot";
-            User = "nextcloud";
+          nextcloud-preview-generator-setup = lib.mkIf cfg.configurePreviewSettings {
+            wantedBy = [ "multi-user.target" ];
+            wants = [ "nextcloud-setup.service" ];
+            after = [ "nextcloud-setup.service" ];
+            environment.NEXTCLOUD_CONFIG_DIR = "${cfg.datadir}/config";
+            script = # bash
+              ''
+                # check with:
+                # for size in squareSizes widthSizes heightSizes; do echo -n "$size: "; nextcloud-occ config:app:get previewgenerator $size; done
+
+                # extra commands run for preview generator:
+                # 32   icon file list
+                # 64   icon file list android app, photos app
+                # 96   nextcloud client VFS windows file preview
+                # 256  file app grid view, many requests
+                # 512  photos app tags
+                ${occ} config:app:set --value="32 64 96 256 512" previewgenerator squareSizes
+
+                # 341 hover in maps app
+                # 1920 files/photos app when viewing picture
+                ${occ} config:app:set --value="341 1920" previewgenerator widthSizes
+
+                # 256 hover in maps app
+                # 1080 files/photos app when viewing picture
+                ${occ} config:app:set --value="256 1080" previewgenerator heightSizes
+              '';
+            serviceConfig = {
+              inherit LoadCredential;
+              Type = "oneshot";
+              User = "nextcloud";
+            };
+          };
+
+          phpfpm-nextcloud.serviceConfig = lib.mkIf (cfg.configureMemories && cfg.configureMemoriesVaapi) {
+            DeviceAllow = [ "/dev/dri/renderD128 rwm" ];
+            PrivateDevices = lib.mkForce false;
           };
         };
-
-        nextcloud-preview-generator-setup = lib.mkIf cfg.configurePreviewSettings {
-          wantedBy = [ "multi-user.target" ];
-          requires = [ "phpfpm-nextcloud.service" ];
-          after = [ "phpfpm-nextcloud.service" ];
-          environment.NEXTCLOUD_CONFIG_DIR = "${config.services.nextcloud.datadir}/config";
-          script =
-            let
-              occ = "/run/current-system/sw/bin/nextcloud-occ";
-            in
-            # bash
-            ''
-              # check with:
-              # for size in squareSizes widthSizes heightSizes; do echo -n "$size: "; nextcloud-occ config:app:get previewgenerator $size; done
-
-              # extra commands run for preview generator:
-              # 32   icon file list
-              # 64   icon file list android app, photos app
-              # 96   nextcloud client VFS windows file preview
-              # 256  file app grid view, many requests
-              # 512  photos app tags
-              ${occ} config:app:set --value="32 64 96 256 512" previewgenerator squareSizes
-
-              # 341 hover in maps app
-              # 1920 files/photos app when viewing picture
-              ${occ} config:app:set --value="341 1920" previewgenerator widthSizes
-
-              # 256 hover in maps app
-              # 1080 files/photos app when viewing picture
-              ${occ} config:app:set --value="256 1080" previewgenerator heightSizes
-            '';
-          serviceConfig = {
-            Type = "oneshot";
-            User = "nextcloud";
-          };
-        };
-
-        nextcloud-setup = lib.mkIf cfg.configureRecognize {
-          script = # bash
-            ''
-              export PATH=$PATH:/etc/profiles/per-user/nextcloud/bin:/run/current-system/sw/bin
-
-              if [[ ! -e ${cfg.home}/store-apps/recognize/node_modules/@tensorflow/tfjs-node/lib/napi-v8/tfjs_binding.node ]]; then
-                if [[ -d ${cfg.home}/store-apps/recognize/node_modules/ ]]; then
-                  cd ${cfg.home}/store-apps/recognize/node_modules/
-                  npm rebuild @tensorflow/tfjs-node --build-addon-from-source
-                fi
-              fi
-            '';
-        };
-
-        phpfpm-nextcloud.serviceConfig = lib.mkIf cfg.configureMemoriesVaapi {
-          DeviceAllow = [ "/dev/dri/renderD128 rwm" ];
-          PrivateDevices = lib.mkForce false;
-        };
-      };
 
       timers.nextcloud-cron-preview-generator = lib.mkIf cfg.configurePreviewSettings {
+        after = [ "nextcloud-setup.service" ];
         timerConfig = {
-          OnUnitActiveSec = "5m";
+          OnCalendar = "*:0/10";
+          OnUnitActiveSec = "9m";
+          Persistent = true;
+          RandomizedDelaySec = 60;
           Unit = "nextcloud-cron-preview-generator.service";
         };
         wantedBy = [ "timers.target" ];
@@ -216,23 +213,11 @@ in
     };
 
     users.users.nextcloud = {
-      extraGroups = lib.mkIf cfg.configureMemoriesVaapi [
+      extraGroups = lib.mkIf (cfg.configureMemories && cfg.configureMemoriesVaapi) [
         "render" # access /dev/dri/renderD128
       ];
-      packages =
-        with pkgs;
-        # generate video thumbnails with preview generator
-        lib.optional cfg.configurePreviewSettings ffmpeg-headless
-        # required for memories, duplicated with nextcloud-cron to better debug
-        ++ lib.optional cfg.configureMemories perl
-        # required for recognize app
-        ++ lib.optionals cfg.configureRecognize [
-          gnumake # installation requirement
-          nodejs_20 # runtime and installation requirement
-          nodejs_20.pkgs.node-pre-gyp # installation requirement
-          python3 # requirement for node-pre-gyp otherwise fails with exit code 236
-          util-linux # runtime requirement for taskset
-        ];
+      # generate video thumbnails with preview generator
+      packages = lib.optional cfg.configurePreviewSettings pkgs.ffmpeg-headless;
     };
   };
 }
