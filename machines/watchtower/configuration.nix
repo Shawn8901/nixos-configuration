@@ -144,6 +144,7 @@ in
       declarativePlugins = with pkgs.grafanaPlugins; [
         victoriametrics-logs-datasource
         victoriametrics-metrics-datasource
+        grafana-metricsdrilldown-app
       ];
       datasources = [
         {
