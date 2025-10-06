@@ -252,10 +252,10 @@ in
               jeff-hykin.better-nix-syntax
 
               # python dev
-              # ms-python.python
-              # ms-python.vscode-pylance
-              # ms-python.debugpy
-              # ms-python.isort
+              ms-python.python
+              ms-python.vscode-pylance
+              ms-python.debugpy
+              ms-python.isort
 
               # typescript dev
               esbenp.prettier-vscode
