@@ -236,21 +236,5 @@ in
     permittedInsecurePackages = [
       "qtwebengine-5.15.19"
     ];
-    packageOverrides = pkgs: {
-      udisks2 = pkgs.udisks2.override {
-        btrfs-progs = null;
-        nilfs-utils = null;
-        xfsprogs = null;
-        f2fs-tools = null;
-      };
-
-      kdePackages = pkgs.kdePackages.overrideScope (
-        self: super: {
-          akonadi = super.akonadi.override {
-            backend = "sqlite";
-          };
-        }
-      );
-    };
   };
 }
