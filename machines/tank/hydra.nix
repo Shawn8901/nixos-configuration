@@ -149,8 +149,8 @@ in
             "/etc/nix/machines"
             "/tmp/hyda/dynamic-machines"
           ];
-          minimumDiskFree = 5;
-          minimumDiskFreeEvaluator = 10;
+          minimumDiskFree = 25;
+          minimumDiskFreeEvaluator = 50;
           hydraURL = "https://${cfg.hostName}";
           notificationSender = cfg.mailAdress;
           useSubstitutes = true;
