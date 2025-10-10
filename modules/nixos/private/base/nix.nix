@@ -63,6 +63,7 @@ in
     flake = lib.mkDefault "github:shawn8901/nixos-configuration";
     clean = {
       enable = true;
+      dates = "daily";
       extraArgs = lib.mkDefault "--keep 5 --keep-since 7d";
     };
   };
