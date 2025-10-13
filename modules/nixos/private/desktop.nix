@@ -141,6 +141,7 @@ in
         skanlite
         kalk
         kleopatra
+        kzones
       ]);
 
       plasma6.excludePackages =
