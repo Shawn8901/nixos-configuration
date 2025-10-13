@@ -44,6 +44,7 @@ in
       devNodes = "/dev/disk/by-id";
       package = pkgs.zfs_2_3;
       allowHibernation = true;
+      forceImportRoot = false;
     };
     loader = {
       systemd-boot.enable = true;
