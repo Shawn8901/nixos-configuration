@@ -43,6 +43,7 @@ in
     zfs = {
       devNodes = "/dev/disk/by-id";
       package = pkgs.zfs_2_3;
+      allowHibernation = true;
     };
     loader = {
       systemd-boot.enable = true;
