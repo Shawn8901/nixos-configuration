@@ -4,6 +4,7 @@ let
 in
 {
   documentation = {
+    enable = mkDefault false;
     doc.enable = mkDefault false;
     dev.enable = mkDefault false;
     info.enable = mkDefault false;
