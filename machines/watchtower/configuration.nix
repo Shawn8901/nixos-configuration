@@ -142,9 +142,12 @@ in
       hostname = "grafana.pointjig.de";
       credentialsFile = secrets.grafana-env.path;
       declarativePlugins = with pkgs.grafanaPlugins; [
+        grafana-metricsdrilldown-app
+        grafana-exploretraces-app
+        grafana-pyroscope-app
+        grafana-lokiexplore-app
         victoriametrics-logs-datasource
         victoriametrics-metrics-datasource
-        grafana-metricsdrilldown-app
       ];
       datasources = [
         {
