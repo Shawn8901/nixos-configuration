@@ -32,22 +32,13 @@ in
       attic = {
         enable = mkEnableOption "Enables usage of attic as binary cache";
         package = mkPackageOption pkgs "attic-client" { };
+        configFile = mkOption { type = types.path; };
       };
-      cachix = {
-        enable = mkEnableOption "Enables usage of cachix as binary cache";
-        cacheName = mkOption {
-          type = types.str;
-          description = "Name of the cachix cache";
-        };
-        cachixTokenFile = mkOption { type = types.path; };
-        signingKeyFile = mkOption { type = types.path; };
-      };
-
       builder = {
         sshKeyFile = mkOption { type = types.path; };
         userName = mkOption {
           type = types.str;
-          default = "root";
+          default = "builder";
         };
       };
     };
@@ -62,20 +53,12 @@ in
       ];
     };
 
-    systemd.tmpfiles.rules = [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ];
+    systemd.tmpfiles.rules = lib.mkMerge [
+      [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ]
+      (lib.optionals cfg.attic.enable [ "d /var/lib/attic 666 attic attic -" ])
+    ];
 
     services = {
-
-      cachix-watch-store = {
-        enable = cfg.cachix.enable;
-        compressionLevel = 10;
-        inherit (cfg.cachix)
-          cacheName
-          cachixTokenFile
-          signingKeyFile
-          ;
-      };
-
       nginx = {
         enable = mkDefault true;
         recommendedGzipSettings = true;
@@ -145,6 +128,7 @@ in
           listenHost = "127.0.0.1";
           port = 3000;
           package = pkgs.hydra_unstable;
+          notificationSender = cfg.mailAdress;
           buildMachinesFiles = [
             "/etc/nix/machines"
             "/tmp/hyda/dynamic-machines"
@@ -152,7 +136,6 @@ in
           minimumDiskFree = 25;
           minimumDiskFreeEvaluator = 50;
           hydraURL = "https://${cfg.hostName}";
-          notificationSender = cfg.mailAdress;
           useSubstitutes = true;
           extraConfig = ''
             evaluator_max_memory_size = ${toString (4 * 1024)}
@@ -272,6 +255,15 @@ in
         ''
           extra-allowed-uris = ${lib.concatStringsSep " " urls}
         '';
+    };
+
+    users.users = lib.mkIf (cfg.attic.enable) {
+      attic = {
+        isNormalUser = false;
+        isSystemUser = true;
+        group = "users";
+        home = "/var/lib/attic";
+      };
     };
   };
 }

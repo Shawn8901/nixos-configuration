@@ -56,8 +56,7 @@ in
           owner = "hydra-queue-runner";
           group = "hydra";
         };
-        cachix_token_file = { };
-        cachix_signing_key = { };
+        attic-token = { };
       }
       (lib.optionalAttrs config.services.stalwart-mail.enable {
         stalwart-fallback-admin = {
@@ -65,25 +64,38 @@ in
         };
       })
     ];
-    templates."hydra-write-token.conf" = {
-      content = ''
-        <github_authorization>
-          Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
-        </github_authorization>
-      '';
-      owner = "hydra-queue-runner";
-      group = "hydra";
-      mode = "0660";
-    };
-    templates."hydra-hook-token.conf" = {
-      content = ''
-        <github>
-          secret = ${config.sops.placeholder.hydra-github-hook}
-        </github>
-      '';
-      owner = "hydra-www";
-      group = "hydra";
-      mode = "0660";
+    templates = {
+      "hydra-write-token.conf" = {
+        content = ''
+          <github_authorization>
+            Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
+          </github_authorization>
+        '';
+        owner = "hydra-queue-runner";
+        group = "hydra";
+        mode = "0660";
+      };
+      "hydra-hook-token.conf" = {
+        content = ''
+          <github>
+            secret = ${config.sops.placeholder.hydra-github-hook}
+          </github>
+        '';
+        owner = "hydra-www";
+        group = "hydra";
+        mode = "0660";
+      };
+      "attic-config" = {
+        content = ''
+          default-server = "nixos"
+          [servers.nixos]
+          endpoint = "https://cache.pointjig.de"
+          token = "${config.sops.placeholder.attic-token}"
+        '';
+        owner = "attic";
+        mode = "0600";
+        path = "/var/lib/attic/.config/attic/config.toml";
+      };
     };
   };
 
@@ -544,12 +556,6 @@ in
         group = "users";
       };
       shawn.extraGroups = [ "nextcloud" ];
-      attic = {
-        isNormalUser = false;
-        isSystemUser = true;
-        group = "users";
-        home = "/var/lib/attic";
-      };
     }
     (lib.optionalAttrs config.services.stalwart-mail.enable {
       stalwart-mail.extraGroups = [ "nginx" ];
@@ -734,12 +740,6 @@ in
       writeTokenFile = secrets.hydra-github-auth.path;
       builder.sshKeyFile = secrets.ssh-builder-key.path;
       attic.enable = true;
-      cachix = {
-        enable = false;
-        cacheName = "shawn8901";
-        signingKeyFile = secrets.cachix_signing_key.path;
-        cachixTokenFile = secrets.cachix_token_file.path;
-      };
     };
     server.enable = true;
   };
