@@ -32,12 +32,10 @@ in
       allow-import-from-derivation = false;
       substituters = [
         "https://cache.pointjig.de/nixos"
-        "https://shawn8901.cachix.org"
         "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
         "nixos:m4zyjiPgXOAWJZ/qVawVuOvPCmrSOfagQc/zbaDmq2Q="
-        "shawn8901.cachix.org-1:XNCe1k4O+gQbithVgUERo6b/B5UtgKU689b0VbKnfDc="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
       cores = mkDefault 4;
