@@ -1,4 +1,5 @@
 {
+  self,
   config,
   lib,
   pkgs,
@@ -6,6 +7,8 @@
 }:
 let
   cfg = config.shawn8901.hydra;
+  hosts = self.nixosConfigurations;
+
   inherit (lib)
     mkEnableOption
     mkPackageOption
@@ -38,7 +41,7 @@ in
         sshKeyFile = mkOption { type = types.path; };
         userName = mkOption {
           type = types.str;
-          default = "builder";
+          default = config.shawn8901.remote-builder.userName;
         };
       };
     };
@@ -194,41 +197,28 @@ in
 
     nix = {
       package = lib.mkForce pkgs.hydra.nix;
-      buildMachines =
-        let
+      buildMachines = [
+        {
+          hostName = "localhost";
+          protocol = null;
+          systems = [
+            "x86_64-linux"
+            "i686-linux"
+          ];
+          supportedFeatures = config.nix.settings.system-features ++ [
+            "gccarch-x86-64-v3"
+          ];
+          maxJobs = 4;
+        }
+        {
+          hostName = "watchtower";
+          systems = [ "aarch64-linux" ];
+          maxJobs = 1;
+          supportedFeatures = hosts.watchtower.config.nix.settings.system-features;
           sshUser = cfg.builder.userName;
           sshKey = cfg.builder.sshKeyFile;
-          supportedFeatures = [
-            "benchmark"
-            "big-parallel"
-            "kvm"
-            "nixos-test"
-          ];
-        in
-        [
-          {
-            hostName = "localhost";
-            protocol = null;
-            systems = [
-              "x86_64-linux"
-              "i686-linux"
-            ];
-            supportedFeatures = supportedFeatures ++ [
-              "gccarch-x86-64-v3"
-            ];
-            maxJobs = 4;
-          }
-          {
-            hostName = "watchtower";
-            systems = [ "aarch64-linux" ];
-            maxJobs = 1;
-            inherit
-              sshUser
-              sshKey
-              supportedFeatures
-              ;
-          }
-        ];
+        }
+      ];
       settings = {
         keep-outputs = mkDefault true;
         keep-derivations = mkDefault true;

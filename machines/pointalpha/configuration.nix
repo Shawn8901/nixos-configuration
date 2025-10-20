@@ -217,9 +217,6 @@ in
       WINEDEBUG = "-all";
     };
   };
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsHm9iUQIJVi/l1FTCIFwGxYhCOv23rkux6pMStL49N"
-  ];
   users.users.shawn.extraGroups = [
     "video"
     "audio"
@@ -230,7 +227,10 @@ in
     "kvm"
   ];
 
-  shawn8901.desktop.enable = true;
+  shawn8901 = {
+    desktop.enable = true;
+    remote-builder.enable = true;
+  };
 
   nixpkgs.config = {
     permittedInsecurePackages = [

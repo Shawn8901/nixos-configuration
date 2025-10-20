@@ -540,9 +540,6 @@ in
   };
   users.users = lib.mkMerge [
     {
-      root.openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGsHm9iUQIJVi/l1FTCIFwGxYhCOv23rkux6pMStL49N"
-      ];
       ela = {
         hashedPasswordFile = secrets.ela.path;
         isNormalUser = true;
