@@ -11,7 +11,7 @@
     pkgs.teamspeak3
     pkgs.portfolio
     pkgs.attic-client
-    pkgs.pytr
+    #pkgs.pytr
     #fPkgs.jameica-fhs
     pkgs.jameica
     pkgs.makemkv
