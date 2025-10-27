@@ -72,7 +72,6 @@ in
     udev.packages = [
       pkgs.libmtp.out
       pkgs.logitech-udev-rules
-      pkgs.android-udev-rules
     ];
     udev.extraRules = ''
       # Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
