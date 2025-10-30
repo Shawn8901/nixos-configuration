@@ -168,7 +168,7 @@ in
       steam = {
         enable = true;
         extraCompatPackages = [ pkgs.proton-ge-bin ];
-        package = pkgs.steam-small.override {
+        package = pkgs.steam.override {
           extraEnv = {
             inherit (config.environment.sessionVariables) AMD_VULKAN_ICD;
             extraBwrapArgs = [ "--unsetenv TZ" ];
