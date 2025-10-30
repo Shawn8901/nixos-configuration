@@ -130,7 +130,7 @@ in
           enable = true;
           listenHost = "127.0.0.1";
           port = 3000;
-          package = pkgs.hydra_unstable;
+          package = pkgs.hydra;
           notificationSender = cfg.mailAdress;
           buildMachinesFiles = [
             "/etc/nix/machines"
