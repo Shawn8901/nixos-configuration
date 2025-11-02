@@ -10,8 +10,7 @@
 let
   inherit (lib) mkEnableOption mkIf getExe;
   inherit (inputs.firefox-addons.lib.${system}) buildFirefoxXpiAddon;
-  inherit (pkgs.hostPlatform) system;
-
+  inherit (pkgs.stdenv.hostPlatform) system;
   cfg = config.shawn8901.desktop;
   firefox-addon-packages = inputs'.firefox-addons.packages;
 in
