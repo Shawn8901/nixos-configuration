@@ -31,8 +31,7 @@ in
     "vscode-extension-mhutchie-git-graph"
     "deezer"
     "discord"
-    "teamspeak-client"
-    "teamspeak3"
+    "teamspeak6-client"
     "tampermonkey"
     "betterttv"
     "teamviewer"
@@ -231,9 +230,4 @@ in
     remote-builder.enable = true;
   };
 
-  nixpkgs.config = {
-    permittedInsecurePackages = [
-      "qtwebengine-5.15.19"
-    ];
-  };
 }

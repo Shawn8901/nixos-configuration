@@ -8,7 +8,7 @@
 
   home.packages = [
     pkgs.keymapp
-    pkgs.teamspeak3
+    pkgs.teamspeak6-client
     pkgs.portfolio
     pkgs.attic-client
     #pkgs.pytr
