@@ -3,13 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:Shawn8901/nixpkgs/nixos-unstable-custom";
-    nixpkgs-stable.url = "github:Shawn8901/nixpkgs/nixos-25.05-custom";
+    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-stable = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     sops-nix = {
@@ -27,7 +27,7 @@
     };
     stfc-bot = {
       url = "github:Shawn8901/stfc-bot";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      #inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";

@@ -321,9 +321,11 @@ in
 
       git = {
         enable = true;
-        userName = "Shawn8901";
-        userEmail = "shawn8901@googlemail.com";
-        extraConfig = {
+        settings = {
+          user = {
+            name = "Shawn8901";
+            email = "shawn8901@googlemail.com";
+          };
           init.defaultBranch = "main";
           push.autoSetupRemote = "true";
           core.pager = "${pkgs.delta}/bin/delta";
