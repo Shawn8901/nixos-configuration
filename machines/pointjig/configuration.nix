@@ -13,15 +13,9 @@ let
 in
 {
   sops.secrets = {
-    sms-technical-passwd = { };
-    sms-shawn-passwd = { };
     mimir-env = {
       owner = "mimir";
       group = "mimir";
-    };
-    stfc-env = {
-      owner = "stfcbot";
-      group = "stfcbot";
     };
     stalwart-env = { };
     vaultwarden = { };
@@ -215,11 +209,6 @@ in
       package = inputs'.mimir.packages.default;
       envFile = secrets.mimir-env.path;
       unixSocket = "/run/mimir-backend/mimir-backend.sock";
-    };
-    stfc-bot = {
-      enable = true;
-      package = inputs'.stfc-bot.packages.default;
-      envFile = secrets.stfc-env.path;
     };
     stalwart-mail = {
       enable = true;

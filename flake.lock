@@ -208,19 +208,6 @@
         "url": "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1763948260,
-        "narHash": "sha256-zZk7fn2ARAqmLwaYTpxBJmj81KIdz11NiWt7ydHHD/M=",
-        "rev": "1c8ba8d3f7634acac4a2094eef7c32ad9106532c",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/25.05/nixos-25.05.813095.1c8ba8d3f763/nixexprs.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-25.05/nixexprs.tar.xz"
-      }
-    },
     "root": {
       "inputs": {
         "asus-numberpad-driver": "asus-numberpad-driver",
@@ -234,8 +221,7 @@
         "mimir-client": "mimir-client",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "sops-nix": "sops-nix",
-        "stfc-bot": "stfc-bot"
+        "sops-nix": "sops-nix"
       }
     },
     "sops-nix": {
@@ -255,24 +241,6 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
-        "type": "github"
-      }
-    },
-    "stfc-bot": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1758138274,
-        "narHash": "sha256-yJau/yOmp5fdWee/fYq6p02a/qi7YwT5RboA+MWRv60=",
-        "owner": "Shawn8901",
-        "repo": "stfc-bot",
-        "rev": "bb990a1b4e5090264f740c3116919d94424205e8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Shawn8901",
-        "repo": "stfc-bot",
         "type": "github"
       }
     }

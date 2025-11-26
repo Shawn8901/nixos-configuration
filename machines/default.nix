@@ -39,7 +39,6 @@
       };
       extraModules = [
         inputs.mimir.nixosModules.default
-        inputs.stfc-bot.nixosModules.default
       ];
     };
     shelter = {
@@ -58,7 +57,6 @@
       };
       extraModules = [
         inputs.mimir.nixosModules.default
-        inputs.stfc-bot.nixosModules.default
         ./tank/hydra.nix
       ];
     };
