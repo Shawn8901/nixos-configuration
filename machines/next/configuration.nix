@@ -40,7 +40,7 @@ in
 
   services = {
     fstrim.enable = true;
-    nginx.package = pkgs.nginxQuic;
+    nginx.package = pkgs.nginx;
   };
   security = {
     acme.defaults.email = "info@clansap.org";

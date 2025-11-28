@@ -48,7 +48,7 @@ in
         bits = 4096;
       }
     ];
-    nginx.package = pkgs.nginxQuic;
+    nginx.package = pkgs.nginx;
     vmagent = {
       package = pkgs.victoriametrics;
       remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";

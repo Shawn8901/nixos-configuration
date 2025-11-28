@@ -20,6 +20,7 @@ in
     stalwart-env = { };
     vaultwarden = { };
     maxmind = { };
+
   };
 
   networking.firewall = {
@@ -139,7 +140,7 @@ in
         '';
       in
       {
-        package = pkgs.nginxQuic;
+        package = pkgs.nginx;
         additionalModules = with pkgs.nginxModules; [
           geoip2
         ];

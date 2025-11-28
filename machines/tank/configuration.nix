@@ -585,7 +585,7 @@ in
       }
     ];
     nginx = {
-      package = pkgs.nginxQuic;
+      package = pkgs.nginx;
       virtualHosts = {
         "mail.tank.pointjig.de" = {
           serverName = "mail.tank.pointjig.de";
