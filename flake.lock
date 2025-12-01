@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763220197,
-        "narHash": "sha256-nqiXb+E7/sRHatzeR+GC8lBlPvLUiBPoV6lHPv6VYBQ=",
+        "lastModified": 1764530114,
+        "narHash": "sha256-2/HiQz95BRMW7x3cBlIqKKWbwEOvC1cSiGvcJjIuvos=",
         "owner": "shawn8901",
         "repo": "asus-numberpad-driver",
-        "rev": "92970a085989cd8a5a9352cb96022f312ad8776e",
+        "rev": "756b878d640e16efbcd23a058ac436005bf3a589",
         "type": "github"
       },
       "original": {
@@ -49,11 +49,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1764475519,
-        "narHash": "sha256-12TAT2CD+L+wdIHszQnPyu8zGSBxcazoVZmP6UQjk6s=",
+        "lastModified": 1764561884,
+        "narHash": "sha256-vQ3iFPPhxsLqV3c5kgmYP53mVD6id6gsP0tN+oTmqok=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "1172c39fb0e847a7f036e480d94f629edcf2cf46",
+        "rev": "aba4621459aec251d90d6452e3495b58a8a5e185",
         "type": "gitlab"
       },
       "original": {
@@ -90,11 +90,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1764361670,
-        "narHash": "sha256-jgWzgpIaHbL3USIq0gihZeuy1lLf2YSfwvWEwnfAJUw=",
+        "lastModified": 1764544324,
+        "narHash": "sha256-GVBGjO7UsmzLrlOJV8NlKSxukHaHencrJqWkCA6FkqI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "780be8ef503a28939cf9dc7996b48ffb1a3e04c6",
+        "rev": "e4e25a8c310fa45f2a8339c7972dc43d2845a612",
         "type": "github"
       },
       "original": {
@@ -110,11 +110,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1764398914,
-        "narHash": "sha256-YPrpwlVQidzQlMh0OnquaJR+58rKe9YNnuRis293Ilo=",
+        "lastModified": 1764536451,
+        "narHash": "sha256-BgtcUkBfItu9/yU14IgUaj4rYOanTOUZjUfBP20/ZB4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d0c5fdc48db6f19471b8adc954eca09194e68036",
+        "rev": "3fdd076e08049a9c7a83149b270440d9787d2df5",
         "type": "github"
       },
       "original": {
@@ -181,11 +181,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1764448276,
-        "narHash": "sha256-wPIUgDYGVqF0bLvOnxwYqpUZG2MWDCkeIu7HL77MDhU=",
+        "lastModified": 1764565448,
+        "narHash": "sha256-wKlQR2PTJmpkdHO9QwOc4fqUWtME+P+/WVHWE5CQzZI=",
         "owner": "Shawn8901",
         "repo": "nixpkgs",
-        "rev": "50f1c78fc71db8522a9eff677847acf0e4836bed",
+        "rev": "1cec518fd1fb25aefe986571af70970f68f854a7",
         "type": "github"
       },
       "original": {
@@ -197,11 +197,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1764406085,
-        "narHash": "sha256-QXqXGjX4TxC72d8uF1IhW4lymO9gIxpGJRaOO5Gd1XI=",
-        "rev": "9561691c9f450fad7c3526916e1c4f44be0d1192",
+        "lastModified": 1764522689,
+        "narHash": "sha256-GzkEBSHGkj8EyOxnxQvl9sx0x2S7JzH0hwCziF176T8=",
+        "rev": "8bb5646e0bed5dbd3ab08c7a7cc15b75ab4e1d0f",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.461.9561691c9f45/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.650.8bb5646e0bed/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
