@@ -74,8 +74,6 @@ in
 
     security = {
       rtkit.enable = true;
-      auditd.enable = false;
-      audit.enable = false;
       # Upstream pipewire limits for realtime
       # https://gitlab.freedesktop.org/pipewire/pipewire/-/blob/master/meson_options.txt#L342
       pam.loginLimits = [

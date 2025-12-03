@@ -97,10 +97,6 @@ in
       };
     };
   };
-  security = {
-    auditd.enable = false;
-    audit.enable = false;
-  };
 
   shawn8901.server.enable = true;
 }

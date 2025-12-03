@@ -534,10 +534,6 @@ in
     };
   };
 
-  security = {
-    auditd.enable = false;
-    audit.enable = false;
-  };
   users.users = lib.mkMerge [
     {
       ela = {

@@ -44,8 +44,6 @@ in
   };
   security = {
     acme.defaults.email = "info@clansap.org";
-    auditd.enable = false;
-    audit.enable = false;
   };
 
   users.mutableUsers = false;

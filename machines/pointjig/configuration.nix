@@ -291,11 +291,6 @@ in
     };
   };
 
-  security = {
-    auditd.enable = false;
-    audit.enable = false;
-  };
-
   shawn8901 = {
     postgresql.enable = true;
     server.enable = true;
