@@ -60,6 +60,11 @@ in
         basicAuthPasswordFile = cfg.credentialsFile;
       };
     };
-    systemd.services.victorialogs.serviceConfig.SystemCallFilter = lib.mkForce [ "@system-service" ];
+    systemd.services.victorialogs.serviceConfig = {
+      SystemCallFilter = lib.mkForce [
+      ];
+      "SystemCallLog" = true;
+    };
+
   };
 }
