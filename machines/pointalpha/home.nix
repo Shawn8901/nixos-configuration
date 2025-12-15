@@ -31,4 +31,6 @@
       ExecStart = "${lib.getExe pkgs.attic-client} watch-store nixos";
     };
   };
+
+  programs.zsh.siteFunctions.cherryPick = "gh pr diff --patch $1 | git am";
 }
