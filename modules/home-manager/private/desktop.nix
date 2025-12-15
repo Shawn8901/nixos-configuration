@@ -92,10 +92,10 @@ in
               # Download all plugins which are not in the repo manually
               (buildFirefoxXpiAddon {
                 pname = "Video-DownloadHelper";
-                version = "9.5.0.2";
+                version = "10.0.271.2";
                 addonId = "{b9db16a4-6edc-47ec-a1f4-b86292ed211d}";
-                url = "https://addons.mozilla.org/firefox/downloads/file/4502183/video_downloadhelper-9.5.0.2.xpi";
-                sha256 = "sha256-wtzC+7WMWhwRXYMe0mlkQzz/pK3fjFJ7cLSF0f6Levs=";
+                url = "https://addons.mozilla.org/firefox/downloads/file/4627654/video_downloadhelper-10.0.271.2.xpi";
+                sha256 = "sha256-2qRaL+N2f4VsvEqBHz5RRtF7qnk0QQ2D/q6gdiRy/oo=";
                 meta = { };
               })
             ];
