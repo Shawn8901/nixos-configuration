@@ -49,11 +49,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1766462603,
-        "narHash": "sha256-rLllnfVL2+mUQbWJs4l7ln5kOBuQc62oPhHqDEzbmMk=",
+        "lastModified": 1766549013,
+        "narHash": "sha256-GTT+poVhfyQ3JoKIneAT8tZgUEt0KyC6jN6LewIDYLY=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "b19da314b14c0056fced72bd2ab24562f74000ea",
+        "rev": "356637020672729e7d406e65cb2e72a633301aba",
         "type": "gitlab"
       },
       "original": {
@@ -90,11 +90,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766387499,
-        "narHash": "sha256-AjK3/UKDzeXFeYNLVBaJ3+HLE9he1g5UrlNd4/BM3eA=",
+        "lastModified": 1766553851,
+        "narHash": "sha256-hHKQhHkXxuPJwLkI8wdu826GLV5AcuW9/HVdc9eBnTU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "527ad07e6625302b648ed3b28c34b62a79bd103e",
+        "rev": "7eca7f7081036a7b740090994c9ec543927f89a7",
         "type": "github"
       },
       "original": {
@@ -110,11 +110,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766292113,
-        "narHash": "sha256-sWTtmkQujRpjWYCnZc8LWdDiCzrRlSBPrGovkZpLkBI=",
+        "lastModified": 1766553861,
+        "narHash": "sha256-ZbnG01yA3O8Yr1vUm3+NQ2qk9iRhS5bloAnuXHHy7+c=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "fdec8815a86db36f42fc9c8cb2931cd8485f5aed",
+        "rev": "0999ed8f965bbbd991437ad9c5ed3434cecbc30e",
         "type": "github"
       },
       "original": {
@@ -197,11 +197,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1766201043,
-        "narHash": "sha256-v9nbQe0BgwBx+KcxRf6i2kbS8EwKjBFRjAawA91B/OE=",
-        "rev": "b3aad468604d3e488d627c0b43984eb60e75e782",
+        "lastModified": 1766473571,
+        "narHash": "sha256-QvjEJNgMVuOootbR+DEfbiW+zSK57U32CE0jmVdcNjQ=",
+        "rev": "76701a179d3a98b07653e2b0409847499b2a07d3",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.2222.b3aad468604d/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.2403.76701a179d3a/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
