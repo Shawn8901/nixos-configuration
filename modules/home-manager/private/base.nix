@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
   inherit (lib) mkDefault;
 in
@@ -6,7 +6,10 @@ in
   home.stateVersion = "23.05";
 
   programs = {
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      dotDir = "${config.xdg.configHome}/zsh";
+    };
     dircolors = {
       enable = true;
       enableZshIntegration = true;
