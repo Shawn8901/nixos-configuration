@@ -64,7 +64,6 @@ in
         element-desktop
       ]
       ++ (with self'.packages; [
-        nas
         generate-zrepl-ssl
       ]);
     programs = {

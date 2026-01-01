@@ -11,7 +11,6 @@
         generate-zrepl-ssl = pkgs.callPackage ./shellscripts/generate-zrepl-ssl.nix { };
 
         rtc-helper = pkgs.callPackage ./shellscripts/rtc-helper.nix { };
-        nas = pkgs.callPackage ./shellscripts/nas.nix { };
         backup-usb = pkgs.callPackage ./shellscripts/backup-usb.nix { };
 
         # s25rttr = pkgs.callPackage ./s25rttr {

@@ -1,1 +1,0 @@
-sudo mount -t cifs //tank.fritz.box/joerg /media/nas -o credentials=/etc/samba/credentials_shawn,iocharset=utf8,uid=1000,gid=100,forcegid,forceuid,vers=3.0
