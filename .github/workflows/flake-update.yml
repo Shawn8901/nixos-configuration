@@ -46,6 +46,9 @@ jobs:
               git fetch origin
               git status
               git rebase origin/main
+
+              nix flake update --commit-lock-file
+
               git push --force-with-lease
             fi
 
