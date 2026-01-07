@@ -130,7 +130,7 @@ in
           enable = true;
           listenHost = "127.0.0.1";
           port = 3000;
-          package = pkgs.hydra;
+          package = pkgs.hydra.override { stdenv = pkgs.gcc14Stdenv; };
           notificationSender = cfg.mailAdress;
           buildMachinesFiles = [
             "/etc/nix/machines"
