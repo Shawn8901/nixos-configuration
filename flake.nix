@@ -79,7 +79,7 @@
           name = "merge-pr";
         in
         {
-          ${name} = nixpkgs.legacyPackages.x86_64-linux.releaseTools.aggregate {
+          ${name} = nixpkgs.legacyPackages."aarch64-linux".releaseTools.aggregate {
             inherit name;
             meta = {
               schedulingPriority = 10;

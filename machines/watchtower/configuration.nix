@@ -27,9 +27,6 @@ in
       };
       victoriametrics = { };
       victorialogs = { };
-      ssh-builder-key = {
-        owner = "hydra-queue-runner";
-      };
       hydra-github-hook = { };
       hydra-github-auth = {
         owner = "hydra-queue-runner";

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }:
 let
@@ -12,7 +13,10 @@ let
     mkOption
     mkDefault
     types
+    concatStringsSep
     ;
+  inherit (config.sops) secrets;
+  hosts = self.nixosConfigurations;
 in
 {
   options = {
@@ -41,6 +45,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+
+    sops.secrets.ssh-builder-key = {
+      owner = "hydra-queue-runner";
+    };
+
     networking.firewall = {
       allowedUDPPorts = [ 443 ];
       allowedTCPPorts = [
@@ -48,11 +57,6 @@ in
         443
       ];
     };
-
-    systemd.tmpfiles.rules = lib.mkMerge [
-      [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ]
-      (lib.optionals cfg.attic.enable [ "d /var/lib/attic 666 attic attic -" ])
-    ];
 
     services = {
       nginx = {
@@ -134,8 +138,8 @@ in
           hydraURL = "https://${cfg.hostName}";
           useSubstitutes = true;
           extraConfig = ''
-            evaluator_max_memory_size = ${toString (4 * 1024)}
-            evaluator_workers = 4
+            evaluator_max_memory_size = ${toString (6 * 1024)}
+            evaluator_workers = 1
             max_concurrent_evals = 1
             restrict-eval = false
             max_output_size = ${toString (5 * 1024 * 1024 * 1024)}
@@ -165,21 +169,93 @@ in
         };
     };
 
-    systemd.services = (
-      lib.optionalAttrs cfg.attic.enable {
-        attic-watch-store = {
-          wantedBy = [ "multi-user.target" ];
-          after = [ "network-online.target" ];
-          requires = [ "network-online.target" ];
-          description = "Upload all store content to binary catch";
-          serviceConfig = {
-            User = "attic";
-            Restart = "always";
-            ExecStart = "${cfg.attic.package}/bin/attic watch-store nixos";
+    systemd =
+      let
+        potentialRemotes = {
+          tank = {
+            userName = "builder";
+            hostName = "tank.pointjig.de";
+            port = 4421;
+            systems = [
+              "x86_64-linux"
+              "i686-linux"
+            ];
+            speedFactor = 1;
+          };
+          pointalpha = {
+            userName = "builder";
+            hostName = "pointalpha.pointjig.de";
+            port = 4422;
+            systems = [
+              "x86_64-linux"
+              "i686-linux"
+            ];
+            speedFactor = 2;
           };
         };
-      }
-    );
+      in
+      {
+        services =
+          let
+            machineInjectionScript = cfg: ''
+              if ${lib.getExe pkgs.netcat} -w5 -z -v ${cfg.hostName} ${toString cfg.port} > /dev/null; then
+                if ! grep ${cfg.hostName} /tmp/hyda/dynamic-machines > /dev/null; then
+                  echo "ssh://${cfg.userName}@${cfg.name} ${concatStringsSep "," cfg.systems} ${secrets.ssh-builder-key.path} ${toString cfg.jobs} ${toString cfg.speedFactor} ${concatStringsSep "," cfg.systemFeatures} - -" >  /tmp/hyda/dynamic-machines
+                  echo "Added ${cfg.name} to dynamic build machines"
+                fi
+              else
+                if grep ${cfg.name} /tmp/hyda/dynamic-machines > /dev/null; then
+                  sed '/${cfg.name}/d' file_name
+                  echo "Removed ${cfg.name} from dynamic build machines"
+                fi
+              fi
+            '';
+
+            hostServices = lib.mapAttrs' (
+              name: cfg:
+              lib.nameValuePair "${name}-online" {
+                script = machineInjectionScript {
+                  systemFeatures = hosts.${name}.config.nix.settings.system-features;
+                  jobs = hosts.${name}.config.nix.settings.max-jobs;
+                  inherit name;
+                  inherit (cfg)
+                    port
+                    systems
+                    speedFactor
+                    hostName
+                    userName
+                    ;
+                };
+              }
+            ) potentialRemotes;
+          in
+          lib.mkMerge [
+            hostServices
+            (lib.optionalAttrs cfg.attic.enable {
+              attic-watch-store = {
+                wantedBy = [ "multi-user.target" ];
+                after = [ "network-online.target" ];
+                requires = [ "network-online.target" ];
+                description = "Upload all store content to binary catch";
+                serviceConfig = {
+                  User = "attic";
+                  Restart = "always";
+                  ExecStart = "${cfg.attic.package}/bin/attic watch-store nixos";
+                };
+              };
+            })
+          ];
+        timers = lib.genAttrs (map (n: "${n}-online") (lib.attrNames potentialRemotes)) (name: {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnCalendar = "*:0/1";
+          };
+        });
+        tmpfiles.rules = lib.mkMerge [
+          [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ]
+          (lib.optionals cfg.attic.enable [ "d /var/lib/attic 666 attic attic -" ])
+        ];
+      };
 
     programs.ssh.extraConfig = ''
       Host tank
@@ -194,6 +270,14 @@ in
     '';
 
     nix = {
+      buildMachines = [
+        {
+          hostName = "localhost";
+          protocol = null;
+          systems = [ "aarch64-linux" ];
+          maxJobs = 1;
+        }
+      ];
       package = lib.mkForce pkgs.hydra.nix;
       settings = {
         keep-outputs = mkDefault true;
@@ -231,5 +315,6 @@ in
         home = "/var/lib/attic";
       };
     };
+
   };
 }
