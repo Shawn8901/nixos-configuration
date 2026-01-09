@@ -185,7 +185,6 @@ in
     nh.flake = "/home/shawn/dev/nixos-configuration";
     kdeconnect.enable = true;
     droidcam.enable = true;
-    adb.enable = true;
   };
 
   virtualisation = {
@@ -205,6 +204,7 @@ in
     systemPackages = [
       pkgs.cifs-utils
       pkgs.solaar
+      pkgs.android-tools
     ];
     etc = {
       "samba/credentials_ela".source = secrets.samba-ela.path;
@@ -221,7 +221,6 @@ in
     "scanner"
     "lp"
     "networkmanager"
-    "adbusers"
     "kvm"
   ];
 

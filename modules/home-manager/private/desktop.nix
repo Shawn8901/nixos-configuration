@@ -218,7 +218,7 @@ in
               "diffEditor.ignoreTrimWhitespace" = false;
               "editor.formatOnSave" = true;
               "nix.enableLanguageServer" = true;
-              "nix.formatterPath" = "${getExe pkgs.nixfmt-rfc-style}";
+              "nix.formatterPath" = "${getExe pkgs.nixfmt}";
               "nix.serverPath" = "${getExe pkgs.nil}";
               "nix.serverSettings" = {
                 "nil" = {
@@ -226,7 +226,7 @@ in
                     "ignored" = [ ];
                   };
                   "formatting" = {
-                    "command" = [ "${getExe pkgs.nixfmt-rfc-style}" ];
+                    "command" = [ "${getExe pkgs.nixfmt}" ];
                   };
                   "flake" = {
                     "autoArchive" = true;
