@@ -688,6 +688,7 @@ in
   };
 
   shawn8901 = {
+    remote-builder.enable = true;
     backup-rclone = {
       enable = true;
       sourceDir = "${config.services.nextcloud.home}/data/shawn/files/";
