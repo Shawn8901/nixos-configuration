@@ -2,6 +2,7 @@
   inputs',
   config,
   pkgs,
+  lib,
   modulesPath,
   ...
 }:
@@ -15,15 +16,58 @@ in
     "${modulesPath}/profiles/perlless.nix"
     ./disko-config.nix
   ];
+  system.forbiddenDependenciesRegexes = lib.mkForce [ ];
 
-  sops.secrets = {
-    attic-env = { };
-    grafana-env = {
-      owner = "grafana";
-      group = "grafana";
+  sops = {
+    secrets = {
+      attic-env = { };
+      grafana-env = {
+        owner = "grafana";
+        group = "grafana";
+      };
+      victoriametrics = { };
+      victorialogs = { };
+      hydra-github-hook = { };
+      hydra-github-auth = {
+        owner = "hydra-queue-runner";
+        group = "hydra";
+      };
+      attic-token = { };
     };
-    victoriametrics = { };
-    victorialogs = { };
+    templates = {
+      "hydra-write-token.conf" = {
+        content = ''
+          <github_authorization>
+            Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
+          </github_authorization>
+        '';
+        owner = "hydra-queue-runner";
+        group = "hydra";
+        mode = "0660";
+      };
+      "hydra-hook-token.conf" = {
+        content = ''
+          <github>
+            secret = ${config.sops.placeholder.hydra-github-hook}
+          </github>
+        '';
+        owner = "hydra-www";
+        group = "hydra";
+        mode = "0660";
+      };
+      "attic-config" = {
+        content = ''
+          default-server = "nixos"
+          [servers.nixos]
+          endpoint = "https://cache.pointjig.de"
+          token = "${config.sops.placeholder.attic-token}"
+        '';
+        owner = "attic";
+        mode = "0600";
+        path = "/var/lib/attic/.config/attic/config.toml";
+      };
+    };
+
   };
 
   networking = {
@@ -136,6 +180,16 @@ in
       username = "vl";
       credentialsFile = secrets.victorialogs.path;
     };
+    hydra = {
+      enable = false;
+      hostName = "ci.pointjig.de";
+      githubHookIncludeFile = config.sops.templates."hydra-hook-token.conf".path;
+      writeTokenIncludeFile = config.sops.templates."hydra-write-token.conf".path;
+      writeTokenFile = secrets.hydra-github-auth.path;
+      builder.sshKeyFile = secrets.ssh-builder-key.path;
+      attic.enable = true;
+    };
+
     grafana = {
       enable = true;
       hostname = "grafana.pointjig.de";

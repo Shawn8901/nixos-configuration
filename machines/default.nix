@@ -19,6 +19,7 @@
         ./watchtower/victoriametrics.nix
         ./watchtower/victorialogs.nix
         ./watchtower/grafana.nix
+        ./watchtower/hydra.nix
       ];
     };
     next = {
