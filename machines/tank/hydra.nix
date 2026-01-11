@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  inputs',
   ...
 }:
 let
@@ -130,7 +131,7 @@ in
           enable = true;
           listenHost = "127.0.0.1";
           port = 3000;
-          package = pkgs.hydra;
+          package = inputs'.nixpkgs-stable.legacyPackages.hydra;
           notificationSender = cfg.mailAdress;
           buildMachinesFiles = [
             "/etc/nix/machines"
