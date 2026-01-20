@@ -10,15 +10,16 @@
   curl,
   gettext,
   libiconv,
+  libsamplerate,
+  lua,
   miniupnpc,
   SDL2,
   SDL2_mixer,
-  libsamplerate,
   writeScript,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "s25rttr";
-  version = "0.9.5";
+  version = "0.9.5-unstable-2026-01-21";
 
   message = ''
     Copy the S2 folder of the Settler 2 Gold Edition to /var/lib/s25rttr/S2/".
@@ -27,36 +28,36 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "Return-To-The-Roots";
     repo = "s25client";
-    rev = "v${finalAttrs.version}";
+    rev = "14c951b36f336a6918a8b4f4675dc23546737d6c";
     fetchSubmodules = true;
-    sha256 = "sha256-6gBvWYP08eoT2i8kco/3nXnTKwVa20DWtv6fLaoH07M=";
+    hash = "sha256-ZV2lZyFJf3twZkkKTFViFeSifwub05+21EKj2HNedjw=";
   };
 
   nativeBuildInputs = [
     cmake
+    git
     pkg-config
   ];
 
   buildInputs = [
-    git
     boost
     bzip2
     curl
     gettext
+
     libiconv
+    libsamplerate
+    lua
     miniupnpc
     SDL2
     SDL2_mixer
-    libsamplerate
   ];
 
   env.NIX_CFLAGS_COMPILE = toString [ "-Wno-error=deprecated-declarations" ];
 
-  patches = [ ./cmake_file_placeholder.patch ];
-
   cmakeBuildType = "Release";
   cmakeFlags = [
-    "-DRTTR_VERSION=${finalAttrs.version}"
+    "-DRTTR_VERSION=20260121"
     "-DRTTR_REVISION=${finalAttrs.src.rev}"
     "-DRTTR_USE_SYSTEM_LIBS=ON"
     "-DFETCHCONTENT_FULLY_DISCONNECTED=ON"
