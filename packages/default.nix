@@ -13,7 +13,8 @@
         rtc-helper = pkgs.callPackage ./shellscripts/rtc-helper.nix { };
         backup-usb = pkgs.callPackage ./shellscripts/backup-usb.nix { };
 
-        s25rttr = pkgs.callPackage ./s25rttr { };
+        s25client-unwrapped = pkgs.callPackage ./s25client-unwrapped { };
+        s25client = pkgs.callPackage ./s25client { inherit (packages) s25client-unwrapped; };
 
         #jameica-fhs = pkgs.callPackage ./jameica/fhsenv.nix { };
       };

@@ -21,16 +21,12 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "s25rttr";
   version = "0.9.5-unstable-2026-01-21";
 
-  message = ''
-    Copy the S2 folder of the Settler 2 Gold Edition to /var/lib/s25rttr/S2/".
-  '';
-
   src = fetchFromGitHub {
     owner = "Return-To-The-Roots";
     repo = "s25client";
-    rev = "14c951b36f336a6918a8b4f4675dc23546737d6c";
+    rev = "12da8bf447c6226ed4c126f5aaedbcf8fd34df5c";
     fetchSubmodules = true;
-    hash = "sha256-ZV2lZyFJf3twZkkKTFViFeSifwub05+21EKj2HNedjw=";
+    hash = "sha256-7jQOV9Uuk7/Sv5YbXXZ9Y375fHfk32xIt24Va/d7r4Q=";
   };
 
   nativeBuildInputs = [
@@ -44,7 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
     bzip2
     curl
     gettext
-
     libiconv
     libsamplerate
     lua
@@ -53,8 +48,6 @@ stdenv.mkDerivation (finalAttrs: {
     SDL2_mixer
   ];
 
-  env.NIX_CFLAGS_COMPILE = toString [ "-Wno-error=deprecated-declarations" ];
-
   cmakeBuildType = "Release";
   cmakeFlags = [
     "-DRTTR_VERSION=20260121"
@@ -62,10 +55,10 @@ stdenv.mkDerivation (finalAttrs: {
     "-DRTTR_USE_SYSTEM_LIBS=ON"
     "-DFETCHCONTENT_FULLY_DISCONNECTED=ON"
     "-DRTTR_INSTALL_PLACEHOLDER=OFF"
-    "-DRTTR_GAMEDIR=/var/lib/s25rttr/S2/"
+    "-DRTTR_GAMEDIR=./"
   ];
 
-  passthru.runUpdate = true;
+  passthru.runUpdate = false;
   passthru.updateScript = writeScript "update-s25rttr" ''
     #!/usr/bin/env nix-shell
     #!nix-shell -i bash -p curl jq common-updater-scripts
@@ -80,5 +73,6 @@ stdenv.mkDerivation (finalAttrs: {
     license = lib.licenses.gpl2Plus;
     platforms = lib.platforms.linux;
     maintainers = with lib.maintainers; [ shawn8901 ];
+    mainProgram = "s25client";
   };
 })
