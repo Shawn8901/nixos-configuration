@@ -22,14 +22,14 @@ jobs:
     needs: [sync_fork]
     steps:
       - name: Clone config repo
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: "${{ github.repository }}"
           token: "${{ secrets.GH_TOKEN }}"
           path: "config"
 
       - name: Clone nixpkgs repository
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: "Shawn8901/nixpkgs"
           token: "${{ secrets.GH_TOKEN }}"
