@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   symlinkJoin,
   makeBinaryWrapper,
@@ -37,14 +38,5 @@ symlinkJoin {
     tests.version = testers.testVersion { package = s25client-unwrapped; };
   };
 
-  meta = {
-    inherit (s25client-unwrapped.meta)
-      description
-      homepage
-      changelog
-      license
-      mainProgram
-      maintainers
-      ;
-  };
+  meta = lib.recurseIntoAttrs (s25client-unwrapped.meta);
 }
