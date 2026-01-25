@@ -4,7 +4,11 @@
 }:
 {
   flake = withSystem "x86_64-linux" (
-    { system, pkgs, ... }:
+    {
+      system,
+      pkgs,
+      ...
+    }:
     let
       packages = {
 
@@ -21,7 +25,9 @@
     in
     {
       packages."${system}" = packages;
-      hydraJobs."${system}" = packages;
+      hydraJobs."${system}" = pkgs.lib.filterAttrs (
+        name: pkg: (builtins.elem system (pkg.meta.hydraPlatforms or pkg.meta.platforms or [ system ]))
+      ) packages;
     }
   );
 }
