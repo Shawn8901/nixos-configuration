@@ -38,5 +38,7 @@ symlinkJoin {
     tests.version = testers.testVersion { package = s25client-unwrapped; };
   };
 
-  meta = lib.recurseIntoAttrs (s25client-unwrapped.meta);
+  meta = lib.recurseIntoAttrs (s25client-unwrapped.meta) // {
+    hydraPlatforms = [ ];
+  };
 }
