@@ -57,6 +57,7 @@ in
           group = "hydra";
         };
         attic-token = { };
+        openarchiver = { };
       }
       (lib.optionalAttrs config.services.stalwart-mail.enable {
         stalwart-fallback-admin = {
@@ -759,5 +760,14 @@ in
             ;
         })
       ];
+  };
+
+  services.openarchiver = {
+    enable = true;
+    configurePostgres = true;
+    configureTika = true;
+    configureMelisearch = true;
+    configureRedis = true;
+    environmentFile = secrets.openarchiver.path;
   };
 }

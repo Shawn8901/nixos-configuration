@@ -58,6 +58,7 @@
       extraModules = [
         inputs.mimir.nixosModules.default
         ./tank/hydra.nix
+        inputs.openarchiver.nixosModules.openarchiver
       ];
     };
     zenbook = {
