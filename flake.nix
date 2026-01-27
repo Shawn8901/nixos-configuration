@@ -41,6 +41,10 @@
       url = "github:shawn8901/asus-numberpad-driver/nixos_improvement";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    openarchiver = {
+      url = "github:shawn8901/openarchiver-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
