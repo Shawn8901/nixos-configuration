@@ -256,11 +256,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769554176,
-        "narHash": "sha256-3ByjWqt1FGA+HhO91lSp8rg/0UuaznwyPhexxBnUjJw=",
+        "lastModified": 1769623975,
+        "narHash": "sha256-VP/ePuZHGVMIavKhVsU2o8tX3goNnhxjAJpcS+Wgrv8=",
         "owner": "shawn8901",
         "repo": "openarchiver-flake",
-        "rev": "48e89ae1e02fe8000a4f5c63d68ac5f7391c9d9a",
+        "rev": "2aca9027a7f3d295a181613a62832ba05fe157dc",
         "type": "github"
       },
       "original": {

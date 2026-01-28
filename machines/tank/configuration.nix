@@ -771,5 +771,8 @@ in
     configureMelisearch = true;
     configureRedis = true;
     environmentFile = secrets.openarchiver.path;
+    settings = {
+      ENABLE_DELETION = true;
+    };
   };
 }
