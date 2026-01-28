@@ -60,7 +60,6 @@ in
 
         nix-tree
         nixpkgs-review
-        vdhcoapp
         element-desktop
       ]
       ++ (with self'.packages; [
@@ -72,7 +71,6 @@ in
         enable = true;
         package = pkgs.firefox;
         nativeMessagingHosts = with pkgs; [
-          vdhcoapp
           keepassxc
         ];
         profiles."shawn" = {
