@@ -49,11 +49,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1769573039,
-        "narHash": "sha256-N6tV2jKnyDsdth7/tOeE5mQx4+zXltwyyYqWITreWLE=",
+        "lastModified": 1769659429,
+        "narHash": "sha256-7xVsQxuxCdypfnWX1QHw91OZphdiTCpFo499zf8Rxow=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "a113241e0e9e837d56b26a608976ac5f1488b17f",
+        "rev": "fefed0323ad53bb5c62944b43c1ed3937c84fb67",
         "type": "gitlab"
       },
       "original": {
@@ -90,11 +90,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769622371,
-        "narHash": "sha256-Cs1/+P3ntxl9mOIL7/QtItBAzQJ2xjvTMHv7qw0nFV0=",
+        "lastModified": 1769638001,
+        "narHash": "sha256-hGwdJ/+oo+IRo2TiWV/V8BWWptQihcdFV/olTONaHqg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "02d763228d8aff317e6e5a319474b6d4d9d826a5",
+        "rev": "bd9f031efc634be4b80c5090b9171cc3a9f8e49c",
         "type": "github"
       },
       "original": {
@@ -222,11 +222,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1769318308,
-        "narHash": "sha256-O2rv+3nFinYI/bPcldqotnVI+5frRStyCfAXAG/q6bg=",
-        "rev": "1cd347bf3355fce6c64ab37d3967b4a2cb4b878c",
+        "lastModified": 1769598131,
+        "narHash": "sha256-kzEnMXuhOsr6tE6QvuTvdolZ3VqnOMzU8EOTGXsP9RU=",
+        "rev": "fa83fd837f3098e3e678e6cf017b2b36102c7211",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.4657.1cd347bf3355/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.4882.fa83fd837f30/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",
@@ -235,11 +235,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1769461804,
-        "narHash": "sha256-msG8SU5WsBUfVVa/9RPLaymvi5bI8edTavbIq3vRlhI=",
+        "lastModified": 1769639584,
+        "narHash": "sha256-ZL83FY98kNMI8f7KQCg7cfISkvX7zpzx2kUql+FerSU=",
         "owner": "Shawn8901",
         "repo": "nixpkgs",
-        "rev": "bfc1b8a4574108ceef22f02bafcf6611380c100d",
+        "rev": "d2475d4ca32125cf397ba3210173281ace0c04bf",
         "type": "github"
       },
       "original": {
