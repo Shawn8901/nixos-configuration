@@ -19,6 +19,7 @@
   environment.persistence."/persist" = {
     hideMounts = true;
     directories = [
+      "/var/lib/private"
       "/var/lib/acme"
       "/var/lib/alsa"
       "/var/lib/attic"
