@@ -26,14 +26,12 @@
       "/var/lib/fail2ban"
       "/var/lib/hydra"
       "/var/lib/immich"
-      "/var/lib/meilisearch"
       "/var/lib/nixos"
       "/var/lib/openarchiver"
       "/var/lib/prometheus2"
       "/var/lib/samba"
       "/var/lib/stalwart-mail"
       "/var/lib/systemd"
-      "/var/lib/tika"
       "/var/lib/vnstat"
     ];
     files = [ "/etc/machine-id" ];
