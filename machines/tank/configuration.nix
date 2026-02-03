@@ -59,9 +59,9 @@ in
         attic-token = { };
         openarchiver = { };
       }
-      (lib.optionalAttrs config.services.stalwart-mail.enable {
+      (lib.optionalAttrs config.services.stalwart.enable {
         stalwart-fallback-admin = {
-          owner = config.systemd.services.stalwart-mail.serviceConfig.User;
+          owner = config.systemd.services.stalwart.serviceConfig.User;
         };
       })
     ];
@@ -553,7 +553,7 @@ in
       };
       shawn.extraGroups = [ "nextcloud" ];
     }
-    (lib.optionalAttrs config.services.stalwart-mail.enable {
+    (lib.optionalAttrs config.services.stalwart.enable {
       stalwart-mail.extraGroups = [ "nginx" ];
     })
   ];
@@ -631,7 +631,7 @@ in
         }
       ];
     };
-    stalwart-mail = {
+    stalwart = {
       enable = true;
       settings = {
         store.db = {
@@ -686,7 +686,7 @@ in
       };
     };
   };
-  systemd.services.stalwart-mail.serviceConfig = lib.mkIf config.services.stalwart-mail.enable {
+  systemd.services.stalwart.serviceConfig = lib.mkIf config.services.stalwart.enable {
     EnvironmentFile = [ secrets.stalwart-fallback-admin.path ];
   };
 
