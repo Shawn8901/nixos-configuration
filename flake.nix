@@ -25,10 +25,6 @@
       url = "github:Shawn8901/mimir";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
-    mimir-client = {
-      url = "github:Shawn8901/mimir-client";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";

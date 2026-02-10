@@ -206,8 +206,8 @@ in
     stne-mimir = {
       enable = true;
       domain = "mimir.pointjig.de";
-      clientPackage = inputs'.mimir-client.packages.default;
-      package = inputs'.mimir.packages.default;
+      clientPackage = inputs'.mimir.packages.mimir-client;
+      package = inputs'.mimir.packages.mimir;
       envFile = secrets.mimir-env.path;
       unixSocket = "/run/mimir-backend/mimir-backend.sock";
     };

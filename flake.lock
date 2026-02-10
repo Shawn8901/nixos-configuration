@@ -154,36 +154,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1770230423,
-        "narHash": "sha256-mUBIRsbY3Z5pKjLGDODwwVhCqjP7/uuFV32QoYfJRhM=",
+        "lastModified": 1770750972,
+        "narHash": "sha256-tLAvOzMQXOzpIphq8q1bGJ5CDr+w31bfqrKKe2kyVdQ=",
         "owner": "Shawn8901",
         "repo": "mimir",
-        "rev": "bce8f1f0615573e5177ef64a23a1cda0bcb20e63",
+        "rev": "36e593894c92f9120ddcea92a833d90f7f02e674",
         "type": "github"
       },
       "original": {
         "owner": "Shawn8901",
         "repo": "mimir",
-        "type": "github"
-      }
-    },
-    "mimir-client": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-stable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1770234078,
-        "narHash": "sha256-JaXZG/a7fjEcYGLiXWNEHQkpV1OtL1ZwJlnGpwE6ITQ=",
-        "owner": "Shawn8901",
-        "repo": "mimir-client",
-        "rev": "47d5a9058f0e811dadc8b0e8967f2201387a440e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Shawn8901",
-        "repo": "mimir-client",
         "type": "github"
       }
     },
@@ -246,7 +226,6 @@
         "home-manager-stable": "home-manager-stable",
         "impermanence": "impermanence",
         "mimir": "mimir",
-        "mimir-client": "mimir-client",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "openarchiver": "openarchiver",
