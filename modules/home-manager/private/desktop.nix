@@ -264,6 +264,15 @@ in
 
               # go dev
               golang.go
+
+              (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+                mktplcRef = {
+                  name = "stnescript-support";
+                  publisher = "STNE";
+                  version = "1.0.5";
+                  hash = "sha256-hSV8Iyi5MEofRzaIdjVcqK5CDMVrLbdfQW4m0SUjHNg=";
+                };
+              })
             ];
           };
         };
