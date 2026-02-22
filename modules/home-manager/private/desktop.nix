@@ -4,7 +4,6 @@
   lib,
   pkgs,
   inputs,
-  inputs',
   ...
 }:
 let
@@ -12,7 +11,6 @@ let
   inherit (inputs.firefox-addons.lib.${system}) buildFirefoxXpiAddon;
   inherit (pkgs.stdenv.hostPlatform) system;
   cfg = config.shawn8901.desktop;
-  firefox-addon-packages = inputs'.firefox-addons.packages;
 in
 {
 
@@ -75,17 +73,14 @@ in
         ];
         profiles."shawn" = {
           extensions = {
-            packages = with firefox-addon-packages; [
+            packages = with pkgs.firefox-addons; [
               ublock-origin
               umatrix
               plasma-integration
               h264ify
               bitwarden
-              # firefox addons are from a input, that does not share pkgs with the host and some can not pass a
-              # nixpkgs.config.allowUnfreePredicate to a flake input.
-              # So overriding the stdenv is the only solution here to use the hosts nixpkgs.config.allowUnfreePredicate.
-              (tampermonkey.override { inherit (pkgs) stdenv fetchurl; })
-              (betterttv.override { inherit (pkgs) stdenv fetchurl; })
+              tampermonkey
+              betterttv
               # Download all plugins which are not in the repo manually
               (buildFirefoxXpiAddon {
                 pname = "Video-DownloadHelper";

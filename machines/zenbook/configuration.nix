@@ -1,5 +1,6 @@
 {
   self,
+  inputs,
   pkgs,
   lib,
   config,
@@ -27,6 +28,8 @@ in
     "tampermonkey"
     "betterttv"
   ];
+
+  nixpkgs.overlays = [ inputs.firefox-addons.overlays.default ];
 
   sops.secrets = {
     zrepl.restartUnits = [ "zrepl.service" ];

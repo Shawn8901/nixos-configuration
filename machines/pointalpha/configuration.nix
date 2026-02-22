@@ -2,6 +2,7 @@
   self,
   pkgs,
   lib,
+  inputs,
   config,
   flakeConfig,
   modulesPath,
@@ -39,6 +40,8 @@ in
     "epsonscan2"
     "makemkv"
   ];
+
+  nixpkgs.overlays = [ inputs.firefox-addons.overlays.default ];
 
   sops.secrets = {
     zrepl = { };
