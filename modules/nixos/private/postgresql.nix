@@ -52,26 +52,17 @@ in
 
     systemd = {
       services = {
-        postgresql-vacuum-analyze = lib.mkMerge [
-          {
-            description = "Vacuum and analyze all PostgreSQL databases";
-            serviceConfig = {
-              ExecStart = "${lib.getExe' cfg.package "psql"} -c 'VACUUM ANALYZE'";
-              User = "postgres";
-            };
-            wantedBy = [ "timers.target" ];
-          }
-          (lib.optionalAttrs (lib.versionOlder config.system.nixos.release "25.11") {
-            after = [ "postgresql.service" ];
-            requires = [ "postgresql.service" ];
-          })
+        postgresql-vacuum-analyze = {
+          description = "Vacuum and analyze all PostgreSQL databases";
+          serviceConfig = {
+            ExecStart = "${lib.getExe' cfg.package "psql"} -c 'VACUUM ANALYZE'";
+            User = "postgres";
+          };
+          wantedBy = [ "timers.target" ];
+          after = [ "postgresql.target" ];
+          requires = [ "postgresql.target" ];
 
-          (lib.optionalAttrs (!lib.versionOlder config.system.nixos.release "25.11") {
-            after = [ "postgresql.target" ];
-            requires = [ "postgresql.target" ];
-          })
-
-        ];
+        };
       };
       timers.postgresql-vacuum-analyze = {
         timerConfig = {

@@ -349,52 +349,48 @@ in
         enable = true;
         extensions = [ pkgs.gh-poi ];
       };
-      ssh = lib.mkMerge [
-        {
-          enable = true;
-          matchBlocks = {
-            tank = {
-              hostname = "tank";
-              user = "shawn";
-            };
-            shelter = {
-              hostname = "shelter.pointjig.de";
-              port = 2242;
-              user = "shawn";
-            };
-            watchtower = {
-              hostname = "watchtower.pointjig.de";
-              port = 2242;
-              user = "shawn";
-            };
-            sap = {
-              hostname = "clansap.org";
-              user = "root";
-            };
-            next = {
-              hostname = "next.clansap.org";
-              port = 2242;
-              user = "root";
-            };
-            pointjig = {
-              hostname = "pointjig.de";
-              port = 2242;
-              user = "shawn";
-            };
-            sapsrv01 = {
-              hostname = "sapsrv01.clansap.org";
-              user = "root";
-            };
-            sapsrv02 = {
-              hostname = "sapsrv02.clansap.org";
-              user = "root";
-            };
+      ssh = {
+        enable = true;
+        matchBlocks = {
+          tank = {
+            hostname = "tank";
+            user = "shawn";
           };
-        }
-        (lib.optionalAttrs (!lib.versionOlder config.home.version.release "25.11") {
-          enableDefaultConfig = false;
-        })
-      ];
+          shelter = {
+            hostname = "shelter.pointjig.de";
+            port = 2242;
+            user = "shawn";
+          };
+          watchtower = {
+            hostname = "watchtower.pointjig.de";
+            port = 2242;
+            user = "shawn";
+          };
+          sap = {
+            hostname = "clansap.org";
+            user = "root";
+          };
+          next = {
+            hostname = "next.clansap.org";
+            port = 2242;
+            user = "root";
+          };
+          pointjig = {
+            hostname = "pointjig.de";
+            port = 2242;
+            user = "shawn";
+          };
+          sapsrv01 = {
+            hostname = "sapsrv01.clansap.org";
+            user = "root";
+          };
+          sapsrv02 = {
+            hostname = "sapsrv02.clansap.org";
+            user = "root";
+          };
+        };
+        enableDefaultConfig = false;
+      };
     };
   };
 }

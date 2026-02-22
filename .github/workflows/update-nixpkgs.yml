@@ -49,10 +49,3 @@ jobs:
           gh_token: "${{ secrets.GH_TOKEN }}"
           base_branch: "nixos-unstable"
           working_dir: "nixpkgs"
-
-      # - name: Sync 25.11
-      #   uses: ./config/.github/actions/update-custom-branch
-      #   with:
-      #     gh_token: "${{ secrets.GH_TOKEN }}"
-      #     base_branch: "nixos-25.11"
-      #     working_dir: "nixpkgs"

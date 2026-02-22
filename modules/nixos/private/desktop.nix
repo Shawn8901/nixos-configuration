@@ -142,17 +142,13 @@ in
         kzones
       ]);
 
-      plasma6.excludePackages =
-        with pkgs.kdePackages;
-        [
-          elisa
-          khelpcenter
-          kate
-          gwenview
-        ]
-        ++ lib.optionals (!lib.versionOlder config.system.nixos.release "25.11") [
-          pkgs.kdePackages.kwin-x11
-        ];
+      plasma6.excludePackages = with pkgs.kdePackages; [
+        elisa
+        khelpcenter
+        kate
+        gwenview
+        kwin-x11
+      ];
     };
 
     boot.kernel.sysctl = {

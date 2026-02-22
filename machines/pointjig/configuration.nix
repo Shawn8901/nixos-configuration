@@ -65,22 +65,13 @@ in
         User = "stalwart-mail";
         EnvironmentFile = [ secrets.stalwart-env.path ];
       };
-      vaultwarden = lib.mkMerge [
-        {
-          serviceConfig = {
-            StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
-          };
-        }
-        (lib.optionalAttrs (lib.versionOlder config.system.nixos.release "25.11") {
-          after = [ "postgresql.service" ];
-          requires = [ "postgresql.service" ];
-        })
-
-        (lib.optionalAttrs (!lib.versionOlder config.system.nixos.release "25.11") {
-          after = [ "postgresql.target" ];
-          requires = [ "postgresql.target" ];
-        })
-      ];
+      vaultwarden = {
+        serviceConfig = {
+          StateDirectory = lib.mkForce "vaultwarden"; # modules defaults to bitwarden_rs
+        };
+        after = [ "postgresql.target" ];
+        requires = [ "postgresql.target" ];
+      };
     };
   };
 

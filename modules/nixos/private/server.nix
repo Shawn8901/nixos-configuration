@@ -51,10 +51,18 @@ in
     services = {
       logrotate.enable = true;
       qemuGuest.enable = true;
-      resolved = {
-        enable = true;
-        llmnr = "false";
-      };
+      resolved = lib.mkMerge [
+        {
+          enable = true;
+        }
+        (lib.optionalAttrs (lib.versionOlder config.system.nixos.release "26.05") {
+          llmnr = "false";
+        })
+
+        (lib.optionalAttrs (!lib.versionOlder config.system.nixos.release "26.05") {
+          settings.Resolve.LLMNR = "false";
+        })
+      ];
       vnstat.enable = true;
       openssh = {
         enable = true;
