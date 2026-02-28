@@ -535,8 +535,9 @@ in
       configureMemories = true;
       configureMemoriesVaapi = true;
       configurePreviewSettings = true;
-      configureRecognize = true;
-      settings.maintenance_window_start = "100";
+      extraApps = {
+        inherit (config.services.nextcloud.package.packages.apps) recognize;
+      };
     };
   };
 

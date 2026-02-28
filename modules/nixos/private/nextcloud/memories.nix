@@ -22,37 +22,47 @@ in
     services.nextcloud = {
       recommendedDefaults = mkOpinionatedOption "set recommended default settings";
 
-      configureImaginary = mkOpinionatedOption "configure and use Imaginary for preview generation";
-
-      configureMemories = mkOpinionatedOption "configure dependencies for Memories App";
+      configureMemories = lib.mkEnableOption "" // {
+        description = "Whether to configure dependencies for Memories App.";
+      };
 
       configureMemoriesVaapi = lib.mkOption {
         type = lib.types.bool;
-        default = false;
-        description = lib.mdDoc ''
-          Wether to configure Memories App to use an Intel iGPU for hardware acceleration.
-        '';
+        default = lib.hasAttr "driver" (config.hardware.intelgpu or { });
+        defaultText = lib.literalExpression ''lib.hasAttr "driver" config.hardware.intelgpu'';
+        description = "Whether to configure Memories App to use an Intel iGPU for hardware acceleration.";
       };
 
       configurePreviewSettings = lib.mkOption {
         type = lib.types.bool;
-        default = cfg.configureImaginary;
-        defaultText = "config.services.nextcloud.configureImaginary";
-        description = lib.mdDoc ''
-          Wether to configure the preview settings to be more optimised for real world usage.
+        default = cfg.imaginary.enable;
+        defaultText = lib.literalExpression "config.services.nextcloud.imaginary.enable";
+        description = ''
+          Whether to configure the preview settings to be more optimised for real world usage.
           By default this is enabled, when Imaginary is configured.
         '';
       };
-
-      configureRecognize = mkOpinionatedOption "configure dependencies for Recognize App";
     };
   };
 
+  imports = [
+    (lib.mkRenamedOptionModule
+      [ "services" "nextcloud" "configureImaginary" ]
+      [ "services" "nextcloud" "imaginary" "enable" ]
+    )
+    (lib.mkRemovedOptionModule [ "services" "nextcloud" "configureRecognize" ] ''
+      configureRecognize has been removed in favor of using the recognize packages from NixOS like:
+
+      services.nextcloud.extraApps = {
+        inherit (config.services.nextcloud.package.packages.apps) recognize;
+      };
+    '')
+  ];
+
   config = lib.mkIf cfg.enable {
     services = {
-      imaginary = lib.mkIf cfg.configureImaginary {
+      imaginary = lib.mkIf cfg.imaginary.enable {
         enable = true;
-        address = "127.0.0.1";
         settings.return-size = true;
       };
 
@@ -66,10 +76,16 @@ in
           })
         ];
 
+        imaginary.enable = lib.mkDefault true;
+
         phpOptions = lib.mkIf cfg.recommendedDefaults {
+          # recommended by nextcloud admin overview after some usage, default 8
+          "opcache.interned_strings_buffer" = 16;
           # https://docs.nextcloud.com/server/latest/admin_manual/installation/server_tuning.html#:~:text=opcache.jit%20%3D%201255%20opcache.jit_buffer_size%20%3D%20128m
           "opcache.jit" = 1255;
           "opcache.jit_buffer_size" = "128M";
+          # https://docs.nextcloud.com/server/32/admin_manual/installation/server_tuning.html#enable-php-opcache
+          "opcache.revalidate_freq" = 60; # default 1
         };
 
         settings = lib.mkMerge [
@@ -78,7 +94,7 @@ in
             log_type = "file";
           })
 
-          (lib.mkIf cfg.configureImaginary {
+          (lib.mkIf cfg.imaginary.enable {
             enabledPreviewProviders = [
               # default from https://github.com/nextcloud/server/blob/master/config/config.sample.php#L1494-L1505
               ''OC\Preview\BMP''
@@ -95,7 +111,7 @@ in
               ''OC\Preview\Imaginary''
             ];
 
-            preview_imaginary_url = "http://127.0.0.1:${toString config.services.imaginary.port}/";
+            preview_imaginary_url = "http://${config.services.imaginary.address}:${toString config.services.imaginary.port}";
           })
 
           (lib.mkIf (cfg.configurePreviewSettings || cfg.configureMemories) {
@@ -106,15 +122,6 @@ in
               ''OC\Preview\TIFF''
               ''OC\Preview\Movie''
             ];
-          })
-
-          (lib.mkIf cfg.configureMemories {
-            "memories.exiftool_no_local" = false;
-            "memories.exiftool" = "${apps.memories}/bin-ext/exiftool/exiftool";
-            "memories.vod.ffmpeg" = "${apps.memories}/bin-ext/ffmpeg";
-            "memories.vod.ffprobe" = "${apps.memories}/bin-ext/ffprobe";
-            "memories.vod.path" = "${apps.memories}/bin-ext/go-vod";
-            "memories.vod.vaapi" = lib.mkIf cfg.configureMemoriesVaapi true;
           })
 
           (lib.mkIf cfg.configurePreviewSettings {
@@ -165,27 +172,26 @@ in
             wants = [ "nextcloud-setup.service" ];
             after = [ "nextcloud-setup.service" ];
             environment.NEXTCLOUD_CONFIG_DIR = "${cfg.datadir}/config";
-            script = # bash
-              ''
-                # check with:
-                # for size in squareSizes widthSizes heightSizes; do echo -n "$size: "; nextcloud-occ config:app:get previewgenerator $size; done
+            script = /* bash */ ''
+              # check with:
+              # for size in squareSizes widthSizes heightSizes; do echo -n "$size: "; nextcloud-occ config:app:get previewgenerator $size; done
 
-                # extra commands run for preview generator:
-                # 32   icon file list
-                # 64   icon file list android app, photos app
-                # 96   nextcloud client VFS windows file preview
-                # 256  file app grid view, many requests
-                # 512  photos app tags
-                ${occ} config:app:set --value="32 64 96 256 512" previewgenerator squareSizes
+              # extra commands run for preview generator:
+              # 32   icon file list
+              # 64   icon file list android app, photos app
+              # 96   nextcloud client VFS windows file preview
+              # 256  file app grid view, many requests
+              # 512  photos app tags
+              ${occ} config:app:set --value="32 64 96 256 512" previewgenerator squareSizes
 
-                # 341 hover in maps app
-                # 1920 files/photos app when viewing picture
-                ${occ} config:app:set --value="341 1920" previewgenerator widthSizes
+              # 341 hover in maps app
+              # 1920 files/photos app when viewing picture
+              ${occ} config:app:set --value="341 1920" previewgenerator widthSizes
 
-                # 256 hover in maps app
-                # 1080 files/photos app when viewing picture
-                ${occ} config:app:set --value="256 1080" previewgenerator heightSizes
-              '';
+              # 256 hover in maps app
+              # 1080 files/photos app when viewing picture
+              ${occ} config:app:set --value="256 1080" previewgenerator heightSizes
+            '';
             serviceConfig = {
               inherit LoadCredential;
               Type = "oneshot";
