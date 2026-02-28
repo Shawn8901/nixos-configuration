@@ -58,7 +58,7 @@ in
 
     systemd.tmpfiles.rules = lib.mkMerge [
       [ "f /tmp/hyda/dynamic-machines 666 hydra hydra - " ]
-      (lib.optionals cfg.attic.enable [ "d /var/lib/attic 666 attic attic -" ])
+      (lib.optionals cfg.attic.enable [ "d /var/lib/attic 600 attic - -" ])
     ];
 
     services = {
