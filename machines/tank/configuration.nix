@@ -30,7 +30,10 @@ in
           owner = "hydra-queue-runner";
         };
         srv-ssh = { };
-        zfs-ztank-key = { };
+        zfs-ztank-key = {
+          # Hack to have the zfs key material available very early for mounting
+          neededForUsers = true;
+        };
         zrepl = { };
         ela = {
           neededForUsers = true;
