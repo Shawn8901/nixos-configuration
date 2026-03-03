@@ -249,6 +249,9 @@ in
               ms-python.debugpy
               ms-python.isort
 
+              # JS
+              dbaeumer.vscode-eslint
+
               # typescript dev
               esbenp.prettier-vscode
               wix.vscode-import-cost
