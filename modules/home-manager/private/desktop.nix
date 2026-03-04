@@ -201,7 +201,11 @@ in
               "[typescript]" = {
                 "editor.defaultFormatter" = "esbenp.prettier-vscode";
               };
+              "[javascript]" = {
+                "editor.defaultFormatter" = "dbaeumer.vscode-eslint";
+              };
               "editor.tabSize" = 2;
+              "eslint.format.enable" = true;
               "terminal.integrated.gpuAcceleration" = false;
               "terminal.integrated.persistentSessionReviveProcess" = "never";
               "terminal.integrated.enablePersistentSessions" = false;
