@@ -70,6 +70,19 @@ in
   };
 
   services = {
+    mysql = {
+      enable = true;
+      package = pkgs.mariadb;
+      ensureDatabases = [ "db" ];
+      ensureUsers = [
+        {
+          name = "shawn";
+          ensurePermissions = {
+            "db.*" = "ALL PRIVILEGES";
+          };
+        }
+      ];
+    };
     resolved.enable = false;
     udev.packages = [
       pkgs.libmtp.out
