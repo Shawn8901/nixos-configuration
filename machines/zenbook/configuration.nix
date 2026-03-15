@@ -156,6 +156,19 @@ in
     };
     acpid.enable = true;
     upower.enable = true;
+    mysql = {
+      enable = true;
+      package = pkgs.mariadb;
+      ensureDatabases = [ "db" ];
+      ensureUsers = [
+        {
+          name = "shawn";
+          ensurePermissions = {
+            "db.*" = "ALL PRIVILEGES";
+          };
+        }
+      ];
+    };
   };
   hardware = {
     amdgpu.initrd.enable = true;
