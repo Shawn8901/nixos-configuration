@@ -256,6 +256,9 @@ in
               # JS
               dbaeumer.vscode-eslint
 
+              # php dev
+              bmewburn.vscode-intelephense-client
+
               # typescript dev
               esbenp.prettier-vscode
               wix.vscode-import-cost

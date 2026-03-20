@@ -184,11 +184,7 @@ in
   services = {
     immich = {
       enable = true;
-      database = {
-        enable = true;
-        enableVectorChord = true;
-        enableVectors = false;
-      };
+      database.enable = true;
       settings = {
         server.externalDomain = "https://${immichName}";
         notifications.smtp.enabled = false;
