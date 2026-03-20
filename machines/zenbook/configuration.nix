@@ -22,6 +22,7 @@ in
     "vscode"
     "vscode-extension-MS-python-vscode-pylance"
     "vscode-extension-mhutchie-git-graph"
+    "vscode-extension-bmewburn-vscode-intelephense-client"
     "discord"
     "teamspeak-client"
     "teamspeak3"
