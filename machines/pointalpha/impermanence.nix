@@ -29,6 +29,7 @@
       "/var/lib/prometheus2"
       "/var/lib/systemd"
       "/var/lib/upower"
+      "/var/lib/mysql"
     ];
     files = [ "/etc/machine-id" ];
   };
