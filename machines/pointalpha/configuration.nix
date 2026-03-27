@@ -120,7 +120,7 @@ in
       enable = true;
       browsed.enable = false;
       listenAddresses = [ "localhost:631" ];
-      drivers = [ pkgs.epson-escpr2 ];
+      #drivers = [ pkgs.epson-escpr2 ];
     };
     zrepl = {
       enable = true;
