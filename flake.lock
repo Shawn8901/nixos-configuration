@@ -21,6 +21,21 @@
         "type": "github"
       }
     },
+    "den": {
+      "locked": {
+        "lastModified": 1774981725,
+        "narHash": "sha256-eaNpxQLoNpALVyiolZQEIoi6eH529jcXeQ7LfuwtHIY=",
+        "owner": "vic",
+        "repo": "den",
+        "rev": "66677bf5f235c5f5fe742e3839f6c184d66065df",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "den",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -63,10 +78,25 @@
         "type": "gitlab"
       }
     },
+    "flake-file": {
+      "locked": {
+        "lastModified": 1774886516,
+        "narHash": "sha256-w2LoQVM6DXrSdGUZBZqa1nYkMzHoB0t82DrptzZKhTs=",
+        "owner": "vic",
+        "repo": "flake-file",
+        "rev": "3daadf37de2bb85b0ff34e2a7ab0d71e077c2b9e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-file",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs"
+          "nixpkgs-lib"
         ]
       },
       "locked": {
@@ -90,11 +120,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774898676,
-        "narHash": "sha256-0Utnqo+FbB+0CVUi0MI3oonF0Kuzy9VcgRkxl53Euvk=",
+        "lastModified": 1774984355,
+        "narHash": "sha256-/41Q8d4EB/bZRFfR5BYdlDl32avGyCqHNEZhznar8EI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a184bd2f8426087bae93f203403cd4b86c99e57d",
+        "rev": "0adb9993274f27168ec0d6c13ec292f03dc328d0",
         "type": "github"
       },
       "original": {
@@ -147,6 +177,21 @@
         "type": "github"
       }
     },
+    "import-tree": {
+      "locked": {
+        "lastModified": 1773693634,
+        "narHash": "sha256-BtZ2dtkBdSUnFPPFc+n0kcMbgaTxzFNPv2iaO326Ffg=",
+        "owner": "vic",
+        "repo": "import-tree",
+        "rev": "c41e7d58045f9057880b0d85e1152d6a4430dbf1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
     "mimir": {
       "inputs": {
         "nixpkgs": [
@@ -171,13 +216,13 @@
       "locked": {
         "lastModified": 1774851180,
         "narHash": "sha256-VqL5QTLahbwknbgqjtfyjxtHFCKAfZrHAMCFuj9wBYA=",
-        "owner": "Shawn8901",
+        "owner": "shawn8901",
         "repo": "nixpkgs",
         "rev": "7141fb51a18506792e42b455c7d32da7273f87c0",
         "type": "github"
       },
       "original": {
-        "owner": "Shawn8901",
+        "owner": "shawn8901",
         "ref": "nixos-unstable-custom",
         "repo": "nixpkgs",
         "type": "github"
@@ -219,14 +264,20 @@
     "root": {
       "inputs": {
         "asus-numberpad-driver": "asus-numberpad-driver",
+        "den": "den",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
+        "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
         "impermanence": "impermanence",
+        "import-tree": "import-tree",
         "mimir": "mimir",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-lib": [
+          "nixpkgs"
+        ],
         "nixpkgs-stable": "nixpkgs-stable",
         "openarchiver": "openarchiver",
         "sops-nix": "sops-nix"
