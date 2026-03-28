@@ -1,77 +1,52 @@
-keys:
+keys: &all
   - &shawn age1q5mka3zt3w0w4nqzlmdm5pwf3ktxnjf87qcdjjxdednsanryry2scfzh93
   - &pointalpha age1fepqavsyfukjf72ajv9cwp6r62hnlz4h6hgxw4wsddrlaqm8e42sns70ws
   - &zenbook age1q9wy9rnpusgr7w993dm03ec50zm0mgrylmqxdpph2avzf38k6gks3g4vp2
-
   - &tank age1ejf78m4mn8ch2lusuwn3gwqkpz45n03368sf78ce2nunzxlgduuqlme66d
   - &pointjig age1wlznz542ulyhjvp9zxe57z5rgy738wt6ygy6qsgjyavl5e9vcd0q27mu3n
   - &shelter age1qx60k4ft2lvs9qa3s0xqhpkdf26zdc8yw4vr7a7424ta9mcq9g8qrseqv3
   - &watchtower age1ctzz6yc073qv2sp8gtq3meeuaq8kcsw0aujaq3s5ecf7jsu8sudsmchn3v
-
   - &next age1uq4qun60snrl3t3yjqagrnjhsjma36kkdw3ypj9sntccwlgplfgq4ytdtj
 
-all: &all
-  - *shawn
-  - *pointalpha
-  - *zenbook
-  - *tank
-  - *pointjig
-  - *watchtower
-  - *shelter
-  - *next
-
 creation_rules:
-  - path_regex: files/secrets-desktop.yaml
-    key_groups:
-      - age:
-        - *shawn
-        - *pointalpha
-        - *zenbook
-  - path_regex: files/secrets-managed.yaml
-    key_groups:
-      - age:
-        - *shawn
-        - *watchtower
-        - *pointalpha
-        - *pointjig
-        - *shelter
-        - *tank
-        - *zenbook
-  - path_regex: files/secrets-base.yaml
+  - path_regex: modules/aspects/cfg/.*/[^/]+\.yaml
     key_groups:
       - age: *all
-  - path_regex: machines/next/[^/]+\.yaml$
+  - path_regex: modules/aspects/users/[^/]+\.yaml
+    key_groups:
+      - age: *all
+  - path_regex: modules/aspects/hosts/next/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *next
-  - path_regex: machines/pointalpha/[^/]+\.yaml$
+          - *shawn
+          - *next
+  - path_regex: modules/aspects/hosts/pointalpha/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *pointalpha
-  - path_regex: machines/pointjig/[^/]+\.yaml$
+          - *shawn
+          - *pointalpha
+  - path_regex: modules/aspects/hosts/pointjig/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *pointjig
-  - path_regex: machines/shelter/[^/]+\.yaml$
+          - *shawn
+          - *pointjig
+  - path_regex: modules/aspects/hosts/shelter/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *shelter
-  - path_regex: machines/tank/[^/]+\.yaml$
+          - *shawn
+          - *shelter
+  - path_regex: modules/aspects/hosts/tank/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *tank
-  - path_regex: machines/zenbook/[^/]+\.yaml$
+          - *shawn
+          - *tank
+  - path_regex: modules/aspects/hosts/zenbook/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *zenbook
-  - path_regex: machines/watchtower/[^/]+\.yaml$
+          - *shawn
+          - *zenbook
+  - path_regex: modules/aspects/hosts/watchtower/[^/]+\.yaml$
     key_groups:
       - age:
-        - *shawn
-        - *watchtower
+          - *shawn
+          - *watchtower
