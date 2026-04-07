@@ -470,7 +470,7 @@
             shawn.extraGroups = [ "nextcloud" ];
           }
           (lib.optionalAttrs config.services.stalwart.enable {
-            stalwart-mail.extraGroups = [ "nginx" ];
+            stalwart.extraGroups = [ "nginx" ];
           })
         ];
 
@@ -535,27 +535,26 @@
             package = pkgs.postgresql_17;
             dataDir = "/persist/var/lib/postgresql/17";
             ensureDatabases = [
-              "stalwart-mail"
+              "stalwart"
             ];
             ensureUsers = [
               {
-                name = "stalwart-mail";
+                name = "stalwart";
                 ensureDBOwnership = true;
               }
             ];
           };
           stalwart = {
             enable = true;
+            stateVersion = "26.05";
             settings = {
               store.db = {
                 type = "postgresql";
                 host = "localhost";
                 password = "%{env:POSTGRESQL_PASSWORD}%";
                 port = 5432;
-                database = "stalwart-mail";
+                database = "stalwart";
               };
-              storage.blob = "db";
-
               authentication.fallback-admin = {
                 user = "admin";
                 secret = "%{env:FALLBACK_ADMIN_PASSWORD}%";
