@@ -9,23 +9,36 @@
 
   systems = builtins.attrNames den.hosts;
 
-  flake.hydraJobs =
-    let
-      name = "merge-pr";
-    in
-    {
-      ${name} = inputs.nixpkgs.legacyPackages.x86_64-linux.releaseTools.aggregate {
-        inherit name;
-        meta = {
-          schedulingPriority = 1;
+  flake = {
+    hydraJobs =
+      let
+        name = "merge-pr";
+      in
+      {
+        ${name} = inputs.nixpkgs.legacyPackages.x86_64-linux.releaseTools.aggregate {
+          inherit name;
+          meta = {
+            schedulingPriority = 1;
+          };
+          constituents = map (n: "nixos." + n) (inputs.nixpkgs.lib.attrNames self.nixosConfigurations);
         };
-        constituents = map (n: "nixos." + n) (inputs.nixpkgs.lib.attrNames self.nixosConfigurations);
-      };
 
-      nixos = inputs.nixpkgs.lib.mapAttrs (
-        _: cfg: cfg.config.system.build.toplevel
-      ) self.nixosConfigurations;
-    };
+        nixos = inputs.nixpkgs.lib.mapAttrs (
+          _: cfg: cfg.config.system.build.toplevel
+        ) self.nixosConfigurations;
+      };
+    devShells.x86_64-linux.default =
+      let
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+      in
+      pkgs.mkShell {
+        packages = with pkgs; [
+          direnv
+          nix-direnv
+          statix
+        ];
+      };
+  };
 
   den.hosts = {
     x86_64-linux = {
