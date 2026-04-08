@@ -42,7 +42,7 @@
         qemuGuest.enable = true;
         resolved = {
           enable = true;
-          llmnr = "false";
+          settings.Resolve.LLMNR = "false";
         };
         vnstat.enable = true;
         openssh = {
