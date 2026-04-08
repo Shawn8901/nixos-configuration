@@ -133,27 +133,6 @@
         "type": "github"
       }
     },
-    "home-manager-stable": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-stable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775425411,
-        "narHash": "sha256-KY6HsebJHEe5nHOWP7ur09mb0drGxYSzE3rQxy62rJo=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "0d02ec1d0a05f88ef9e74b516842900c41f0f2fe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-25.11",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "impermanence": {
       "inputs": {
         "home-manager": [
@@ -195,15 +174,15 @@
     "mimir": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1772564806,
-        "narHash": "sha256-RDRC0UDE2ETvgBng5BSqmLzkQxMqIsQWzLUWcQoerVM=",
+        "lastModified": 1775683567,
+        "narHash": "sha256-MRGYwLHoYMuogk+F295gEPF2FYFwqFW3CRnuoRdYVlM=",
         "owner": "Shawn8901",
         "repo": "mimir",
-        "rev": "c473d82a4574a0f20d311f2afc0d1e5f3cceeccb",
+        "rev": "6e0f453fbfcec313c909f4e39cb3282c37ad9f84",
         "type": "github"
       },
       "original": {
@@ -226,19 +205,6 @@
         "ref": "nixos-unstable-custom",
         "repo": "nixpkgs",
         "type": "github"
-      }
-    },
-    "nixpkgs-stable": {
-      "locked": {
-        "lastModified": 1775525138,
-        "narHash": "sha256-Je+1anyWP+TeGfSBXHVIIE6vF6N/oN2+V1zbourYr0c=",
-        "rev": "d96b37bbeb9840f1c0ebfe90585ef5067b69bbb3",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.8919.d96b37bbeb98/nixexprs.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz"
       }
     },
     "openarchiver": {
@@ -270,7 +236,6 @@
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
-        "home-manager-stable": "home-manager-stable",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
         "mimir": "mimir",
@@ -278,7 +243,6 @@
         "nixpkgs-lib": [
           "nixpkgs"
         ],
-        "nixpkgs-stable": "nixpkgs-stable",
         "openarchiver": "openarchiver",
         "sops-nix": "sops-nix"
       }

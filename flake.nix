@@ -26,10 +26,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager-stable = {
-      url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     impermanence = {
       url = "github:nix-community/impermanence";
       inputs = {
@@ -40,11 +36,10 @@
     import-tree.url = "github:vic/import-tree";
     mimir = {
       url = "github:Shawn8901/mimir";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:shawn8901/nixpkgs/nixos-unstable-custom";
     nixpkgs-lib.follows = "nixpkgs";
-    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     openarchiver = {
       url = "github:shawn8901/openarchiver-flake";
       inputs.nixpkgs.follows = "nixpkgs";

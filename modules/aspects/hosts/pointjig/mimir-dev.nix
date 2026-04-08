@@ -3,7 +3,7 @@
 
   flake-file.inputs.mimir = {
     url = "github:Shawn8901/mimir";
-    inputs.nixpkgs.follows = "nixpkgs-stable";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   den.aspects.pointjig.nixos =

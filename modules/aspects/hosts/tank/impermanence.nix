@@ -32,7 +32,7 @@
           "/var/lib/openarchiver"
           "/var/lib/prometheus2"
           "/var/lib/samba"
-          "/var/lib/stalwart-mail"
+          "/var/lib/stalwart"
           "/var/lib/systemd"
           "/var/lib/vnstat"
         ];

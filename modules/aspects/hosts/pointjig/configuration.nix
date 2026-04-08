@@ -68,10 +68,7 @@
             wait-online.anyInterface = true;
           };
           services = {
-            stalwart-mail.serviceConfig = {
-              User = "stalwart-mail";
-              EnvironmentFile = [ secrets.stalwart-env.path ];
-            };
+            stalwart.serviceConfig.EnvironmentFile = [ secrets.stalwart-env.path ];
             vaultwarden = {
               serviceConfig.StateDirectory = lib.mkForce "vaultwarden";
               after = [ "postgresql.target" ];
@@ -81,7 +78,7 @@
         };
 
         # So that we can read acme certificate from nginx
-        users.users.stalwart-mail.extraGroups = [ "nginx" ];
+        users.users.stalwart.extraGroups = [ "nginx" ];
 
         services = {
           fstrim.enable = true;
@@ -107,12 +104,12 @@
               track_io_timing = true;
             };
             ensureDatabases = [
-              "stalwart-mail"
+              "stalwart"
               "vaultwarden"
             ];
             ensureUsers = [
               {
-                name = "stalwart-mail";
+                name = "stalwart";
                 ensureDBOwnership = true;
               }
               {
@@ -193,15 +190,16 @@
                 };
               };
             };
-          stalwart-mail = {
+          stalwart = {
             enable = true;
+            stateVersion = "26.05";
             settings = {
               store.db = {
                 type = "postgresql";
                 host = "localhost";
                 password = "%{env:POSTGRESQL_PASSWORD}%";
                 port = 5432;
-                database = "stalwart-mail";
+                database = "stalwart";
               };
               storage.blob = "db";
               authentication.fallback-admin = {
@@ -214,10 +212,10 @@
                 cert = "%{file:/var/lib/acme/${mailHostname}/cert.pem}%";
                 default = true;
               };
-              spam-filter.resource = "file://${pkgs.stalwart-mail}/etc/stalwart/spamfilter.toml";
+              spam-filter.resource = "file://${pkgs.stalwart}/etc/stalwart/spamfilter.toml";
               webadmin = {
-                path = "/var/cache/stalwart-mail";
-                resource = "file://${pkgs.stalwart-mail.webadmin}/webadmin.zip";
+                path = "/var/cache/stalwart";
+                resource = "file://${pkgs.stalwart.webadmin}/webadmin.zip";
               };
 
               server = {
