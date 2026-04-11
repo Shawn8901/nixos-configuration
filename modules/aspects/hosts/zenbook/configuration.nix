@@ -9,7 +9,7 @@
     url = "github:shawn8901/asus-numberpad-driver/nixos_improvement";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  den.aspects.zenbook = {
+  den.aspects.zenbook.provides.to-users = {
     includes = [
       cfg.desktop
       cfg.monitoree

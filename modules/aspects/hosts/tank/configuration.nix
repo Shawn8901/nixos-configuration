@@ -11,7 +11,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  den.aspects.tank = {
+  den.aspects.tank.provides.to-users = {
     includes = [
       cfg.monitoree
       cfg.nextcloud

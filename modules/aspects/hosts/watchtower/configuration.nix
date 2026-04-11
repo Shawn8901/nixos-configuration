@@ -1,6 +1,6 @@
 { cfg, ... }:
 {
-  den.aspects.watchtower = {
+  den.aspects.watchtower.provides.to-users = {
     includes = [
       cfg.monitoree
       cfg.server

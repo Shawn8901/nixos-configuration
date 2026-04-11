@@ -4,7 +4,7 @@
   ...
 }:
 {
-  den.aspects.shelter = {
+  den.aspects.shelter.provides.to-users = {
     includes = [
       cfg.monitoree
       cfg.server

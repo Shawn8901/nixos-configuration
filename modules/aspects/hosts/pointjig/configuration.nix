@@ -1,6 +1,6 @@
 { cfg, ... }:
 {
-  den.aspects.pointjig = {
+  den.aspects.pointjig.provides.to-users = {
     includes = [
       cfg.monitoree
       cfg.server
