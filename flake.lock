@@ -96,7 +96,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs-lib"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -240,9 +240,6 @@
         "import-tree": "import-tree",
         "mimir": "mimir",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ],
         "openarchiver": "openarchiver",
         "sops-nix": "sops-nix"
       }

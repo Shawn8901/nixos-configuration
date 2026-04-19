@@ -20,7 +20,7 @@
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -39,7 +39,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:shawn8901/nixpkgs/nixos-unstable-custom";
-    nixpkgs-lib.follows = "nixpkgs";
     openarchiver = {
       url = "github:shawn8901/openarchiver-flake";
       inputs.nixpkgs.follows = "nixpkgs";
