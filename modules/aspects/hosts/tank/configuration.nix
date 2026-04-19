@@ -113,6 +113,7 @@
         nix.settings = {
           keep-outputs = true;
           keep-derivations = true;
+          http2 = false;
         };
         services = {
           immich = {

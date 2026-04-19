@@ -75,6 +75,7 @@
           keep-outputs = true;
           keep-derivations = true;
           cores = 8;
+          http2 = false;
         };
 
         services = {
