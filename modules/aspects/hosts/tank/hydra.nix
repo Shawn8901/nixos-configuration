@@ -78,36 +78,36 @@
 
       systemd = {
         tmpfiles.rules = [
-          "f /tmp/hyda/dynamic-machines 666 hydra hydra - "
           "d /var/lib/attic 700 attic - -"
+          # "f /tmp/hyda/dynamic-machines 666 hydra hydra - "
         ];
-        services.pointalpha-online =
-          let
-            systemFeatures = hosts.pointalpha.config.nix.settings.system-features;
-            jobs = hosts.pointalpha.config.nix.settings.max-jobs;
-            speedFactor = 1;
-          in
-          {
-            script = ''
-              if ${pkgs.iputils}/bin/ping -c1 -w 1 pointalpha > /dev/null; then
-                if ! grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
-                  echo "ssh://root@pointalpha x86_64-linux,i686-linux ${config.sops.secrets.ssh-builder-key.path} ${toString jobs} ${toString speedFactor} ${lib.concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines
-                  echo "Added pointalpha to dynamic build machines"
-                fi
-              else
-                if grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
-                  echo "" > /tmp/hyda/dynamic-machines
-                  echo "Cleared dynamic build machines"
-                fi
-              fi
-            '';
-          };
-        timers.pointalpha-online = {
-          wantedBy = [ "timers.target" ];
-          timerConfig = {
-            OnCalendar = "*:0/1";
-          };
-        };
+        # services.pointalpha-online =
+        #   let
+        #     systemFeatures = hosts.pointalpha.config.nix.settings.system-features;
+        #     jobs = hosts.pointalpha.config.nix.settings.max-jobs;
+        #     speedFactor = 1;
+        #   in
+        #   {
+        #     script = ''
+        #       if ${pkgs.iputils}/bin/ping -c1 -w 1 pointalpha > /dev/null; then
+        #         if ! grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
+        #           echo "ssh://root@pointalpha x86_64-linux,i686-linux ${config.sops.secrets.ssh-builder-key.path} ${toString jobs} ${toString speedFactor} ${lib.concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines
+        #           echo "Added pointalpha to dynamic build machines"
+        #         fi
+        #       else
+        #         if grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
+        #           echo "" > /tmp/hyda/dynamic-machines
+        #           echo "Cleared dynamic build machines"
+        #         fi
+        #       fi
+        #     '';
+        #   };
+        # timers.pointalpha-online = {
+        #   wantedBy = [ "timers.target" ];
+        #   timerConfig = {
+        #     OnCalendar = "*:0/1";
+        #   };
+        # };
       };
       services = {
         nginx = {
