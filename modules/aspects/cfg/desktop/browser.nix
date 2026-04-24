@@ -23,12 +23,14 @@
     homeManager =
       {
         pkgs,
+        config,
         ...
       }:
       {
         home.packages = [ pkgs.kdePackages.plasma-integration ];
         programs.firefox = {
           enable = true;
+          configPath = "${config.xdg.configHome}/mozilla/firefox";
           package = pkgs.firefox;
           profiles."shawn" = {
             extensions = {
