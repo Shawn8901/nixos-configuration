@@ -24,6 +24,7 @@
       {
         environment.sessionVariables = {
           PROTON_ENABLE_WAYLAND = "1";
+          PROTON_USE_NTSYNC = "1";
           WINEFSYNC = "1";
           WINEDEBUG = "-all";
         };
@@ -53,9 +54,7 @@
             ];
           };
         };
-        boot.kernelModules = (
-          lib.optionals (lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.15") [ "ntsync" ]
-        );
+        boot.kernelModules = [ "ntsync" ];
       };
   };
 }
