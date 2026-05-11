@@ -18,8 +18,12 @@
     };
   };
 
-  den.ctx.user.includes = [ den.provides.mutual-provider ];
-  den.schema.user.classes = lib.mkDefault [ "homeManager" ];
+  den.schema = {
+    user = {
+      classes = lib.mkDefault [ "homeManager" ];
+      includes = [ den.provides.mutual-provider ];
+    };
+  };
 
   den.ctx.hm-host.nixos.home-manager = {
     useGlobalPkgs = true;
@@ -33,7 +37,7 @@
       den.provides.define-user
 
       den.provides.hostname
-      (den.lib.parametric.exactly {
+      {
         includes = [
           (
             { host }:
@@ -44,7 +48,7 @@
             }
           )
         ];
-      })
+      }
     ];
 
     nixos =

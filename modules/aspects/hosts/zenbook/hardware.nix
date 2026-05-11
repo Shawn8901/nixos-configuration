@@ -54,7 +54,10 @@
           "zfs"
           "ntfs"
         ];
-        zfs.devNodes = "/dev/disk/by-id";
+        zfs = {
+          devNodes = "/dev/disk/by-id";
+          forceImportRoot = false;
+        };
         loader = {
           systemd-boot.enable = true;
           efi.canTouchEfiVariables = true;

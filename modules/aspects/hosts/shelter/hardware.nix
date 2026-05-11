@@ -20,6 +20,7 @@
           devNodes = "/dev/";
           extraPools = [ "zbackup" ];
           requestEncryptionCredentials = false;
+          forceImportRoot = false;
         };
         extraModprobeConfig = ''
           options zfs zfs_arc_max=134217728

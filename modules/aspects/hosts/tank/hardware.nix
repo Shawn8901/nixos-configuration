@@ -45,6 +45,7 @@
           devNodes = "/dev/disk/by-id";
           requestEncryptionCredentials = [ "ztank" ];
           extraPools = [ "ztank" ];
+          forceImportRoot = false;
         };
         loader = {
           systemd-boot.enable = true;

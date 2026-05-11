@@ -5,7 +5,7 @@
   ...
 }:
 {
-  debug = true;
+  debug = false;
   systems = builtins.attrNames den.hosts;
   flake =
     let
