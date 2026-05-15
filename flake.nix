@@ -43,6 +43,10 @@
       url = "github:shawn8901/openarchiver-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    snm = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

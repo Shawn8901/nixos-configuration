@@ -1,4 +1,4 @@
-{ cfg, ... }:
+{ cfg, inputs, ... }:
 {
   den.aspects.pointjig.provides.to-users = {
     includes = [
@@ -20,12 +20,16 @@
         vaultwardenName = "vault.pointjig.de";
       in
       {
+
+        imports = [ inputs.snm.nixosModules.default ];
+
         sops = {
           defaultSopsFile = ./secrets.yaml;
           secrets = {
-            stalwart-env = { };
             vaultwarden = { };
             maxmind = { };
+            snm-shawn = { };
+            snm-dorman = { };
           };
         };
 
@@ -34,12 +38,6 @@
           allowedTCPPorts = [
             80
             443
-
-            # Mail ports for stalwart
-            25
-            587
-            993
-            4190
           ];
         };
 
@@ -67,18 +65,12 @@
             };
             wait-online.anyInterface = true;
           };
-          services = {
-            stalwart.serviceConfig.EnvironmentFile = [ secrets.stalwart-env.path ];
-            vaultwarden = {
-              serviceConfig.StateDirectory = lib.mkForce "vaultwarden";
-              after = [ "postgresql.target" ];
-              requires = [ "postgresql.target" ];
-            };
+          services.vaultwarden = {
+            serviceConfig.StateDirectory = lib.mkForce "vaultwarden";
+            after = [ "postgresql.target" ];
+            requires = [ "postgresql.target" ];
           };
         };
-
-        # So that we can read acme certificate from nginx
-        users.users.stalwart.extraGroups = [ "nginx" ];
 
         services = {
           fstrim.enable = true;
@@ -190,63 +182,6 @@
                 };
               };
             };
-          stalwart = {
-            enable = true;
-            stateVersion = "26.05";
-            settings = {
-              store.db = {
-                type = "postgresql";
-                host = "localhost";
-                password = "%{env:POSTGRESQL_PASSWORD}%";
-                port = 5432;
-                database = "stalwart";
-              };
-              storage.blob = "db";
-              authentication.fallback-admin = {
-                user = "admin";
-                secret = "%{env:FALLBACK_ADMIN_PASSWORD}%";
-              };
-              lookup.default.hostname = mailHostname;
-              certificate.default = {
-                private-key = "%{file:/var/lib/acme/${mailHostname}/key.pem}%";
-                cert = "%{file:/var/lib/acme/${mailHostname}/cert.pem}%";
-                default = true;
-              };
-              spam-filter.resource = "file://${pkgs.stalwart}/etc/stalwart/spamfilter.toml";
-              webadmin = {
-                path = "/var/cache/stalwart";
-                resource = "file://${pkgs.stalwart.webadmin}/webadmin.zip";
-              };
-
-              server = {
-                http.use-x-forwarded = true;
-                tls.enable = true;
-                listener = {
-                  "smtp" = {
-                    bind = [ "[::]:25" ];
-                    protocol = "smtp";
-                  };
-                  "submission" = {
-                    bind = [ "[::]:587" ];
-                    protocol = "smtp";
-                  };
-                  "imaptls" = {
-                    bind = [ "[::]:993" ];
-                    protocol = "imap";
-                    tls.implicit = true;
-                  };
-                  "sieve" = {
-                    bind = [ "[::]:4190" ];
-                    protocol = "managesieve";
-                  };
-                  "http" = {
-                    bind = [ "127.0.0.1:8080" ];
-                    protocol = "http";
-                  };
-                };
-              };
-            };
-          };
           vaultwarden = {
             enable = true;
             dbBackend = "postgresql";
@@ -266,6 +201,64 @@
               SMTP_FROM = "noreply@pointjig.de";
               SMTP_FROM_NAME = "Vaultwarden";
               SMTP_USERNAME = "postman";
+            };
+          };
+        };
+
+        mailserver = {
+          enable = true;
+          stateVersion = 4;
+          fqdn = "mail.pointjig.de";
+          domains = [ "pointjig.de" ];
+          x509.useACMEHost = config.mailserver.fqdn;
+          accounts = {
+            "shawn@pointjig.de" = {
+              hashedPasswordFile = secrets.snm-shawn.path;
+              aliases = [
+                "aktienfinder@pointjig.de"
+                "alphavps@pointjig.de"
+                "aquatuning@pointjig.de"
+                "atlas@pointjig.de"
+                "caseking@pointjig.de"
+                "check24@pointjig.de"
+                "circular@pointjig.de"
+                "codeberg@pointjig.de"
+                "dropbox@pointjig.de"
+                "eatventure@pointjig.de"
+                "epic@pointjig.de"
+                "estateguru@pointjig.de"
+                "flexispot@pointjig.de"
+                "fritz@pointjig.de"
+                "geizhals@pointjig.de"
+                "intex@pointjig.de"
+                "kinguin@pointjig.de"
+                "lotto@pointjig.de"
+                "megaprimus@pointjig.de"
+                "milesandmore@pointjig.de"
+                "mindfactory@pointjig.de"
+                "nb@pointjig.de"
+                "osaio@pointjig.de"
+                "parqet@pointjig.de"
+                "planetside@pointjig.de"
+                "pool@pointjig.de"
+                "reddit@pointjig.de"
+                "smite@pointjig.de"
+                "spocks@pointjig.de"
+                "spotify@pointjig.de"
+                "steam@pointjig.de"
+                "stfc@pointjig.de"
+                "stne@pointjig.de"
+                "sto@pointjig.de"
+                "supremegamers@pointjig.de"
+                "unity@pointjig.de"
+                "zsa@pointjig.de"
+              ];
+            };
+            "dorman@pointjig.de" = {
+              hashedPasswordFile = secrets.snm-dorman.path;
+              aliases = [
+                "ninjatrader@pointjig.de"
+              ];
             };
           };
         };
