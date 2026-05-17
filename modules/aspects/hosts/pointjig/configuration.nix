@@ -16,8 +16,8 @@
       let
         inherit (builtins) concatStringsSep;
         inherit (config.sops) secrets;
-        mailHostname = "mail.pointjig.de";
         vaultwardenName = "vault.pointjig.de";
+        mailHostname = "mail.pointjig.de";
       in
       {
 
@@ -134,7 +134,7 @@
               virtualHosts."pointjig.de" = {
                 enableACME = true;
                 forceSSL = true;
-                globalRedirect = mailHostname;
+                globalRedirect = vaultwardenName;
               };
               recommendedGzipSettings = true;
               recommendedOptimisation = true;
@@ -160,10 +160,8 @@
                   http3 = true;
                   kTLS = true;
                   locations."/" = {
-                    proxyPass = "http://localhost:8080";
-                    recommendedProxySettings = true;
                     extraConfig = ''
-                      ${forbidNotAllowedCountries}
+                      return 200;
                     '';
                   };
                 };
@@ -197,7 +195,7 @@
               ROCKET_PORT = 8222;
               SIGNUPS_ALLOWED = false;
               TRASH_AUTO_DELETE_DAYS = 30;
-              SMTP_HOST = mailHostname;
+              SMTP_HOST = "mail.pointjig.de";
               SMTP_FROM = "noreply@pointjig.de";
               SMTP_FROM_NAME = "Vaultwarden";
               SMTP_USERNAME = "postman";
