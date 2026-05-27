@@ -8,7 +8,7 @@
       url = "github:shawn8901/asus-numberpad-driver/nixos_improvement";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    den.url = "github:vic/den";
+    den.url = "github:denful/den";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +17,7 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-file.url = "github:vic/flake-file";
+    flake-file.url = "github:denful/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
