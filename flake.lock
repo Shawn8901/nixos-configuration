@@ -39,11 +39,11 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1780270913,
-        "narHash": "sha256-7jmaw+1HI0mfZvxNj7qo8GL4wAjo9fCBkPDqDfzzt3E=",
+        "lastModified": 1780350150,
+        "narHash": "sha256-odrDGqh9p/l9o8vJL2OgEZnM15RZ9dImbakdiUftBL0=",
         "owner": "denful",
         "repo": "den",
-        "rev": "294d58404758df423e0332646a241b98ed087d78",
+        "rev": "73f2af9028c0b93181e4520e0d8f0701ac22e058",
         "type": "github"
       },
       "original": {
@@ -80,11 +80,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1780286561,
-        "narHash": "sha256-73UvAlulbn6cSaoq+Wllj7WxKrhti8wkT+zYKvFD9d0=",
+        "lastModified": 1780373275,
+        "narHash": "sha256-wyOXYCVRwJbPriBi9GHdVGkzV4S9vFAcOR+f3ImfwZw=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "2838055f920c314b0731f71a53a6b878de0309cc",
+        "rev": "cc32ec3611bb3cd0443ed5479bbc009a1006db0b",
         "type": "gitlab"
       },
       "original": {
@@ -200,11 +200,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780099287,
-        "narHash": "sha256-efIPwVGtIWIjWcznhaop6XN6HxnOL8800hF6CBNvlqQ=",
+        "lastModified": 1780408569,
+        "narHash": "sha256-s7Tv6FUQThRAvW8En8XVC6HMb0uiikzVccCcCo9u/Bg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "7d8127d308c3fb9664f7e643eec944be74ebb37d",
+        "rev": "f384af1bec6423a0d4ba1855917ab948f64e5808",
         "type": "github"
       },
       "original": {
@@ -273,11 +273,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1779782852,
-        "narHash": "sha256-X4Sry7/8jRvR+L8f33l3DqZq9bhrSIcfhvB6i3DGRnA=",
+        "lastModified": 1780243769,
+        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
         "owner": "shawn8901",
         "repo": "nixpkgs",
-        "rev": "3513456f1b8d5e1df458acb447e9aa418b76353a",
+        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
         "type": "github"
       },
       "original": {
@@ -335,11 +335,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779651995,
-        "narHash": "sha256-JT27OzVt+zKC9OUzG9siqRA2tqRiNwu+aWER67FNnNY=",
+        "lastModified": 1780340963,
+        "narHash": "sha256-rQCWOQXN0/sQxwP7T2Y3hsC1KYxLQgul6l9LPbQdqi4=",
         "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "da16ebd4b5f8c2867f0a5220780f87d94d979626",
+        "rev": "a61228e6918a9d673c3faf48ab23e92a55822012",
         "type": "gitlab"
       },
       "original": {
