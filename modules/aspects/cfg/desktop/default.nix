@@ -39,6 +39,7 @@
           };
           speechd.enable = false;
           orca.enable = false;
+          fwupd.enable = false;
         };
 
         systemd.defaultUnit = "graphical.target";
