@@ -29,12 +29,12 @@
             nssmdns4 = true;
           };
           desktopManager.plasma6.enable = true;
-          displayManager.sddm = {
+          displayManager.plasma-login-manager = {
             enable = true;
-            autoNumlock = true;
-            wayland = {
-              enable = true;
-              compositor = "kwin";
+            settings = {
+              General = {
+                Numlock = true;
+              };
             };
           };
           speechd.enable = false;
