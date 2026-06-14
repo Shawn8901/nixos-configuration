@@ -32,6 +32,8 @@
       let
         inherit (config.sops) secrets;
         immichName = "immich.tank.pointjig.de";
+        haName = "ha.tank.pointjig.de";
+        haPort = 8123;
       in
       {
 
@@ -116,6 +118,28 @@
           http2 = false;
         };
         services = {
+          home-assistant = {
+            enable = true;
+            extraComponents = [
+              "androidtv_remote"
+              "roomba"
+              "matter"
+              "tplink_tapo"
+              "mqtt"
+              "epson"
+              "picnic"
+              "fritzbox"
+            ];
+            config = {
+              http = {
+                use_x_forwarded_for = true;
+                trusted_proxies = [ "127.0.0.1" ];
+                server_host = "127.0.0.1";
+                server_port = haPort;
+              };
+              default_config = { };
+            };
+          };
           immich = {
             enable = true;
             database.enable = true;
@@ -525,6 +549,20 @@
                 locations = {
                   "/" = {
                     proxyPass = "http://localhost:${toString config.services.immich.port}";
+                    recommendedProxySettings = true;
+                    proxyWebsockets = true;
+                  };
+                };
+              };
+              "${haName}" = {
+                serverName = haName;
+                forceSSL = true;
+                enableACME = true;
+                http3 = true;
+                kTLS = true;
+                locations = {
+                  "/" = {
+                    proxyPass = "http://localhost:${toString haPort}";
                     recommendedProxySettings = true;
                     proxyWebsockets = true;
                   };
