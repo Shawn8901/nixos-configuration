@@ -199,6 +199,7 @@
               SMTP_FROM = "noreply@pointjig.de";
               SMTP_FROM_NAME = "Vaultwarden";
               SMTP_USERNAME = "postman";
+              ICON_SERVICE = "internal";
             };
           };
         };
