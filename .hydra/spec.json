@@ -4,7 +4,7 @@
   "description": "jobset evaluation",
   "nixexprinput": "nixexpr",
   "nixexprpath": ".hydra/jobsets.nix",
-  "checkinterval": 600,
+  "checkinterval": 1200,
   "schedulingshares": 100,
   "enableemail": false,
   "emailoverride": "",
