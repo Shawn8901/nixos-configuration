@@ -12,7 +12,6 @@
 
       hostName = "hydra.pointjig.de";
       mailAdress = "hydra@pointjig.de";
-      githubHookIncludeFile = config.sops.templates."hydra-hook-token.conf".path;
       writeTokenIncludeFile = config.sops.templates."hydra-write-token.conf".path;
       writeTokenFile = config.sops.secrets.hydra-github-auth.path;
       builder = {
@@ -26,7 +25,6 @@
           ssh-builder-key = {
             owner = "hydra-queue-runner";
           };
-          hydra-github-hook = { };
           hydra-github-auth = {
             owner = "hydra-queue-runner";
             group = "hydra";
@@ -41,16 +39,6 @@
               </github_authorization>
             '';
             owner = "hydra-queue-runner";
-            group = "hydra";
-            mode = "0660";
-          };
-          "hydra-hook-token.conf" = {
-            content = ''
-              <github>
-                secret = ${config.sops.placeholder.hydra-github-hook}
-              </github>
-            '';
-            owner = "hydra-www";
             group = "hydra";
             mode = "0660";
           };
@@ -211,7 +199,6 @@
                 useShortContext = true
               </githubstatus>
               Include ${writeTokenIncludeFile}
-              Include ${githubHookIncludeFile}
             '';
           };
       };
