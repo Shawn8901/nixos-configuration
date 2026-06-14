@@ -21,25 +21,26 @@
       environment.persistence."/persist" = {
         hideMounts = true;
         directories = [
-          "/var/lib/private"
           "/var/lib/acme"
           "/var/lib/alsa"
           "/var/lib/attic"
+          "/var/lib/dovecot"
           "/var/lib/fail2ban"
+          "/var/lib/hass"
           "/var/lib/hydra"
           "/var/lib/immich"
+          "/var/lib/nextcloud"
           "/var/lib/nixos"
           "/var/lib/openarchiver"
+          "/var/lib/postfix"
+          "/var/lib/private/"
           "/var/lib/prometheus2"
+          "/var/lib/rspamd"
           "/var/lib/samba"
           "/var/lib/systemd"
-          "/var/lib/vnstat"
-          "/var/lib/dovecot"
-          "/var/lib/postfix"
-          "/var/lib/redis-rspamd"
-          "/var/lib/rspamd"
+          "/var/lib/thread"
           "/var/lib/userborn"
-          "/var/lib/nextcloud"
+          "/var/lib/vnstat"
         ];
         files = [ "/etc/machine-id" ];
       };
