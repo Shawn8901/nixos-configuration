@@ -14,7 +14,7 @@ runs:
       shell: bash
       run: echo "${{ inputs.netrc_content }}" > /home/runner/.netrc
     - name: Install nix
-      uses: nixbuild/nix-quick-install-action@2c9db80fb984ceb1bcaa77cdda3fdf8cfba92035 # v34
+      uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
       with:
         github_access_token: ${{ inputs.github_token }}
         nix_conf: |
