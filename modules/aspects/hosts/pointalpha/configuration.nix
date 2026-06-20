@@ -76,6 +76,16 @@
           keep-derivations = true;
           cores = 8;
           http2 = false;
+          auto-allocate-uids = true;
+          use-cgroups = true;
+          experimental-features = [
+            "auto-allocate-uids"
+            "cgroups"
+          ];
+          extra-system-features = [
+            "uid-range"
+
+          ];
         };
 
         services = {
