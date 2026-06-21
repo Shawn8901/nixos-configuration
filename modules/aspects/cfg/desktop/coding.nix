@@ -249,7 +249,7 @@
           };
           ssh = {
             enable = true;
-            matchBlocks = {
+            settings = {
               tank = {
                 hostname = "tank";
                 user = "shawn";
