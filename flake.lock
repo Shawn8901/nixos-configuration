@@ -287,26 +287,6 @@
         "type": "github"
       }
     },
-    "openarchiver": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774635592,
-        "narHash": "sha256-1GYOcLF0s/nJ7eMgs7jirV7e9IoOZJ/hqZhlM2wMs+I=",
-        "owner": "shawn8901",
-        "repo": "openarchiver-flake",
-        "rev": "a481d0bd9e267abaa40b39cc43a4fb44c29aac30",
-        "type": "github"
-      },
-      "original": {
-        "owner": "shawn8901",
-        "repo": "openarchiver-flake",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "asus-numberpad-driver": "asus-numberpad-driver",
@@ -320,7 +300,6 @@
         "import-tree": "import-tree",
         "mimir": "mimir",
         "nixpkgs": "nixpkgs",
-        "openarchiver": "openarchiver",
         "snm": "snm",
         "sops-nix": "sops-nix"
       }

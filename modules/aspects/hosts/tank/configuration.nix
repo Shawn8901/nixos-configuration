@@ -5,12 +5,6 @@
   ...
 }:
 {
-
-  flake-file.inputs.openarchiver = {
-    url = "github:shawn8901/openarchiver-flake";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   den.aspects.tank.provides.to-users = {
     includes = [
       cfg.monitoree
@@ -37,7 +31,6 @@
 
         imports = [
           "${modulesPath}/profiles/perlless.nix"
-          inputs.openarchiver.nixosModules.openarchiver
         ];
         # We dont build fully perlless yet
         system.forbiddenDependenciesRegexes = lib.mkForce [ ];
@@ -647,18 +640,17 @@
               '')
             ];
         };
-
-        services.openarchiver = {
-          enable = true;
-          configurePostgres = true;
-          configureTika = true;
-          configureMelisearch = true;
-          configureRedis = true;
-          environmentFile = secrets.openarchiver.path;
-          settings = {
-            ENABLE_DELETION = true;
-          };
-        };
+        # services.openarchiver = {
+        #   enable = true;
+        #   configurePostgres = true;
+        #   configureTika = true;
+        #   configureMelisearch = true;
+        #   configureRedis = true;
+        #   environmentFile = secrets.openarchiver.path;
+        #   settings = {
+        #     ENABLE_DELETION = true;
+        #   };
+        # };
       };
   };
 }

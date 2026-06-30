@@ -39,10 +39,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:shawn8901/nixpkgs/nixos-unstable-custom";
-    openarchiver = {
-      url = "github:shawn8901/openarchiver-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     snm = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
       inputs.nixpkgs.follows = "nixpkgs";
