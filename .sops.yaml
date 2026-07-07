@@ -9,6 +9,9 @@ keys: &all
   - &next age1uq4qun60snrl3t3yjqagrnjhsjma36kkdw3ypj9sntccwlgplfgq4ytdtj
 
 creation_rules:
+  - path_regex: modules/aspects/secrets.yaml
+    key_groups:
+      - age: *all
   - path_regex: modules/aspects/cfg/.*/[^/]+\.yaml
     key_groups:
       - age: *all
