@@ -46,18 +46,18 @@
             enable = true;
             networks = {
               "20-wired" = {
-                matchConfig.Name = "enp6s18";
+                matchConfig.Name = "ens3";
                 networkConfig = {
                   Address = [
-                    "134.255.226.114/28"
-                    "2a05:bec0:1:16::114/64"
+                    "152.53.44.132/22"
+                    "2a0a:4cc0:0:23b0::/64"
                   ];
                   DNS = "8.8.8.8";
-                  Gateway = "134.255.226.113";
+                  Gateway = "152.53.44.1";
                 };
                 routes = [
                   {
-                    Gateway = "2a05:bec0:1:16::1";
+                    Gateway = "fe80::1";
                     GatewayOnLink = "yes";
                   }
                 ];
