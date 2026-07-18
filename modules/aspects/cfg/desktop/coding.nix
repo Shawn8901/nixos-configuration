@@ -42,38 +42,26 @@
       {
         sops = {
           secrets.attic-token.sopsFile = ./secrets.yaml;
-          templates."attic-config" = {
-            content = ''
-              default-server = "nixos"
-              [servers.nixos]
-              endpoint = "https://cache.pointjig.de"
-              token = "${config.sops.placeholder.attic-token}"
-            '';
-            mode = "0600";
-            path = "${config.xdg.configHome}/attic/config.toml";
-          };
         };
 
         home.packages = with pkgs; [
-          attic-client
           sops
           nix-tree
           nixpkgs-review
         ];
 
-        systemd.user.services.attic-watch-store = {
-          Unit = {
-            Description = "Upload all store content to binary catch";
-          };
-          Install = {
-            WantedBy = [ "default.target" ];
-          };
-          Service = {
-            ExecStart = "${lib.getExe pkgs.attic-client} watch-store nixos";
-          };
-        };
-
         programs = {
+          attic-client = {
+            enable = true;
+            watchStore = [ "nixos" ];
+            settings = {
+              default-server = "nixos";
+              servers.nixos = {
+                endpoint = "https://cache.pointjig.de";
+                token-file = config.sops.secrets.attic-token.path;
+              };
+            };
+          };
           vscode = {
             enable = true;
             mutableExtensionsDir = false;
