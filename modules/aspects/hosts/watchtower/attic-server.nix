@@ -43,7 +43,7 @@
           enable = true;
           settings = {
             database = {
-              url = "postgresql:///atticd?host=/run/postgresql";
+              url = "postgres:///atticd?user=atticd&host=/run/postgresql";
               heartbeat = true;
             };
             compression.type = "zstd";
