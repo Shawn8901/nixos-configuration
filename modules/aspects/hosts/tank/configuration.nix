@@ -90,19 +90,6 @@
           };
         };
 
-        programs.ssh = {
-          knownHosts = {
-            sapsrv01 = {
-              hostNames = [ "sapsrv01.clansap.org" ];
-              publicKey = " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkeXDm5GJlVdQBM8Jh43JYi0X0Nf+idqnL4I4Kl1fbF";
-            };
-            sapsrv02 = {
-              hostNames = [ "sapsrv02.clansap.org" ];
-              publicKey = " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdBgG0egUCjainz/4p2f7txbzUeLvtItCowCb2vsZqB";
-            };
-          };
-        };
-
         nix.settings = {
           keep-outputs = true;
           keep-derivations = true;
@@ -228,68 +215,6 @@
                   client_cns = [ "zenbook" ];
                 };
                 recv.placeholder.encryption = "inherit";
-              }
-              {
-                name = "sapsrv01";
-                type = "pull";
-                root_fs = "ztank/backup/sapsrv01";
-                interval = "1h";
-                connect = {
-                  type = "ssh+stdinserver";
-                  host = "sapsrv01.clansap.org";
-                  port = 22;
-                  user = "root";
-                  identity_file = secrets.srv-ssh.path;
-                  options = [ "Compression=yes" ];
-                };
-                recv.placeholder.encryption = "inherit";
-                pruning = {
-                  keep_receiver = [
-                    {
-                      type = "grid";
-                      grid = "7x1d(keep=all) | 3x30d";
-                      regex = "^auto_daily.*";
-                    }
-                  ];
-                  keep_sender = [
-                    {
-                      type = "last_n";
-                      count = 10;
-                      regex = "^auto_daily.*";
-                    }
-                  ];
-                };
-              }
-              {
-                name = "sapsrv02";
-                type = "pull";
-                root_fs = "ztank/backup/sapsrv02";
-                interval = "1h";
-                connect = {
-                  type = "ssh+stdinserver";
-                  host = "sapsrv02.clansap.org";
-                  port = 22;
-                  user = "root";
-                  identity_file = secrets.srv-ssh.path;
-                  options = [ "Compression=yes" ];
-                };
-                recv.placeholder.encryption = "inherit";
-                pruning = {
-                  keep_receiver = [
-                    {
-                      type = "grid";
-                      grid = "7x1d(keep=all) | 3x30d";
-                      regex = "^auto_daily.*";
-                    }
-                  ];
-                  keep_sender = [
-                    {
-                      type = "last_n";
-                      count = 10;
-                      regex = "^auto_daily.*";
-                    }
-                  ];
-                };
               }
               {
                 name = "tank_data";
