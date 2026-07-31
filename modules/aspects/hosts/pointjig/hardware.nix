@@ -19,7 +19,7 @@
         kernelParams = [ "memhp_default_state=online" ];
         loader.grub = {
           enable = true;
-          device = "/dev/sda";
+          device = "/dev/vda";
         };
       };
 
