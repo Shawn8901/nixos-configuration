@@ -346,6 +346,7 @@
             ];
           };
           nextcloud = {
+            settings.maintenance_window_start = "19";
             recommendedDefaults = true;
             configureMemories = true;
             configureMemoriesVaapi = true;
