@@ -6,7 +6,6 @@ keys: &all
   - &pointjig age1wlznz542ulyhjvp9zxe57z5rgy738wt6ygy6qsgjyavl5e9vcd0q27mu3n
   - &shelter age1qx60k4ft2lvs9qa3s0xqhpkdf26zdc8yw4vr7a7424ta9mcq9g8qrseqv3
   - &watchtower age1ctzz6yc073qv2sp8gtq3meeuaq8kcsw0aujaq3s5ecf7jsu8sudsmchn3v
-  - &next age1uq4qun60snrl3t3yjqagrnjhsjma36kkdw3ypj9sntccwlgplfgq4ytdtj
 
 creation_rules:
   - path_regex: .*/secrets.yaml

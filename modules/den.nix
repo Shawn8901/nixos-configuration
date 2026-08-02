@@ -37,7 +37,6 @@
 
   den.hosts = {
     x86_64-linux = {
-      next = { };
       pointalpha.users.shawn = { };
       pointjig.users.shawn = { };
       shelter.users.shawn = { };
