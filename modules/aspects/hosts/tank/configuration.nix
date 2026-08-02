@@ -352,7 +352,7 @@
             configurePreviewSettings = true;
             hostName = "next.tank.pointjig.de";
             home = "/persist/var/lib/nextcloud";
-            package = pkgs.nextcloud33;
+            package = pkgs.nextcloud34;
             imaginary.enable = true;
             extraApps = {
               inherit (config.services.nextcloud.package.packages.apps) recognize;

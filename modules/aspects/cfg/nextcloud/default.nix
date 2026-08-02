@@ -52,10 +52,6 @@
             adminuser = "admin";
             adminpassFile = config.sops.secrets.nextcloud-admin.path;
           };
-          caching = {
-            apcu = false;
-            memcached = false;
-          };
           phpOptions = {
             "opcache.enable" = "1";
             "opcache.save_comments" = "1";
