@@ -60,6 +60,7 @@
             "overwrite.cli.url" = "https://${config.services.nextcloud.hostName}";
             default_phone_region = "DE";
             maintenance_window_start = lib.mkDefault "1";
+            serverid = 0;
           };
         };
         postgresql = {
