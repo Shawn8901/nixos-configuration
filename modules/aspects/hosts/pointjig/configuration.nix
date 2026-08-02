@@ -5,6 +5,7 @@
       cfg.monitoree
       cfg.server
       cfg.postgresql
+      cfg.mailserver
     ];
     nixos =
       {
@@ -28,8 +29,6 @@
           secrets = {
             vaultwarden = { };
             maxmind = { };
-            snm-shawn = { };
-            snm-dorman = { };
           };
         };
 
@@ -96,14 +95,9 @@
               track_io_timing = true;
             };
             ensureDatabases = [
-              "stalwart"
               "vaultwarden"
             ];
             ensureUsers = [
-              {
-                name = "stalwart";
-                ensureDBOwnership = true;
-              }
               {
                 name = "vaultwarden";
                 ensureDBOwnership = true;
@@ -203,62 +197,51 @@
             };
           };
         };
-
         mailserver = {
-          enable = true;
-          stateVersion = 4;
           fqdn = "mail.pointjig.de";
-          domains = [ "pointjig.de" ];
-          x509.useACMEHost = config.mailserver.fqdn;
           accounts = {
-            "shawn@pointjig.de" = {
-              hashedPasswordFile = secrets.snm-shawn.path;
-              aliases = [
-                "aktienfinder@pointjig.de"
-                "alphavps@pointjig.de"
-                "aquatuning@pointjig.de"
-                "atlas@pointjig.de"
-                "caseking@pointjig.de"
-                "check24@pointjig.de"
-                "circular@pointjig.de"
-                "codeberg@pointjig.de"
-                "dropbox@pointjig.de"
-                "eatventure@pointjig.de"
-                "epic@pointjig.de"
-                "estateguru@pointjig.de"
-                "flexispot@pointjig.de"
-                "fritz@pointjig.de"
-                "geizhals@pointjig.de"
-                "intex@pointjig.de"
-                "kinguin@pointjig.de"
-                "lotto@pointjig.de"
-                "megaprimus@pointjig.de"
-                "milesandmore@pointjig.de"
-                "mindfactory@pointjig.de"
-                "nb@pointjig.de"
-                "osaio@pointjig.de"
-                "parqet@pointjig.de"
-                "planetside@pointjig.de"
-                "pool@pointjig.de"
-                "reddit@pointjig.de"
-                "smite@pointjig.de"
-                "spocks@pointjig.de"
-                "spotify@pointjig.de"
-                "steam@pointjig.de"
-                "stfc@pointjig.de"
-                "stne@pointjig.de"
-                "sto@pointjig.de"
-                "supremegamers@pointjig.de"
-                "unity@pointjig.de"
-                "zsa@pointjig.de"
-              ];
-            };
-            "dorman@pointjig.de" = {
-              hashedPasswordFile = secrets.snm-dorman.path;
-              aliases = [
-                "ninjatrader@pointjig.de"
-              ];
-            };
+            "shawn@pointjig.de".aliases = [
+              "aktienfinder@pointjig.de"
+              "alphavps@pointjig.de"
+              "aquatuning@pointjig.de"
+              "atlas@pointjig.de"
+              "caseking@pointjig.de"
+              "check24@pointjig.de"
+              "circular@pointjig.de"
+              "codeberg@pointjig.de"
+              "dropbox@pointjig.de"
+              "eatventure@pointjig.de"
+              "epic@pointjig.de"
+              "estateguru@pointjig.de"
+              "flexispot@pointjig.de"
+              "fritz@pointjig.de"
+              "geizhals@pointjig.de"
+              "intex@pointjig.de"
+              "kinguin@pointjig.de"
+              "lotto@pointjig.de"
+              "megaprimus@pointjig.de"
+              "milesandmore@pointjig.de"
+              "mindfactory@pointjig.de"
+              "nb@pointjig.de"
+              "osaio@pointjig.de"
+              "parqet@pointjig.de"
+              "planetside@pointjig.de"
+              "pool@pointjig.de"
+              "reddit@pointjig.de"
+              "smite@pointjig.de"
+              "spocks@pointjig.de"
+              "spotify@pointjig.de"
+              "steam@pointjig.de"
+              "stfc@pointjig.de"
+              "stne@pointjig.de"
+              "sto@pointjig.de"
+              "supremegamers@pointjig.de"
+              "unity@pointjig.de"
+              "zsa@pointjig.de"
+            ];
+            "dorman@pointjig.de".aliases = [
+              "ninjatrader@pointjig.de"
+            ];
           };
         };
       };

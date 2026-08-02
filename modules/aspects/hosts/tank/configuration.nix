@@ -31,6 +31,7 @@
 
         imports = [
           "${modulesPath}/profiles/perlless.nix"
+          inputs.snm.nixosModules.default
         ];
         # We dont build fully perlless yet
         system.forbiddenDependenciesRegexes = lib.mkForce [ ];
@@ -52,26 +53,12 @@
               };
               openarchiver = { };
             }
-            (lib.optionalAttrs config.services.stalwart.enable {
-              stalwart-fallback-admin = {
-                owner = config.systemd.services.stalwart.serviceConfig.User;
-              };
-            })
           ];
         };
 
-        networking = {
-          firewall.allowedTCPPorts = [
-            # Mail ports for stalwart
-            25
-            587
-            993
-            4190
-          ];
-          hosts = {
-            "127.0.0.1" = lib.attrNames config.services.nginx.virtualHosts;
-            "::1" = lib.attrNames config.services.nginx.virtualHosts;
-          };
+        networking.hosts = {
+          "127.0.0.1" = lib.attrNames config.services.nginx.virtualHosts;
+          "::1" = lib.attrNames config.services.nginx.virtualHosts;
         };
 
         systemd = {
@@ -364,7 +351,7 @@
             configurePreviewSettings = true;
             hostName = "next.tank.pointjig.de";
             home = "/persist/var/lib/nextcloud";
-            package = pkgs.nextcloud32;
+            package = pkgs.nextcloud33;
             imaginary.enable = true;
             extraApps = {
               inherit (config.services.nextcloud.package.packages.apps) recognize;
@@ -388,9 +375,6 @@
             };
             shawn.extraGroups = [ "nextcloud" ];
           }
-          (lib.optionalAttrs config.services.stalwart.enable {
-            stalwart.extraGroups = [ "nginx" ];
-          })
         ];
 
         services = {
@@ -453,72 +437,7 @@
           postgresql = {
             package = pkgs.postgresql_17;
             dataDir = "/persist/var/lib/postgresql/17";
-            ensureDatabases = [
-              "stalwart"
-            ];
-            ensureUsers = [
-              {
-                name = "stalwart";
-                ensureDBOwnership = true;
-              }
-            ];
           };
-          stalwart = {
-            enable = true;
-            stateVersion = "26.05";
-            settings = {
-              store.db = {
-                type = "postgresql";
-                host = "localhost";
-                password = "%{env:POSTGRESQL_PASSWORD}%";
-                port = 5432;
-                database = "stalwart";
-              };
-              authentication.fallback-admin = {
-                user = "admin";
-                secret = "%{env:FALLBACK_ADMIN_PASSWORD}%";
-              };
-              lookup.default.hostname = "tank.pointjig.de";
-              tracer.stdout = {
-                level = "trace";
-              };
-              certificate.default = {
-                private-key = "%{file:/var/lib/acme/tank.pointjig.de/key.pem}%";
-                cert = "%{file:/var/lib/acme/tank.pointjig.de/cert.pem}%";
-                default = true;
-              };
-              server = {
-                http.use-x-forwarded = true;
-                tls.enable = true;
-                listener = {
-                  "smtp" = {
-                    bind = [ "[::]:25" ];
-                    protocol = "smtp";
-                  };
-                  "submission" = {
-                    bind = [ "[::]:587" ];
-                    protocol = "smtp";
-                  };
-                  "imaptls" = {
-                    bind = [ "[::]:993" ];
-                    protocol = "imap";
-                    tls.implicit = true;
-                  };
-                  "sieve" = {
-                    bind = [ "[::]:4190" ];
-                    protocol = "managesieve";
-                  };
-                  "http" = {
-                    bind = [ "127.0.0.1:8080" ];
-                    protocol = "http";
-                  };
-                };
-              };
-            };
-          };
-        };
-        systemd.services.stalwart.serviceConfig = lib.mkIf config.services.stalwart.enable {
-          EnvironmentFile = [ secrets.stalwart-fallback-admin.path ];
         };
         environment = {
           etc.".ztank_key".source = secrets.zfs-ztank-key.path;
@@ -576,6 +495,7 @@
         #     ENABLE_DELETION = true;
         #   };
         # };
+        mailserver.fqdn = "mail.tank.pointjig.de";
       };
   };
 }

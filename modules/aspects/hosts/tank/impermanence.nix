@@ -32,9 +32,12 @@
           "/var/lib/openarchiver"
           "/var/lib/prometheus2"
           "/var/lib/samba"
-          "/var/lib/stalwart"
           "/var/lib/systemd"
           "/var/lib/vnstat"
+          "/var/lib/dovecot"
+          "/var/lib/postfix"
+          "/var/lib/redis-rspamd"
+          "/var/lib/rspamd"
         ];
         files = [ "/etc/machine-id" ];
       };
