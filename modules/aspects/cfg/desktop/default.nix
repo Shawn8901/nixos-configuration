@@ -16,7 +16,12 @@
         fonts
         networking
       ])
-      ++ [ (den.provides.unfree [ "discord" ]) ];
+      ++ [
+        (den.provides.unfree [
+          "discord"
+          "discord-unwrapped"
+        ])
+      ];
 
     nixos =
       { pkgs, ... }:
@@ -125,9 +130,7 @@
           libreoffice-qt
           element-desktop
           cifs-utils
-          (discord.override {
-            nss = nss_latest;
-          })
+          discord
         ];
 
         programs.vim.packageConfigurable = pkgs.vim-full;
