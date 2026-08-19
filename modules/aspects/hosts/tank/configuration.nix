@@ -352,7 +352,6 @@
             configureMemoriesVaapi = true;
             configurePreviewSettings = true;
             hostName = "next.tank.pointjig.de";
-            home = "/persist/var/lib/nextcloud";
             package = pkgs.nextcloud34;
             imaginary.enable = true;
             extraApps = {

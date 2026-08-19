@@ -39,6 +39,7 @@
           "/var/lib/redis-rspamd"
           "/var/lib/rspamd"
           "/var/lib/userborn"
+          "/var/lib/nextcloud"
         ];
         files = [ "/etc/machine-id" ];
       };
