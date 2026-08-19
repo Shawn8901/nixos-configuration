@@ -38,6 +38,7 @@
           "/var/lib/postfix"
           "/var/lib/redis-rspamd"
           "/var/lib/rspamd"
+          "/var/lib/userborn"
         ];
         files = [ "/etc/machine-id" ];
       };

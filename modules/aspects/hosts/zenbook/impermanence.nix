@@ -28,6 +28,7 @@
           "/var/lib/NetworkManager"
           "/var/lib/nixos"
           "/var/lib/prometheus2"
+          "/var/lib/userborn"
           "/var/lib/systemd"
           "/var/lib/upower"
           "/var/lib/mysql"
