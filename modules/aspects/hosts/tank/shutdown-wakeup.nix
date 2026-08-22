@@ -11,7 +11,7 @@
       '';
 
       shutdownTime = "0:00:00";
-      wakeupTime = "16:00:00";
+      wakeupTime = "8:00:00";
 
     in
     {
