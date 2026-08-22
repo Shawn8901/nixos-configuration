@@ -55,6 +55,7 @@
                 inherit (config.services.prometheus.exporters.fritz) group;
               };
               openarchiver = { };
+              hass-token = { };
             }
           ];
         };
@@ -78,6 +79,7 @@
             requires = [ "network-online.target" ];
             after = [ "network-online.target" ];
           };
+          services.vmagent.serviceConfig.LoadCredential = "hass_token:${secrets.hass-token.path}";
         };
 
         nix.settings = {
@@ -448,6 +450,21 @@
                     [ "${cfg.listenAddress}:${toString cfg.port}" ];
                 }
               ];
+            }
+            {
+              job_name = "hass";
+              static_configs = [
+                {
+                  targets =
+                    let
+                      cfg = config.services.home-assistant.config.http;
+                    in
+                    [ "${cfg.server_host}:${toString cfg.server_port}" ];
+                }
+              ];
+              scrape_interval = "15s";
+              metrics_path = "/api/prometheus";
+              bearer_token_file = "/run/credentials/vmagent.service/hass_token";
             }
           ];
           nginx = {
