@@ -37,6 +37,7 @@
           extraPackages =
             python3Packages: with python3Packages; [
               gtts
+              pychromecast
             ];
         };
         matterjs-server.enable = true;
