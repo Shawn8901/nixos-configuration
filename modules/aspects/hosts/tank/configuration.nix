@@ -27,8 +27,6 @@
       let
         inherit (config.sops) secrets;
         immichName = "immich.tank.pointjig.de";
-        haName = "ha.tank.pointjig.de";
-        haPort = 8123;
       in
       {
 
@@ -41,23 +39,20 @@
 
         sops = {
           defaultSopsFile = ./secrets.yaml;
-          secrets = lib.mkMerge [
-            {
-              srv-ssh = { };
-              zfs-ztank-key = {
-                # Hack to have the zfs key material available very early for mounting
-                neededForUsers = true;
-              };
-              zrepl = { };
-              ela.neededForUsers = true;
-              prometheus-fritzbox = {
-                owner = config.services.prometheus.exporters.fritz.user;
-                inherit (config.services.prometheus.exporters.fritz) group;
-              };
-              openarchiver = { };
-              hass-token = { };
-            }
-          ];
+          secrets = {
+            srv-ssh = { };
+            zfs-ztank-key = {
+              # Hack to have the zfs key material available very early for mounting
+              neededForUsers = true;
+            };
+            zrepl = { };
+            ela.neededForUsers = true;
+            prometheus-fritzbox = {
+              owner = config.services.prometheus.exporters.fritz.user;
+              inherit (config.services.prometheus.exporters.fritz) group;
+            };
+            openarchiver = { };
+          };
         };
 
         networking.hosts = {
@@ -79,7 +74,6 @@
             requires = [ "network-online.target" ];
             after = [ "network-online.target" ];
           };
-          services.vmagent.serviceConfig.LoadCredential = "hass_token:${secrets.hass-token.path}";
         };
 
         nix.settings = {
@@ -88,52 +82,6 @@
           http2 = false;
         };
         services = {
-          home-assistant = {
-            enable = true;
-            extraComponents = [
-              "androidtv_remote"
-              "roomba"
-              "matter"
-              "otbr"
-              "thread"
-              "tplink_tapo"
-              "epson"
-              "picnic"
-              "fritzbox"
-              "prometheus"
-            ];
-            config = {
-              http = {
-                use_x_forwarded_for = true;
-                trusted_proxies = [ "127.0.0.1" ];
-                server_host = "127.0.0.1";
-                server_port = haPort;
-              };
-              prometheus = {
-                namespace = "hass";
-              };
-              default_config = { };
-            };
-            extraPackages =
-              python3Packages: with python3Packages; [
-                gtts
-              ];
-          };
-          matterjs-server.enable = true;
-          openthread-border-router = {
-            enable = true;
-            openFirewall = true;
-            backboneInterfaces = [ "eno1" ];
-            logLevel = "notice";
-            radio = {
-              device = "/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_441BF685FD94-if00";
-              baudRate = 460800;
-            };
-            web = {
-              enable = true;
-              listenAddress = "0.0.0.0";
-            };
-          };
           immich = {
             enable = true;
             database.enable = true;
@@ -408,26 +356,6 @@
               inherit (config.services.nextcloud.package.packages.apps) recognize;
             };
           };
-        };
-
-        users.users = {
-          ela = {
-            hashedPasswordFile = secrets.ela.path;
-            isNormalUser = true;
-            group = "users";
-            uid = 1001;
-            shell = pkgs.zsh;
-          };
-          nologin = {
-            isNormalUser = false;
-            isSystemUser = true;
-            group = "users";
-          };
-          shawn.extraGroups = [ "nextcloud" ];
-          hass.extraGroups = [ "dialout" ];
-        };
-
-        services = {
           prometheus.exporters.fritz = {
             enable = true;
             listenAddress = "127.0.0.1";
@@ -450,21 +378,6 @@
                     [ "${cfg.listenAddress}:${toString cfg.port}" ];
                 }
               ];
-            }
-            {
-              job_name = "hass";
-              static_configs = [
-                {
-                  targets =
-                    let
-                      cfg = config.services.home-assistant.config.http;
-                    in
-                    [ "${cfg.server_host}:${toString cfg.server_port}" ];
-                }
-              ];
-              scrape_interval = "15s";
-              metrics_path = "/api/prometheus";
-              bearer_token_file = "/run/credentials/vmagent.service/hass_token";
             }
           ];
           nginx = {
@@ -497,20 +410,6 @@
                   };
                 };
               };
-              "${haName}" = {
-                serverName = haName;
-                forceSSL = true;
-                enableACME = true;
-                http3 = true;
-                kTLS = true;
-                locations = {
-                  "/" = {
-                    proxyPass = "http://localhost:${toString haPort}";
-                    recommendedProxySettings = true;
-                    proxyWebsockets = true;
-                  };
-                };
-              };
             };
           };
           postgresql = {
@@ -518,6 +417,23 @@
             dataDir = "/persist/var/lib/postgresql/17";
           };
         };
+
+        users.users = {
+          ela = {
+            hashedPasswordFile = secrets.ela.path;
+            isNormalUser = true;
+            group = "users";
+            uid = 1001;
+            shell = pkgs.zsh;
+          };
+          nologin = {
+            isNormalUser = false;
+            isSystemUser = true;
+            group = "users";
+          };
+          shawn.extraGroups = [ "nextcloud" ];
+        };
+
         environment = {
           etc.".ztank_key".source = secrets.zfs-ztank-key.path;
           systemPackages =
