@@ -1,6 +1,6 @@
 {
   den.aspects.tank.provides.to-users.nixos =
-    { config, ... }:
+    { config, pkgs, ... }:
     let
       haName = "ha.tank.pointjig.de";
       haPort = 8123;
@@ -39,6 +39,20 @@
               gtts
               pychromecast
             ];
+          customComponents = [
+            (pkgs.buildHomeAssistantComponent {
+              owner = "Sdahl1234";
+              domain = "intex_wa510";
+              version = "0.6.3-unstable-2026-06-22";
+
+              src = pkgs.fetchFromGitHub {
+                owner = "Sdahl1234";
+                repo = "intex_wa510";
+                rev = "d2b4efdd5ecf6d9b5c29a2212aed4cb41f0b35a8";
+                hash = "sha256-VCNUrHdF6eLl2iJ8iodOkFJM1J1x2IlFZAjQTm1kc0k=";
+              };
+            })
+          ];
         };
         matterjs-server.enable = true;
         openthread-border-router = {
