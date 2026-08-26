@@ -21,6 +21,7 @@
             "picnic"
             "fritzbox"
             "prometheus"
+            "tuya"
           ];
           config = {
             http = {
@@ -39,19 +40,8 @@
               gtts
               pychromecast
             ];
-          customComponents = [
-            (pkgs.buildHomeAssistantComponent rec {
-              owner = "Yeoh37";
-              domain = "intex_wa510";
-              version = "0.6.3";
-
-              src = pkgs.fetchFromGitHub {
-                owner = "Yeoh37";
-                repo = "intex_wa510";
-                tag = "v${version}";
-                hash = "sha256-jOhPHz67A6JBt6pBh9DepU3U4UQ8C1wPxKKOcCdNnTQ=";
-              };
-            })
+          customComponents = with pkgs.home-assistant-custom-components; [
+            tuya_local
           ];
         };
         matterjs-server.enable = true;
