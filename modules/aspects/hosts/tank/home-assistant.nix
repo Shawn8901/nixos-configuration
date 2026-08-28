@@ -33,6 +33,27 @@
               namespace = "hass";
             };
             default_config = { };
+            rest = [
+
+              {
+                resource = "https://www.heizoel24.de/DailyPriceXml.ashx?zipCode=47239&litre=2000&unloadingpoints=1";
+                headers = {
+                  user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0";
+                };
+                scan_interval = 3600;
+                sensor = [
+                  {
+
+                    name = "heizoelpreis";
+                    value_template = "{{ value_json['result']['deliveries']['delivery']['price'][0]['#text'] | regex_replace(find=',' , replace='.') | float }}";
+                    unit_of_measurement = "EUR";
+                    state_class = "total";
+                    device_class = "monetary";
+                    unique_id = "heizoelpreis";
+                  }
+                ];
+              }
+            ];
           };
           extraPackages =
             python3Packages: with python3Packages; [
