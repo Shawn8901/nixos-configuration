@@ -38,6 +38,7 @@
             python3Packages: with python3Packages; [
               gtts
               pychromecast
+              pyipp
             ];
           customComponents = [
             (pkgs.buildHomeAssistantComponent {
