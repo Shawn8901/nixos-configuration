@@ -361,6 +361,7 @@
             listenAddress = "127.0.0.1";
             settings.devices = [
               {
+                hostname = "192.168.11.1";
                 username = "prometheus";
                 password_file = secrets.prometheus-fritzbox.path;
               }
