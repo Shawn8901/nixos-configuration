@@ -34,7 +34,6 @@
             };
             default_config = { };
             rest = [
-
               {
                 resource = "https://www.heizoel24.de/DailyPriceXml.ashx?zipCode=47239&litre=2000&unloadingpoints=1";
                 headers = {
@@ -43,7 +42,6 @@
                 scan_interval = 3600;
                 sensor = [
                   {
-
                     name = "heizoelpreis";
                     value_template = "{{ value_json['result']['deliveries']['delivery']['price'][0]['#text'] | regex_replace(find=',' , replace='.') | float }}";
                     unit_of_measurement = "EUR";
@@ -108,7 +106,7 @@
                   [ "${cfg.server_host}:${toString cfg.server_port}" ];
               }
             ];
-            scrape_interval = "15s";
+            scrape_interval = "5s";
             metrics_path = "/api/prometheus";
             bearer_token_file = "/run/credentials/vmagent.service/hass_token";
           }
