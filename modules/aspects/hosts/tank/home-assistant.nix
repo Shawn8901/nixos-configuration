@@ -59,6 +59,9 @@
               pychromecast
               pyipp
             ];
+          customLovelaceModules = [
+            pkgs.home-assistant-custom-lovelace-modules.xiaomi-vacuum-map-card
+          ];
           customComponents = [
             (pkgs.buildHomeAssistantComponent {
               owner = "Sdahl1234";
