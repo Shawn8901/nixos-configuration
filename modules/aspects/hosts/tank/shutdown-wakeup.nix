@@ -15,7 +15,7 @@
 
     in
     {
-      systemd = {
+      systemd = lib.mkIf (false) {
         services.sched-shutdown = {
           description = "Scheduled shutdown";
           serviceConfig = {
