@@ -59,8 +59,9 @@
               pychromecast
               pyipp
             ];
-          customLovelaceModules = [
-            pkgs.home-assistant-custom-lovelace-modules.xiaomi-vacuum-map-card
+          customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+            xiaomi-vacuum-map-card
+            apexcharts-card
           ];
           customComponents = [
             (pkgs.buildHomeAssistantComponent {
