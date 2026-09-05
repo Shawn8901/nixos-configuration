@@ -34,7 +34,6 @@
           pkgs.makemkv
           pkgs.libation
           (pkgs.asunder.override { mp3Support = true; })
-          pkgs.deezer-enhanced
         ];
 
         programs.zsh.shellAliases =
