@@ -181,10 +181,10 @@
             };
           };
           lvm.enable = false;
-          journald.extraConfig = ''
-            SystemMaxUse=75M
-            SystemMaxFileSize=25M
-          '';
+          journald.settings.Journal = {
+            SystemMaxUse = "75M";
+            SystemMaxFileSize = "25M";
+          };
           dbus.implementation = "broker";
         };
         programs.nh = {
