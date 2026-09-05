@@ -32,6 +32,9 @@
           enable = true;
           configPath = "${config.xdg.configHome}/mozilla/firefox";
           package = pkgs.firefox;
+          nativeMessagingHosts = [
+            pkgs.kdePackages.plasma-browser-integration
+          ];
           profiles."shawn" = {
             extensions = {
               packages = with pkgs.firefox-addons; [
