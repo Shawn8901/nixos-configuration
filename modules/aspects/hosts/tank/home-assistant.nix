@@ -1,6 +1,11 @@
 {
   den.aspects.tank.provides.to-users.nixos =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     let
       haName = "ha.tank.pointjig.de";
       haPort = 8123;
@@ -23,6 +28,10 @@
             "prometheus"
           ];
           config = {
+            recorder.db_url = "postgresql://@/hass";
+            "automation ui" = "!include automations.yaml";
+            "scene ui" = "!include scenes.yaml";
+            "script ui" = "!include scripts.yaml";
             http = {
               use_x_forwarded_for = true;
               trusted_proxies = [ "127.0.0.1" ];
@@ -58,6 +67,7 @@
               gtts
               pychromecast
               pyipp
+              psycopg2
             ];
           customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
             xiaomi-vacuum-map-card
@@ -121,6 +131,9 @@
           enableACME = true;
           http3 = true;
           kTLS = true;
+          extraConfig = ''
+            proxy_buffering off;
+          '';
           locations = {
             "/" = {
               proxyPass = "http://localhost:${toString haPort}";
@@ -128,6 +141,16 @@
               proxyWebsockets = true;
             };
           };
+        };
+        postgresql = {
+          enable = lib.mkDefault true;
+          ensureDatabases = [ "hass" ];
+          ensureUsers = [
+            {
+              name = "hass";
+              ensureDBOwnership = true;
+            }
+          ];
         };
       };
       systemd.services.vmagent.serviceConfig.LoadCredential =
