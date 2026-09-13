@@ -278,7 +278,8 @@
         "mimir": "mimir",
         "nixpkgs": "nixpkgs",
         "snm": "snm",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "valheim": "valheim"
       }
     },
     "snm": {
@@ -322,6 +323,26 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "valheim": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789342048,
+        "narHash": "sha256-hMx8O68Thd89ny0nSqMi50cFCsGeSnz3F8qFomCeZmI=",
+        "owner": "shawn8901",
+        "repo": "valheim-nix",
+        "rev": "b123193861c0731913c39e91e35030e2950cb8ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shawn8901",
+        "repo": "valheim-nix",
         "type": "github"
       }
     }

@@ -47,5 +47,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    valheim = {
+      url = "github:shawn8901/valheim-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
