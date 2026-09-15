@@ -10,12 +10,12 @@
         ${pkgs.util-linux}/bin/rtcwake -m no -t $(${pkgs.coreutils-full}/bin/date +%s -d 'tomorrow ${wakeupTime}')
       '';
 
-      shutdownTime = "0:00:00";
-      wakeupTime = "8:00:00";
+      shutdownTime = "22:00:00";
+      wakeupTime = "20:00:00";
 
     in
     {
-      systemd = lib.mkIf (false) {
+      systemd = {
         services.sched-shutdown = {
           description = "Scheduled shutdown";
           serviceConfig = {
