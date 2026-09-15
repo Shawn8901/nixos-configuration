@@ -33,7 +33,6 @@
         ];
         zfs = {
           devNodes = "/dev/disk/by-id";
-          package = pkgs.zfs_2_3;
           forceImportRoot = false;
         };
         loader = {
