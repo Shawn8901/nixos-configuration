@@ -74,6 +74,10 @@
             requires = [ "network-online.target" ];
             after = [ "network-online.target" ];
           };
+
+          tmpfiles.rules = [
+            "w /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference - - - - balance_power"
+          ];
         };
 
         nix.settings = {
@@ -479,6 +483,11 @@
                 fi
               '')
             ];
+        };
+        powerManagement = {
+          enable = true;
+          powertop.enable = true;
+          cpuFreqGovernor = "schedutil";
         };
         # services.openarchiver = {
         #   enable = true;
