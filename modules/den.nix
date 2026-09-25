@@ -42,6 +42,7 @@
       shelter.users.shawn = { };
       tank.users.shawn = { };
       zenbook.users.shawn = { };
+      beacon.users.shawn = { };
     };
     aarch64-linux.watchtower.users.shawn = { };
   };
