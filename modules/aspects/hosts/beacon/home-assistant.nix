@@ -93,7 +93,10 @@
             })
           ];
         };
-        matterjs-server.enable = true;
+        matterjs-server = {
+          enable = true;
+          extraArgs = [ "--log-level=notice" ];
+        };
         openthread-border-router = {
           enable = true;
           openFirewall = true;
