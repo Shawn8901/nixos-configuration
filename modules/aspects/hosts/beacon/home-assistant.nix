@@ -105,6 +105,11 @@
           radio = {
             device = "/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_441BF685FD94-if00";
             baudRate = 460800;
+            flowControl = true;
+          };
+          rest = {
+            listenAddress = "0.0.0.0";
+            listenPort = 8081;
           };
           web = {
             enable = true;
