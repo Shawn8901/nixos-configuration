@@ -31,7 +31,7 @@
         useNetworkd = true;
         useDHCP = lib.mkDefault false;
       };
-      hardware.bluetooth.enable = false;
+      hardware.bluetooth.enable = lib.mkDefault false;
       security.acme = {
         acceptTerms = true;
         defaults.email = lib.mkDefault "shawn@pointjig.de";

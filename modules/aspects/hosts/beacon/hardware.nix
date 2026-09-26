@@ -33,6 +33,7 @@
       hardware = {
         cpu.intel.updateMicrocode = true;
         enableRedistributableFirmware = true;
+        bluetooth.enable = true;
       };
 
       fileSystems = {
