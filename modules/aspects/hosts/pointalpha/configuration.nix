@@ -57,6 +57,7 @@
       {
         pkgs,
         config,
+        lib,
         ...
       }:
       {
@@ -135,7 +136,7 @@
             enable = true;
             openFirewall = true;
           };
-          nh.flake = "/home/shawn/dev/nixos-configuration";
+          nh.flake = lib.mkForce "/home/shawn/dev/nixos-configuration-old";
           kdeconnect.enable = true;
           droidcam.enable = true;
         };
