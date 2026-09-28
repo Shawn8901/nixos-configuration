@@ -26,7 +26,6 @@
           "/var/lib/attic"
           "/var/lib/dovecot"
           "/var/lib/fail2ban"
-          "/var/lib/hass"
           "/var/lib/hydra"
           "/var/lib/immich"
           "/var/lib/nextcloud"
@@ -38,7 +37,6 @@
           "/var/lib/rspamd"
           "/var/lib/samba"
           "/var/lib/systemd"
-          "/var/lib/thread"
           "/var/lib/userborn"
           "/var/lib/vnstat"
         ];
