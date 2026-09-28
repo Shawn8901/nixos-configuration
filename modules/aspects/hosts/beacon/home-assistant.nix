@@ -177,5 +177,7 @@
       systemd.services.vmagent.serviceConfig.LoadCredential =
         "hass_token:${config.sops.secrets.hass-token.path}";
       users.users.hass.extraGroups = [ "dialout" ];
+
+      security.acme.certs."${haName}".extraDomainNames = [ config.networking.hostName ];
     };
 }
