@@ -10,7 +10,7 @@
         ${pkgs.util-linux}/bin/rtcwake -m no -t $(${pkgs.coreutils-full}/bin/date +%s -d 'tomorrow ${wakeupTime}')
       '';
 
-      shutdownTime = "22:00:00";
+      shutdownTime = "23:00:00";
       wakeupTime = "20:00:00";
 
     in
