@@ -13,8 +13,8 @@
     {
       sops.secrets.hass-token = { };
       networking.firewall.allowedTCPPorts = [
-        80
-        443
+        8080
+        8443
       ];
 
       services = {
@@ -144,6 +144,8 @@
           recommendedOptimisation = true;
           recommendedTlsSettings = true;
           recommendedProxySettings = true;
+          defaultHTTPListenPort = 8080;
+          defaultSSLListenPort = 8443;
           virtualHosts."${haName}" = {
             serverName = haName;
             forceSSL = true;
