@@ -392,7 +392,8 @@
                 serverName = "mail.tank.pointjig.de";
                 forceSSL = true;
                 enableACME = true;
-                http3 = true;
+                http3 = false;
+                http2 = false;
                 kTLS = true;
                 locations = {
                   "/" = {
@@ -405,7 +406,8 @@
                 serverName = immichName;
                 forceSSL = true;
                 enableACME = true;
-                http3 = true;
+                http3 = false;
+                http2 = false;
                 kTLS = true;
                 locations = {
                   "/" = {
