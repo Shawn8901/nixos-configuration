@@ -52,6 +52,7 @@
               inherit (config.services.prometheus.exporters.fritz) group;
             };
             openarchiver = { };
+            lego-dode = { };
           };
         };
 
@@ -491,6 +492,14 @@
         #   };
         # };
         mailserver.fqdn = "mail.tank.pointjig.de";
+        security.acme = {
+          acceptTerms = true;
+          defaults = {
+            dnsProvider = "dode";
+            credentialFiles.DODE_TOKEN_FILE = secrets.lego-dode.path;
+          };
+
+        };
       };
   };
 }
