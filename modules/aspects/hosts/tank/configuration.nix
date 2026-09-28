@@ -321,18 +321,6 @@
                 "directory mask" = 700;
                 browseable = "yes";
               };
-              hopfelde = {
-                path = "/media/hopfelde";
-                public = "yes";
-                writeable = "yes";
-                printable = "no";
-                browseable = "yes";
-                available = "yes";
-                "guest ok" = "yes";
-                "valid users" = "nologin";
-                "create mask" = 700;
-                "directory mask" = 700;
-              };
             };
           };
           smartd = {
