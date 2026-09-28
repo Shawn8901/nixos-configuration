@@ -32,6 +32,9 @@
           "cifs"
         ];
         kernelPackages = pkgs.linuxPackages;
+        kernelParams = [
+          "pci=noaer"
+        ];
         extraModulePackages = with config.boot.kernelPackages; [ it87 ];
         extraModprobeConfig = ''
           options zfs zfs_arc_max=2147483648
