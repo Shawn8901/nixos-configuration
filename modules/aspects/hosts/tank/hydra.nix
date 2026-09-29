@@ -224,6 +224,7 @@
 
       nix = {
         package = lib.mkForce pkgs.hydra.nix;
+        settings.system-features = [ "gccarch-x86-64-v3" ];
         buildMachines = [
           {
             hostName = "localhost";
