@@ -1,5 +1,5 @@
 {
-  den.aspects.beacon.provides.to-users.nixos =
+  den.aspects.beacon.nixos =
     {
       config,
       pkgs,
@@ -12,10 +12,15 @@
     in
     {
       sops.secrets.hass-token = { };
-      networking.firewall.allowedTCPPorts = [
-        8080
-        8443
-      ];
+      networking.firewall = {
+        allowedTCPPorts = [
+          8080
+          8443
+        ];
+        allowedUDPPorts = [
+          8443
+        ];
+      };
 
       services = {
         home-assistant = {
