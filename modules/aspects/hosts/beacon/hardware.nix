@@ -1,6 +1,6 @@
 {
   den.aspects.beacon.nixos =
-    { modulesPath, ... }:
+    { modulesPath, pkgs, ... }:
     {
       imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
@@ -33,7 +33,12 @@
       hardware = {
         cpu.intel.updateMicrocode = true;
         enableRedistributableFirmware = true;
-        bluetooth.enable = true;
+        bluetooth = {
+          enable = true;
+          package = pkgs.bluez5-experimental;
+          settings.General.Experimental = true;
+          input.General.ClassicBondedOnly = false;
+        };
       };
 
       fileSystems = {
