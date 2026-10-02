@@ -228,26 +228,6 @@
         "type": "github"
       }
     },
-    "mimir": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788468471,
-        "narHash": "sha256-Hzm9GYiBp59ngFTN9dmO/k05B3Ibb913D+bRVDf2JdY=",
-        "owner": "Shawn8901",
-        "repo": "mimir",
-        "rev": "d6f303a37fb67a75589f765dfbe0e804711c6e0d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Shawn8901",
-        "repo": "mimir",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1790971861,
@@ -275,7 +255,6 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
-        "mimir": "mimir",
         "nixpkgs": "nixpkgs",
         "snm": "snm",
         "sops-nix": "sops-nix",

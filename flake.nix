@@ -34,10 +34,6 @@
       };
     };
     import-tree.url = "github:denful/import-tree";
-    mimir = {
-      url = "github:Shawn8901/mimir";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixpkgs.url = "github:shawn8901/nixpkgs/nixos-unstable-custom";
     snm = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
