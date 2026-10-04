@@ -78,6 +78,7 @@
           http2 = false;
           auto-allocate-uids = true;
           use-cgroups = true;
+          system-features = [ "gccarch-x86-64-v3" ];
           experimental-features = [
             "auto-allocate-uids"
             "cgroups"
