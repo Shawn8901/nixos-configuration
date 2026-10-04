@@ -155,7 +155,7 @@
                   kTLS = true;
                   locations."/" = {
                     extraConfig = ''
-                      return 200;
+                      return 204;
                     '';
                   };
                 };
