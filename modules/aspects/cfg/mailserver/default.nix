@@ -8,6 +8,10 @@
           snm-dorman.sopsFile = ./secrets.yaml;
         };
       };
+      services.nginx = {
+        enable = true;
+        virtualHosts.${config.mailserver.fqdn}.enableACME = true;
+      };
 
       mailserver = {
         enable = true;

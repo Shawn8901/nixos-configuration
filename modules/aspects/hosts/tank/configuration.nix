@@ -376,34 +376,18 @@
           ];
           nginx = {
             package = pkgs.nginx;
-            virtualHosts = {
-              "mail.tank.pointjig.de" = {
-                serverName = "mail.tank.pointjig.de";
-                forceSSL = true;
-                enableACME = true;
-                http3 = false;
-                http2 = false;
-                kTLS = true;
-                locations = {
-                  "/" = {
-                    proxyPass = "http://localhost:8080";
-                    recommendedProxySettings = true;
-                  };
-                };
-              };
-              "${immichName}" = {
-                serverName = immichName;
-                forceSSL = true;
-                enableACME = true;
-                http3 = false;
-                http2 = false;
-                kTLS = true;
-                locations = {
-                  "/" = {
-                    proxyPass = "http://localhost:${toString config.services.immich.port}";
-                    recommendedProxySettings = true;
-                    proxyWebsockets = true;
-                  };
+            virtualHosts."${immichName}" = {
+              serverName = immichName;
+              forceSSL = true;
+              enableACME = true;
+              http3 = false;
+              http2 = false;
+              kTLS = true;
+              locations = {
+                "/" = {
+                  proxyPass = "http://localhost:${toString config.services.immich.port}";
+                  recommendedProxySettings = true;
+                  proxyWebsockets = true;
                 };
               };
             };

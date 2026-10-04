@@ -146,31 +146,17 @@
                   ${concatStringsSep "\n  " (map (c: "${c} 1;") allowedCountries)}
                 }
               '';
-              virtualHosts = {
-                "${mailHostname}" = {
-                  serverName = "${mailHostname}";
-                  forceSSL = true;
-                  enableACME = true;
-                  http3 = true;
-                  kTLS = true;
-                  locations."/" = {
-                    extraConfig = ''
-                      return 204;
-                    '';
-                  };
-                };
-                "${vaultwardenName}" = {
-                  serverName = vaultwardenName;
-                  forceSSL = true;
-                  enableACME = true;
-                  http3 = true;
-                  kTLS = true;
-                  locations."/" = {
-                    proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-                    extraConfig = ''
-                      ${forbidNotAllowedCountries}
-                    '';
-                  };
+              virtualHosts."${vaultwardenName}" = {
+                serverName = vaultwardenName;
+                forceSSL = true;
+                enableACME = true;
+                http3 = true;
+                kTLS = true;
+                locations."/" = {
+                  proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+                  extraConfig = ''
+                    ${forbidNotAllowedCountries}
+                  '';
                 };
               };
             };
