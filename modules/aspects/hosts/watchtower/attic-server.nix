@@ -33,7 +33,7 @@
               client_header_buffer_size 64k;
             '';
             locations."/" = {
-              proxyPass = "http://127.0.0.1:8080";
+              proxyPass = "http://127.0.0.1:8089";
               recommendedProxySettings = true;
             };
           };
@@ -42,6 +42,7 @@
           environmentFile = config.sops.secrets.attic-env.path;
           enable = true;
           settings = {
+            listen = "[::]:8089";
             database = {
               url = "postgres:///atticd?user=atticd&host=/run/postgresql";
               heartbeat = true;
