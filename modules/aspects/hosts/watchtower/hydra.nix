@@ -1,6 +1,5 @@
-{ self, ... }:
 {
-  den.aspects.tank.nixos =
+  den.aspects.watchtower.nixos =
     {
       config,
       lib,
@@ -8,53 +7,32 @@
       ...
     }:
     let
-      hosts = self.nixosConfigurations;
 
-      hostName = "hydra.tank.pointjig.de";
+      hostName = "hydra.pointjig.de";
       mailAdress = "hydra@pointjig.de";
       writeTokenIncludeFile = config.sops.templates."hydra-write-token.conf".path;
       writeTokenFile = config.sops.secrets.hydra-github-auth.path;
-      builder = {
-        userName = "builder";
-        sshKeyFile = config.sops.secrets.ssh-builder-key.path;
-      };
     in
     {
       sops = {
-        secrets = {
-          ssh-builder-key = {
-            owner = "hydra-queue-runner";
-          };
-          hydra-github-auth = {
-            owner = "hydra-queue-runner";
-            group = "hydra";
-          };
-          attic-token = { };
+        secrets.hydra-github-auth = {
+          owner = "hydra-queue-runner";
+          group = "hydra";
         };
-        templates = {
-          "hydra-write-token.conf" = {
-            content = ''
-              <github_authorization>
-                Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
-              </github_authorization>
-            '';
-            owner = "hydra-queue-runner";
-            group = "hydra";
-            mode = "0660";
-          };
-          "attic-config" = {
-            content = ''
-              default-server = "nixos"
-              [servers.nixos]
-              endpoint = "https://cache.pointjig.de"
-              token = "${config.sops.placeholder.attic-token}"
-            '';
-            owner = "attic";
-            mode = "0600";
-            path = "/var/lib/attic/.config/attic/config.toml";
-          };
+        templates."hydra-write-token.conf" = {
+          content = ''
+            <github_authorization>
+              Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
+            </github_authorization>
+          '';
+          owner = "hydra-queue-runner";
+          group = "hydra";
+          mode = "0660";
         };
       };
+
+      # We dont build fully perlless yet
+      system.forbiddenDependenciesRegexes = lib.mkForce [ ];
 
       networking.firewall = {
         allowedUDPPorts = [ 443 ];
@@ -64,39 +42,6 @@
         ];
       };
 
-      systemd = {
-        tmpfiles.rules = [
-          "d /var/lib/attic 700 attic - -"
-          # "f /tmp/hyda/dynamic-machines 666 hydra hydra - "
-        ];
-        # services.pointalpha-online =
-        #   let
-        #     systemFeatures = hosts.pointalpha.config.nix.settings.system-features;
-        #     jobs = hosts.pointalpha.config.nix.settings.max-jobs;
-        #     speedFactor = 1;
-        #   in
-        #   {
-        #     script = ''
-        #       if ${pkgs.iputils}/bin/ping -c1 -w 1 pointalpha > /dev/null; then
-        #         if ! grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
-        #           echo "ssh://root@pointalpha x86_64-linux,i686-linux ${config.sops.secrets.ssh-builder-key.path} ${toString jobs} ${toString speedFactor} ${lib.concatStringsSep "," systemFeatures} - -" >  /tmp/hyda/dynamic-machines
-        #           echo "Added pointalpha to dynamic build machines"
-        #         fi
-        #       else
-        #         if grep pointalpha /tmp/hyda/dynamic-machines > /dev/null; then
-        #           echo "" > /tmp/hyda/dynamic-machines
-        #           echo "Cleared dynamic build machines"
-        #         fi
-        #       fi
-        #     '';
-        #   };
-        # timers.pointalpha-online = {
-        #   wantedBy = [ "timers.target" ];
-        #   timerConfig = {
-        #     OnCalendar = "*:0/1";
-        #   };
-        # };
-      };
       services = {
         nginx = {
           enable = true;
@@ -204,38 +149,8 @@
         };
       };
 
-      systemd.services.attic-watch-store = {
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network-online.target" ];
-        requires = [ "network-online.target" ];
-        description = "Upload all store content to binary catch";
-        serviceConfig = {
-          User = "attic";
-          Restart = "always";
-          ExecStart = "${lib.getExe pkgs.attic-client} watch-store nixos";
-        };
-      };
-
-      programs.ssh.extraConfig = ''
-        Host watchtower
-        Hostname watchtower.pointjig.de
-        Port 2242
-        Compression yes
-      '';
-
       nix = {
         package = lib.mkForce pkgs.hydra.nix;
-        settings.system-features = [ "gccarch-x86-64-v3" ];
-        buildMachines = [
-          {
-            hostName = "watchtower";
-            systems = [ "aarch64-linux" ];
-            maxJobs = 1;
-            supportedFeatures = hosts.watchtower.config.nix.settings.system-features;
-            sshUser = builder.userName;
-            sshKey = builder.sshKeyFile;
-          }
-        ];
         settings = {
           keep-outputs = true;
           keep-derivations = true;
@@ -262,13 +177,6 @@
           ''
             extra-allowed-uris = ${lib.concatStringsSep " " urls}
           '';
-      };
-
-      users.users.attic = {
-        isNormalUser = false;
-        isSystemUser = true;
-        group = "users";
-        home = "/var/lib/attic";
       };
     };
 }
