@@ -17,11 +17,6 @@
 
       services = {
         nginx = {
-          enable = lib.mkDefault true;
-          recommendedGzipSettings = true;
-          recommendedOptimisation = true;
-          recommendedTlsSettings = true;
-          recommendedProxySettings = true;
           clientMaxBodySize = "2G";
           virtualHosts."cache.pointjig.de" = {
             enableACME = true;

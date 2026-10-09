@@ -45,7 +45,14 @@
               bits = 4096;
             }
           ];
-          nginx.package = pkgs.nginx;
+          nginx = {
+            enable = true;
+            package = pkgs.nginx;
+            recommendedGzipSettings = true;
+            recommendedOptimisation = true;
+            recommendedTlsSettings = true;
+            recommendedProxySettings = true;
+          };
           vmagent = {
             package = pkgs.victoriametrics;
             remoteWrite.url = "http://${config.services.victoriametrics.listenAddress}/api/v1/write";
