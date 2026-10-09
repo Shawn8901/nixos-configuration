@@ -168,21 +168,18 @@
             port = 3001;
             package = pkgs.hydra;
             notificationSender = mailAdress;
-            buildMachinesFiles = [
-              "/etc/nix/machines"
-              "/tmp/hyda/dynamic-machines"
-            ];
             minimumDiskFree = 25;
             minimumDiskFreeEvaluator = 50;
             hydraURL = "https://${hostName}";
             useSubstitutes = true;
+            queueRunner.settings.maxOutputSize = (5 * 1024 * 1024 * 1024);
+            evaluatorSettings = {
+              max_concurrent_evals = 1;
+              evaluator_max_memory_size = (4 * 1024);
+              evaluator_workers = 4;
+              restrict-eval = false;
+            };
             extraConfig = ''
-              evaluator_max_memory_size = ${toString (4 * 1024)}
-              evaluator_workers = 4
-              max_concurrent_evals = 1
-              restrict-eval = false
-              max_output_size = ${toString (5 * 1024 * 1024 * 1024)}
-              max_db_connections = 150
               compress_build_logs = 1
               <runcommand>
                 job = *:*:merge-pr
@@ -201,6 +198,10 @@
               Include ${writeTokenIncludeFile}
             '';
           };
+        hydra-builder = {
+          enable = true;
+          queueRunnerAddr = "http://[::1]:50051";
+        };
       };
 
       systemd.services.attic-watch-store = {
@@ -226,18 +227,6 @@
         package = lib.mkForce pkgs.hydra.nix;
         settings.system-features = [ "gccarch-x86-64-v3" ];
         buildMachines = [
-          {
-            hostName = "localhost";
-            protocol = null;
-            systems = [
-              "x86_64-linux"
-              "i686-linux"
-            ];
-            supportedFeatures = config.nix.settings.system-features ++ [
-              "gccarch-x86-64-v3"
-            ];
-            maxJobs = 4;
-          }
           {
             hostName = "watchtower";
             systems = [ "aarch64-linux" ];
