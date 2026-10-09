@@ -7,7 +7,6 @@
       ...
     }:
     let
-
       hostName = "hydra.pointjig.de";
       mailAdress = "hydra@pointjig.de";
       writeTokenIncludeFile = config.sops.templates."hydra-write-token.conf".path;
@@ -15,14 +14,21 @@
     in
     {
       sops = {
-        secrets.hydra-github-auth = {
-          owner = "hydra-queue-runner";
-          group = "hydra";
+        secrets = {
+          hydra-github-auth = {
+            owner = "hydra-queue-runner";
+            group = "hydra";
+          };
+
+          local-queue-runner-token = {
+            mode = "0440";
+            group = "hydra";
+          };
         };
         templates."hydra-write-token.conf" = {
           content = ''
             <github_authorization>
-              Shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
+              shawn8901 = Bearer ${config.sops.placeholder.hydra-github-auth}
             </github_authorization>
           '';
           owner = "hydra-queue-runner";
@@ -43,14 +49,43 @@
       };
 
       services = {
-        nginx.virtualHosts."${hostName}" = {
-          enableACME = true;
-          forceSSL = true;
-          http3 = true;
-          kTLS = true;
-          locations."/" = {
-            proxyPass = "http://${config.services.hydra.listenHost}:${toString config.services.hydra.port}";
-            recommendedProxySettings = true;
+        nginx.virtualHosts = {
+          "${hostName}" = {
+            enableACME = true;
+            forceSSL = true;
+            http3 = true;
+            kTLS = true;
+            locations."/" = {
+              proxyPass = "http://${config.services.hydra.listenHost}:${toString config.services.hydra.port}";
+              recommendedProxySettings = true;
+            };
+          };
+          "queue-runner.${hostName}" = {
+            enableACME = true;
+            forceSSL = true;
+            locations."/".extraConfig = ''
+              # This is necessary so that grpc connections do not get closed early
+              # see https://stackoverflow.com/a/67805465
+              client_body_timeout 31536000s;
+              client_max_body_size 0;
+
+              grpc_pass grpc://${config.services.hydra.queueRunner.grpc.address}:${toString config.services.hydra.queueRunner.grpc.port};
+
+              grpc_read_timeout 31536000s; # 1 year in seconds
+              grpc_send_timeout 31536000s; # 1 year in seconds
+              grpc_socket_keepalive on;
+
+              # Builders reuse one long-lived HTTP/2 channel for many RPCs. The
+              # default keepalive_requests (1000) makes nginx GOAWAY mid-stream,
+              # cancelling in-flight RPCs and aborting builds.
+              keepalive_requests 1000000;
+              keepalive_timeout 600s;
+
+              grpc_set_header Host $host;
+              grpc_set_header X-Real-IP $remote_addr;
+              grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              grpc_set_header X-Forwarded-Proto $scheme;
+            '';
           };
         };
         postgresql = {
@@ -110,13 +145,11 @@
             minimumDiskFreeEvaluator = 50;
             hydraURL = "https://${hostName}";
             useSubstitutes = true;
-            queueRunner.settings.maxOutputSize = (5 * 1024 * 1024 * 1024);
-            evaluatorSettings = {
-              max_concurrent_evals = 1;
-              evaluator_max_memory_size = (4 * 1024);
-              evaluator_workers = 4;
-              restrict-eval = false;
+            queueRunner.settings = {
+              maxOutputSize = (5 * 1024 * 1024 * 1024);
+              tokenPaths = with config.sops.secrets; [ local-queue-runner-token.path ];
             };
+            evaluatorSettings.max_concurrent_evals = 1;
             extraConfig = ''
               compress_build_logs = 1
               <runcommand>
@@ -138,7 +171,8 @@
           };
         hydra-builder = {
           enable = true;
-          queueRunnerAddr = "http://[::1]:50051";
+          queueRunnerAddr = "https://queue-runner.${hostName}";
+          authorizationFile = config.sops.secrets.local-queue-runner-token.path;
         };
       };
 
