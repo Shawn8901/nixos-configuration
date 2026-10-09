@@ -19,8 +19,11 @@
             owner = "hydra-queue-runner";
             group = "hydra";
           };
-
           local-queue-runner-token = {
+            mode = "0440";
+            group = "hydra";
+          };
+          pointalpha-queue-runner-token = {
             mode = "0440";
             group = "hydra";
           };
@@ -147,7 +150,10 @@
             useSubstitutes = true;
             queueRunner.settings = {
               maxOutputSize = (5 * 1024 * 1024 * 1024);
-              tokenPaths = with config.sops.secrets; [ local-queue-runner-token.path ];
+              tokenPaths = with config.sops.secrets; [
+                local-queue-runner-token.path
+                pointalpha-queue-runner-token.path
+              ];
             };
             evaluatorSettings.max_concurrent_evals = 1;
             extraConfig = ''

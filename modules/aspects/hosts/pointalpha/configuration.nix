@@ -63,7 +63,10 @@
       {
         sops = {
           defaultSopsFile = ./secrets.yaml;
-          secrets.zrepl = { };
+          secrets = {
+            zrepl = { };
+            hydra-queue-runner-token.owner = "hydra-builder";
+          };
         };
 
         environment.systemPackages = [
@@ -130,6 +133,11 @@
               };
             }
           ];
+          hydra-builder = {
+            enable = true;
+            authorizationFile = config.sops.secrets.hydra-queue-runner-token.path;
+            queueRunnerAddr = "http://queue-runner.hydra.pointjig.de";
+          };
         };
 
         programs = {
