@@ -53,7 +53,6 @@
             openarchiver = { };
             lego-dode = { };
             hydra-queue-runner-token.owner = "hydra-builder";
-
           };
         };
 
