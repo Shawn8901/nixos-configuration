@@ -17,7 +17,6 @@
 
       services = {
         nginx = {
-          clientMaxBodySize = "2G";
           virtualHosts."cache.pointjig.de" = {
             enableACME = true;
             forceSSL = true;
@@ -26,6 +25,7 @@
             kTLS = true;
             extraConfig = ''
               client_header_buffer_size 64k;
+              client_max_body_size 2G;
             '';
             locations."/" = {
               proxyPass = "http://127.0.0.1:8089";
