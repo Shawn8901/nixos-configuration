@@ -84,6 +84,7 @@
           keep-outputs = true;
           keep-derivations = true;
           http2 = false;
+          system-features = [ "gccarch-x86-64-v3" ];
         };
         services = {
           hydra-builder = {
