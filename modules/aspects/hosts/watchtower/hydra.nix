@@ -148,6 +148,7 @@
             useSubstitutes = true;
             queueRunner.settings = {
               maxOutputSize = (5 * 1024 * 1024 * 1024);
+              maxUnsupportedTimeInS = (48 * 60 * 60);
               tokenPaths = with config.sops.secrets; [
                 local-queue-runner-token.path
                 pointalpha-queue-runner-token.path
