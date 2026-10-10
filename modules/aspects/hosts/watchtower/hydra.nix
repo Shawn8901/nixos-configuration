@@ -23,10 +23,8 @@
             mode = "0440";
             group = "hydra";
           };
-          pointalpha-queue-runner-token = {
-            mode = "0440";
-            group = "hydra";
-          };
+          pointalpha-queue-runner-token.owner = "hydra-queue-runner";
+          tank-queue-runner-token.owner = "hydra-queue-runner";
         };
         templates."hydra-write-token.conf" = {
           content = ''
@@ -153,6 +151,7 @@
               tokenPaths = with config.sops.secrets; [
                 local-queue-runner-token.path
                 pointalpha-queue-runner-token.path
+                tank-queue-runner-token.path
               ];
             };
             evaluatorSettings.max_concurrent_evals = 1;

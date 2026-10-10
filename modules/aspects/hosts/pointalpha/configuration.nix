@@ -12,7 +12,6 @@
       cfg.monitoree
       cfg.perlless
       cfg.printer
-      cfg.remote-builder
       cfg.zfs
       cfg.zrepl
       cfg.zrepl-admin
@@ -136,7 +135,7 @@
           hydra-builder = {
             enable = true;
             authorizationFile = config.sops.secrets.hydra-queue-runner-token.path;
-            queueRunnerAddr = "http://queue-runner.hydra.pointjig.de";
+            queueRunnerAddr = "https://queue-runner.hydra.pointjig.de";
           };
         };
 

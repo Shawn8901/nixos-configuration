@@ -10,7 +10,6 @@
       cfg.mailserver
       cfg.monitoree
       cfg.nextcloud
-      cfg.remote-builder
       cfg.server
       cfg.postgresql
       cfg.zfs
@@ -53,6 +52,8 @@
             };
             openarchiver = { };
             lego-dode = { };
+            hydra-queue-runner-token.owner = "hydra-builder";
+
           };
         };
 
@@ -87,6 +88,11 @@
           http2 = false;
         };
         services = {
+          hydra-builder = {
+            enable = true;
+            authorizationFile = config.sops.secrets.hydra-queue-runner-token.path;
+            queueRunnerAddr = "https://queue-runner.hydra.pointjig.de";
+          };
           immich = {
             enable = true;
             database.enable = true;

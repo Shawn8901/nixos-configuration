@@ -5,7 +5,6 @@
       cfg.monitoree
       cfg.server
       cfg.postgresql
-      cfg.remote-builder
     ];
 
     nixos =
