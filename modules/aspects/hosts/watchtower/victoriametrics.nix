@@ -21,7 +21,7 @@
         victoriametrics = {
           enable = true;
           retentionPeriod = "1y";
-          listenAddress = "localhost:8427";
+          listenAddress = "127.0.0.1:8427";
           basicAuthUsername = "vm";
           basicAuthPasswordFile = config.sops.secrets.victoriametrics.path;
           extraOptions = [
