@@ -64,33 +64,6 @@
                   }
                 ];
               }
-              {
-                job_name = "blackbox";
-                metrics_path = "/probe";
-                params.module = [ "http_2xx" ];
-                static_configs = [
-                  {
-                    targets = [
-                      "https://sapsrv01.clansap.org:8006"
-                      "https://sapsrv02.clansap.org:8006"
-                    ];
-                  }
-                ];
-                relabel_configs = [
-                  {
-                    source_labels = [ "__address__" ];
-                    target_label = "__param_target";
-                  }
-                  {
-                    source_labels = [ "__param_target" ];
-                    target_label = "target";
-                  }
-                  {
-                    replacement = "127.0.0.1:${toString config.services.prometheus.exporters.blackbox.port}";
-                    target_label = "__address__";
-                  }
-                ];
-              }
             ];
           };
           prometheus = {

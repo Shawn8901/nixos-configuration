@@ -266,14 +266,6 @@
                 port = 2242;
                 user = "shawn";
               };
-              sapsrv01 = {
-                hostname = "sapsrv01.clansap.org";
-                user = "root";
-              };
-              sapsrv02 = {
-                hostname = "sapsrv02.clansap.org";
-                user = "root";
-              };
             };
             enableDefaultConfig = false;
           };

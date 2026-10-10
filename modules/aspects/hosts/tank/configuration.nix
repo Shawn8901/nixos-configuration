@@ -39,7 +39,6 @@
         sops = {
           defaultSopsFile = ./secrets.yaml;
           secrets = {
-            srv-ssh = { };
             zfs-ztank-key = {
               # Hack to have the zfs key material available very early for mounting
               neededForUsers = true;
