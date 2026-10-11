@@ -76,7 +76,7 @@
         nix.settings = {
           keep-outputs = true;
           keep-derivations = true;
-          cores = 8;
+          cores = 10;
           http2 = false;
           auto-allocate-uids = true;
           use-cgroups = true;
