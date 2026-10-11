@@ -80,18 +80,18 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1791518578,
-        "narHash": "sha256-wPE66J6tYQHoa5DOB4lg+aVTJTdEQnc7SoSjwkGaZUY=",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "rev": "55c1d7ee569523b8bde22ee765b6157670787e4c",
-        "type": "gitlab"
+        "lastModified": 1791691571,
+        "narHash": "sha256-btJ4vVIAyQp3BqlARGdbJb9iq3WD7/KTSj0QW5DmvLM=",
+        "ref": "refs/heads/master",
+        "rev": "17a8cf0be701c3f264e42c8465368a0cc602bb18",
+        "revCount": 4986,
+        "type": "git",
+        "url": "https://gitlab.com/rycee/nur-expressions.git"
       },
       "original": {
         "dir": "pkgs/firefox-addons",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "type": "gitlab"
+        "type": "git",
+        "url": "https://gitlab.com/rycee/nur-expressions.git"
       }
     },
     "flake-compat": {
@@ -273,16 +273,15 @@
       "locked": {
         "lastModified": 1791231530,
         "narHash": "sha256-sj7RiYmHW+d7NjH2TWKozEaYp8nhdGas6/zMKjTCO5k=",
-        "owner": "simple-nixos-mailserver",
-        "repo": "nixos-mailserver",
+        "ref": "refs/heads/main",
         "rev": "4a06abf89ea5e38a3e0f9bf12f3036095d4a24a2",
-        "type": "gitlab"
+        "revCount": 1080,
+        "type": "git",
+        "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       },
       "original": {
-        "owner": "simple-nixos-mailserver",
-        "ref": "main",
-        "repo": "nixos-mailserver",
-        "type": "gitlab"
+        "type": "git",
+        "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git"
       }
     },
     "sops-nix": {

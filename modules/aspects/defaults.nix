@@ -17,7 +17,7 @@
       inputs.home-manager.follows = "home-manager";
     };
     snm = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
+      url = "git+https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

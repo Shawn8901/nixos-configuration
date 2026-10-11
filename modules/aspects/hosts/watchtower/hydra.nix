@@ -203,7 +203,7 @@
               "github:Mic92/sops-nix/"
               "github:zhaofengli/"
               "github:ipetkov/crane/"
-              "gitlab:rycee/nur-expressions/"
+              "git+https://gitlab.com/rycee/nur-expressions/"
               "github:Shawn8901/"
             ];
           in

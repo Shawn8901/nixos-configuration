@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      url = "git+https://gitlab.com/rycee/nur-expressions.git?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-file.url = "github:denful/flake-file";
@@ -36,7 +36,7 @@
     import-tree.url = "github:denful/import-tree";
     nixpkgs.url = "github:shawn8901/nixpkgs/nixos-unstable-custom";
     snm = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
+      url = "git+https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {

@@ -5,8 +5,6 @@
 }:
 {
 
-  flake-file.inputs.firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-
   cfg.desktop = {
     includes =
       (with cfg.desktop.provides; [

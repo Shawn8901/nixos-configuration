@@ -2,7 +2,7 @@
 {
 
   flake-file.inputs.firefox-addons = {
-    url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    url = "git+https://gitlab.com/rycee/nur-expressions.git?dir=pkgs/firefox-addons";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
