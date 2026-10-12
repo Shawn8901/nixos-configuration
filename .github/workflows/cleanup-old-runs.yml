@@ -6,7 +6,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  sync_fork:
+  clean_old_logs:
     runs-on: ubuntu-24.04
     steps:
       - name: Clone repository
