@@ -112,11 +112,11 @@
     },
     "flake-file": {
       "locked": {
-        "lastModified": 1791696462,
-        "narHash": "sha256-Iu862mflVRLHE3ivJD1ah5j/pprVyxnXMMUPMR9C1Wg=",
+        "lastModified": 1791833380,
+        "narHash": "sha256-QUt7WHGDhecwjrDLw5ln4LrBMqRV7OcmksMWa9FKxp8=",
         "owner": "denful",
         "repo": "flake-file",
-        "rev": "4ccd0b92aee0943b94324ec4c39949df1769f123",
+        "rev": "24d371623077d3ef7ba1abf984433c4ec9e6dc4c",
         "type": "github"
       },
       "original": {
