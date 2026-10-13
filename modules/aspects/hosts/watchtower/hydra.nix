@@ -205,6 +205,9 @@
               "github:ipetkov/crane/"
               "git+https://gitlab.com/rycee/nur-expressions/"
               "github:Shawn8901/"
+              "https://github.com/"
+              "https://gitlab.com/"
+              "git+https://gitlab.com/"
             ];
           in
           ''
