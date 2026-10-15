@@ -168,6 +168,9 @@
                   port = 9199
                 </prometheus>
               </hydra_notify>
+              <git-input>
+                timeout = 3600
+              </git-input>
               <githubstatus>
                 jobs = .*
                 useShortContext = true
