@@ -87,7 +87,6 @@
             khelpcenter
             kate
             gwenview
-            kwin-x11
           ];
         };
         programs.kde-pim = {
