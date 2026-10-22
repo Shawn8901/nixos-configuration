@@ -175,6 +175,7 @@
               <githubstatus>
                 jobs = .*
                 useShortContext = true
+                excludeBuildFromContext = true
               </githubstatus>
               Include ${writeTokenIncludeFile}
             '';
