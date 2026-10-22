@@ -9,7 +9,7 @@
   systems = builtins.attrNames den.hosts;
   flake =
     let
-      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+      pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
       hydraJob = "merge-pr";
     in
     {
