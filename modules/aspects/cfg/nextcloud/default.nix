@@ -49,8 +49,6 @@
             dbuser = "nextcloud";
             dbhost = "/run/postgresql";
             dbname = "nextcloud";
-            adminuser = "admin";
-            adminpassFile = config.sops.secrets.nextcloud-admin.path;
           };
           phpOptions = {
             "opcache.enable" = "1";
