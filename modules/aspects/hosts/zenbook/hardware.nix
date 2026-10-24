@@ -16,17 +16,14 @@
       imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
       boot = {
-        initrd = {
-          availableKernelModules = [
-            "nvme"
-            "xhci_pci"
-            "rtsx_pci_sdmmc"
-            "usbhid"
-            "sd_mod"
-            "sr_mod"
-          ];
-          systemd.enable = true;
-        };
+        initrd.availableKernelModules = [
+          "nvme"
+          "xhci_pci"
+          "rtsx_pci_sdmmc"
+          "usbhid"
+          "sd_mod"
+          "sr_mod"
+        ];
         kernelModules = [
           "kvm-amd"
           "cifs"

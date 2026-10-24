@@ -7,18 +7,15 @@
       ];
 
       boot = {
-        initrd = {
-          availableKernelModules = [
-            "xhci_pci"
-            "thunderbolt"
-            "ahci"
-            "usb_storage"
-            "usbhid"
-            "sd_mod"
-            "sdhci_pci"
-          ];
-          systemd.enable = true;
-        };
+        initrd.availableKernelModules = [
+          "xhci_pci"
+          "thunderbolt"
+          "ahci"
+          "usb_storage"
+          "usbhid"
+          "sd_mod"
+          "sdhci_pci"
+        ];
         kernelModules = [ "kvm-intel" ];
         loader = {
           systemd-boot.enable = true;

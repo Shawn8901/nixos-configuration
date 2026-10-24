@@ -4,16 +4,13 @@
     {
       imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
       boot = {
-        initrd = {
-          availableKernelModules = [
-            "ahci"
-            "xhci_pci"
-            "usbhid"
-            "sd_mod"
-            "sr_mod"
-          ];
-          systemd.enable = true;
-        };
+        initrd.availableKernelModules = [
+          "ahci"
+          "xhci_pci"
+          "usbhid"
+          "sd_mod"
+          "sr_mod"
+        ];
         kernelModules = [
           "kvm-amd"
           "cifs"
