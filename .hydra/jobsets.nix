@@ -22,7 +22,7 @@ let
     enabled = "1";
     enableemail = false;
     emailoverride = "";
-    keepnr = 3;
+    keepnr = 1;
     hidden = false;
     type = 1;
     flake = "github:shawn8901/nixos-configuration/${branch}";
