@@ -142,8 +142,8 @@
             port = 3001;
             package = pkgs.hydra;
             notificationSender = mailAdress;
-            minimumDiskFree = 25;
-            minimumDiskFreeEvaluator = 50;
+            minimumDiskFree = 10;
+            minimumDiskFreeEvaluator = 15;
             hydraURL = "https://${hostName}";
             useSubstitutes = true;
             queueRunner.settings = {
