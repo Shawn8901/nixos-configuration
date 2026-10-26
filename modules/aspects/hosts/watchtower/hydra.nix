@@ -60,6 +60,7 @@
               proxyPass = "http://${config.services.hydra.listenHost}:${toString config.services.hydra.port}";
               recommendedProxySettings = true;
             };
+
           };
           "queue-runner.${hostName}" = {
             enableACME = true;
@@ -88,6 +89,21 @@
               grpc_set_header X-Forwarded-Proto $scheme;
             '';
           };
+          "channel.${hostName}" = {
+            enableACME = true;
+            forceSSL = true;
+            http3 = true;
+            kTLS = true;
+            locations = {
+              "/nixos-unstable-custom/nixexprs.tar.zst".extraConfig = ''
+                include /var/lib/channels/nixos-unstable-custom/current_header.conf;
+                add_header Cache-Control "public, max-age=60";
+              '';
+              "/nixos-unstable-custom/tarballs".extraConfig = ''
+                autoindex on;
+              '';
+            };
+          };
         };
         postgresql = {
           enable = true;
@@ -109,7 +125,7 @@
         hydra =
           let
             jq = lib.getExe pkgs.jq;
-            merge_pr = pkgs.writeScriptBin "merge_pr" ''
+            merge-pr = pkgs.writeShellScriptBin "merge_pr" ''
               cat $HYDRA_JSON
               echo ""
               job_name=$(${jq} --raw-output ".jobset" $HYDRA_JSON)
@@ -134,6 +150,37 @@
               -H "X-GitHub-Api-Version: 2022-11-28" \
               https://api.github.com/repos/shawn8901/nixos-configuration/pulls/$job_name/merge \
               -d '{"merge_method":"rebase"}'
+            '';
+            channel-update = pkgs.writeShellScriptBin "update-channel" ''
+              set -euo pipefail
+              TARBALL_PATH="${jq} --raw-output ".outputs[-1].path" $HYDRA_JSON"
+              NAME="${jq} --raw-output ".outputs[-1].name" $HYDRA_JSON"
+              CHANNEL_DIR="/var/lib/channels/nixos-unstable-custom"
+              TARBALLS_DIR="$CHANNEL_DIR/tarballs"
+
+              mkdir -p "$TARBALLS_DIR"
+
+              NAR_HASH=$(nix hash path "$TARBALL_PATH")
+              echo "NAR_HASH: $NAR_HASH"
+
+              DEST_PATH="$TARBALLS_DIR/$NAME"
+
+              if [ ! -f "$DEST_PATH" ]; then
+                  cp "$TARBALL_PATH" "$DEST_PATH"
+                  chmod 644 "$DEST_PATH"
+              fi
+
+              ln -sf "tarballs/$NAME" "$CHANNEL_DIR/nixexprs.tar.zst"
+
+              PUBLIC_URL="https://channels.${hostName}/nixos-unstable-custom/tarballs/$NAME?narHash=$NAR_HASH"
+
+              cat <<EOF > "$CHANNEL_DIR/current_header.conf"
+              add_header Link '<$PUBLIC_URL>; rel="immutable"';
+              EOF
+
+              systemctl reload nginx
+
+              echo "Bumped channel to $NAME"
             '';
           in
           {
@@ -161,7 +208,11 @@
               evaluator_max_memory_size = ${toString (8 * 1024)}
               <runcommand>
                 job = *:*:merge-pr
-                command = ${lib.getExe merge_pr}
+                command = ${lib.getExe merge-pr}
+              </runcommand>
+              <runcommand>
+                job = *:*:channel
+                command = ${lib.getExe channel-update}
               </runcommand>
               <hydra_notify>
                 <prometheus>
