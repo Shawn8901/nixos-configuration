@@ -163,8 +163,6 @@
                   chmod 644 "$DEST_PATH"
               fi
 
-              ln -sf "$DEST_PATH" "$CHANNEL_DIR/nixexprs.tar.zst"
-
               TEMP_DIR=$(mktemp -d)
               trap 'rm -rf "$TEMP_DIR"' EXIT INT TERM
 
