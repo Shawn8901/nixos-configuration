@@ -311,11 +311,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789342048,
-        "narHash": "sha256-hMx8O68Thd89ny0nSqMi50cFCsGeSnz3F8qFomCeZmI=",
+        "lastModified": 1793212065,
+        "narHash": "sha256-LChN2YR+fAyVedP2fRrp0F9+HxAJROu+wApIDAenVe4=",
         "owner": "shawn8901",
         "repo": "valheim-nix",
-        "rev": "b123193861c0731913c39e91e35030e2950cb8ac",
+        "rev": "0b2a44ca81434c2dfbc2ddef38af71e298b553e0",
         "type": "github"
       },
       "original": {
