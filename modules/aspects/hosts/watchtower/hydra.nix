@@ -277,6 +277,7 @@
               "https://github.com/"
               "https://gitlab.com/"
               "git+https://gitlab.com/"
+              "https://channel.hydra.pointjig.de"
             ];
           in
           ''
