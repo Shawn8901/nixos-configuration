@@ -25,6 +25,11 @@
           };
           pointalpha-queue-runner-token.owner = "hydra-queue-runner";
           tank-queue-runner-token.owner = "hydra-queue-runner";
+          cachix-token = {
+            owner = "hydra-queue-runner";
+            group = "hydra";
+            mode = "0660";
+          };
         };
         templates."hydra-write-token.conf" = {
           content = ''
@@ -179,7 +184,14 @@
               /run/wrappers/bin/sudo /run/current-system/sw/bin/systemctl reload nginx
 
               echo "Bumped channel to $NAME"
+            '';
+            push-stdenv = pkgs.writeShellScriptBin "update-channel" ''
+              output_paths=$(${lib.getExe pkgs.jq} --raw-output '.outputs[-1].path' $HYDRA_JSON)
+              echo "Pushing outputs ''${output_paths} to cachix"
 
+              CACHIX_AUTH_TOKEN="$(<"${config.sops.secrets.cachix-token.path}")"
+              export CACHIX_AUTH_TOKEN
+              ${lib.getExe pkgs.cachix} push x86-64-v3 "''${output_paths}"
             '';
           in
           {
@@ -212,6 +224,10 @@
               <runcommand>
                 job = *:*:channel
                 command = ${lib.getExe channel-update}
+              </runcommand>
+              <runcommand>
+                job = x86-64-v3:stdenv:*
+                command = ${lib.getExe push-stdenv}
               </runcommand>
               <hydra_notify>
                 <prometheus>
