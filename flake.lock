@@ -80,11 +80,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1794110558,
-        "narHash": "sha256-rFaS/p7g4SWsK4n7pD006HE4vDg7tU83OZ1Vkf4fRjM=",
+        "lastModified": 1794197002,
+        "narHash": "sha256-CdD6KXKeGLfiSEIYOwcHcgRvLy6VvzED5KVb43pybRw=",
         "ref": "refs/heads/master",
-        "rev": "c2939c05dfc5c3854f2086fbbf9ecba6c310f92c",
-        "revCount": 5036,
+        "rev": "dc6207afc8093b4d167b5a56e661e65ff54894f9",
+        "revCount": 5037,
         "type": "git",
         "url": "https://gitlab.com/rycee/nur-expressions.git"
       },
@@ -177,11 +177,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793979366,
-        "narHash": "sha256-7OoWDsYO9teiPxl0QdlS5lYE20Pue8/5mpscSL32FUA=",
+        "lastModified": 1794252721,
+        "narHash": "sha256-sD1rhEjMghSyWSUG2xEOw+FOVd2wnoWwi/809w8fRkI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2c0c1f01521469cf0271180c453c79782d53c2f6",
+        "rev": "f1db7c474bb49babfe9d8def532939e0c7404327",
         "type": "github"
       },
       "original": {
@@ -230,11 +230,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1794088243,
-        "narHash": "sha256-1u/DwiePCg+zuXqWhJ7uHPtU1xcLZwPQPa/Xpf0Wbb4=",
+        "lastModified": 1794228719,
+        "narHash": "sha256-/f8fM3Bg+5rOdsSVOIMcRXDg2a2p/8H8v99GrVAUTbE=",
         "owner": "shawn8901",
         "repo": "nixpkgs",
-        "rev": "b138d6ea98b9b0b7a5d2961e1af8a9fda21e523f",
+        "rev": "88ccc97957d58468b81a793a173d09f7ef5a8504",
         "type": "github"
       },
       "original": {
