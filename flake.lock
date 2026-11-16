@@ -39,11 +39,11 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1794601813,
-        "narHash": "sha256-DM6BxRr3nR2DjkLQetoi3LGlOIIj0lSV2+1LFyImFYE=",
+        "lastModified": 1794846199,
+        "narHash": "sha256-UKLgBlX0xcUZAetX/fXqcwzjbL4ehO8/JrMTBX+bxdk=",
         "owner": "denful",
         "repo": "den",
-        "rev": "9bdfbc2123a96c1a96ffd2e76241d321741e0dc8",
+        "rev": "9dcee08bd91a40597fb7a510d6a42a2dfacd1d61",
         "type": "github"
       },
       "original": {
@@ -80,11 +80,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1794715369,
-        "narHash": "sha256-avGx5S2l0O2GH3cNK97mzPPxO8OJwzBw8SH9IAUyNwA=",
+        "lastModified": 1794801771,
+        "narHash": "sha256-TdlskgDOwOwH+cXD1Hs1eiaCi0uLnYYxbBlLckFoNOU=",
         "ref": "refs/heads/master",
-        "rev": "37a5af678e1bfa730df5471cf869550b767fa3a9",
-        "revCount": 5049,
+        "rev": "2060a2a111cee4c855ba08e3df37173321d9d589",
+        "revCount": 5052,
         "type": "git",
         "url": "https://gitlab.com/rycee/nur-expressions.git"
       },
