@@ -7,7 +7,7 @@ on:
 
 jobs:
   sync_fork:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Sync fork
         shell: bash
@@ -18,7 +18,7 @@ jobs:
           GH_TOKEN: "${{ secrets.GH_TOKEN }}"
 
   update-branch:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: [sync_fork]
     steps:
       - name: Clone config repo
