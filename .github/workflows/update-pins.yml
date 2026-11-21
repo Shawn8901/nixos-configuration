@@ -1,0 +1,73 @@
+name: Pins Updater
+
+on:
+  schedule:
+    - cron: "30 10 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  update_pins:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.gen_packages.outputs.packages }}
+      machines: ${{ steps.gen_machines.outputs.machines }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: "${{ secrets.GH_TOKEN }}"
+          fetch-depth: 0
+      - name: Set up git
+        shell: bash
+        run: |
+          git config user.email git@pointjig.de
+          git config user.name "Git Bot"
+          git config --global push.autoSetupRemote true
+      - name: Install nix
+        uses: ./.github/actions/setup-env
+        with:
+          github_token: "${{ secrets.GH_TOKEN }}"
+          netrc_content: "${{ secrets.NETRC_CONTENT }}"
+      - name: Update Pins
+        shell: bash
+        run: |
+          has_pr_open=$(gh pr list --label lon --json number)
+          if [ $has_pr_open != "[]" ]
+          then
+            echo "There is already a update PR, dont create a new one."
+
+            gh pr checkout $(gh pr list --label lon  --json number | jq ".[].number")
+            commits_ahead=$(git rev-list --count HEAD..origin/main)
+            echo "Commits ahead: $commits_ahead"
+            git log --oneline -5
+            echo "----------"
+            git log --oneline -5 origin/main
+            if [ $commits_ahead -ne 0 ]
+            then
+              git fetch origin
+              git status
+              git rebase origin/main
+              git push --force-with-lease
+            fi
+          else
+            branchName=update-lon-$(date -I)
+            git switch -c $branchName
+          fi
+
+          nix-shell --run "lon update --commit"
+
+          has_updates=$(git rev-list --count origin/main..HEAD)
+          if [ $has_updates -eq 0 ]
+          then
+            echo "no changes"
+            exit 0
+          fi
+
+          git push
+
+          PR=$(gh pr create \
+          --body "Automatic pin update for lon.lock on $(date -I)" \
+          --title "Update for lon.lock $(date -I)") \
+          --base main --label lon --fill
+        env:
+          GH_TOKEN: ${{ github.token }}
