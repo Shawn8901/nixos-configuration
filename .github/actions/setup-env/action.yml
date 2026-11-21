@@ -14,14 +14,11 @@ runs:
       shell: bash
       run: echo "${{ inputs.netrc_content }}" > /home/runner/.netrc
     - name: Install nix
-      uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
+      uses: cachix/install-nix-action@bb0495a1086c46893eee56f32fd192dfe4a15bb9 # v32.0.0
       with:
+        nix_path: nixpkgs=channel:nixos-unstable
         github_access_token: ${{ inputs.github_token }}
-        nix_conf: |
+        extra_nix_config: |
           netrc-file = /home/runner/.netrc
           substituters = https://cache.nixos.org https://nix-community.cachix.org https://cache.pointjig.de/nixos
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= nixos:5axzveeiERb8xAeioBUHNHq4SVLvwDcJkLMFsWq0l1E=
-    # - uses: nix-community/cache-nix-action@135667ec418502fa5a3598af6fb9eb733888ce6a # v6.1.3
-    #   with:
-    #       primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix', '**/flake.lock') }}
-    #       restore-prefixes-first-match: nix-${{ runner.os }}-

@@ -1,0 +1,31 @@
+{
+  "enabled": 1,
+  "hidden": false,
+  "description": "jobset evaluation",
+  "nixexprinput": "declInput",
+  "nixexprpath": "hydra/jobsets.nix",
+  "checkinterval": 1200,
+  "schedulingshares": 100,
+  "enableemail": false,
+  "emailoverride": "",
+  "keepnr": 1,
+  "type": 0,
+  "inputs": {
+    "nixpkgs": {
+      "value": "https://github.com/NixOS/nixpkgs f20cd90e28fe0403873f473b29e42662cd86e8c4",
+      "type": "git",
+      "emailresponsible": false
+    },
+    "refs": {
+      "type": "github_refs",
+      "value": "shawn8901 nixos-configuration heads",
+      "emailresponsible": false
+    },
+    "pulls": {
+      "type": "githubpulls",
+      "value": "shawn8901 nixos-configuration",
+      "emailresponsible": false
+    }
+
+  }
+}
