@@ -1,0 +1,92 @@
+{
+  "version": "1",
+  "sources": {
+    "asus-numberpad-driver": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "asus-linux-drivers",
+      "repo": "asus-numberpad-driver",
+      "branch": "master",
+      "revision": "ae5b3293681abec518b728a88da17e5e118bd4ce",
+      "url": "https://github.com/asus-linux-drivers/asus-numberpad-driver/archive/ae5b3293681abec518b728a88da17e5e118bd4ce.tar.gz",
+      "hash": "sha256-OWy+q4vP57v6v0SeSkDo2wmXsjhTFc4wE5vaI+CoTeU="
+    },
+    "disko": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "nix-community",
+      "repo": "disko",
+      "branch": "master",
+      "revision": "44761d4f745b95e037458a0e57133c5700c8e320",
+      "url": "https://github.com/nix-community/disko/archive/44761d4f745b95e037458a0e57133c5700c8e320.tar.gz",
+      "hash": "sha256-D35n2Q2v1KrlF9LS/pFl8Z3EBMJW6qvPw5q4HMbXXLg="
+    },
+    "home-manager": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "nix-community",
+      "repo": "home-manager",
+      "branch": "master",
+      "revision": "6857c7f7c338ad181729c52071386b0d3afa24bc",
+      "url": "https://github.com/nix-community/home-manager/archive/6857c7f7c338ad181729c52071386b0d3afa24bc.tar.gz",
+      "hash": "sha256-1RJm4DEu7YHJv94sjSY7sjqT+kHx/AUwmtUN4dtFBUo="
+    },
+    "nixpkgs": {
+      "type": "Tarball",
+      "fetchType": "tarball",
+      "origin": "https://channel.hydra.pointjig.de/nixos-unstable-custom/nixexprs.tar.zst",
+      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1124499.7c994671c82b.tar.zst?narHash=sha256-SAINzQJeiWsMldkvMalVnTl666fvHfci/pBGzUTkXnQ=&lastModified=1795180460",
+      "hash": "sha256-SAINzQJeiWsMldkvMalVnTl666fvHfci/pBGzUTkXnQ="
+    },
+    "preservation": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "nix-community",
+      "repo": "preservation",
+      "branch": "main",
+      "revision": "00be7f7dd1a11ae0605386f2272288de7cf33abe",
+      "url": "https://github.com/nix-community/preservation/archive/00be7f7dd1a11ae0605386f2272288de7cf33abe.tar.gz",
+      "hash": "sha256-s/A2rSO2Ndf8Y5yiouesnI/3Zkn9pmVGF2NxFxOUvx8="
+    },
+    "rycee": {
+      "type": "Git",
+      "fetchType": "git",
+      "branch": "master",
+      "revision": "e80d6b27d377d16f1c4517788c807a6b2b643f76",
+      "url": "https://gitlab.com/rycee/nur-expressions.git",
+      "hash": "sha256-eEYtDG99UbXeBMbQDTTAuLsagBoNL5pLsVuRNqnncRE=",
+      "lastModified": 1795233760,
+      "submodules": false
+    },
+    "snm": {
+      "type": "Git",
+      "fetchType": "git",
+      "branch": "main",
+      "revision": "9004c7d9b0986719a76ca6945a718434508d7b2e",
+      "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git",
+      "hash": "sha256-K6tvVoF+DSoMpgddGk6Xhern6pcBm3KktHV4c9MWrxM=",
+      "lastModified": 1792611588,
+      "submodules": false
+    },
+    "sops-nix": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "mic92",
+      "repo": "sops-nix",
+      "branch": "master",
+      "revision": "7c637afdccdf9bcf35c4a2d67b58a77c1fd843a4",
+      "url": "https://github.com/mic92/sops-nix/archive/7c637afdccdf9bcf35c4a2d67b58a77c1fd843a4.tar.gz",
+      "hash": "sha256-Y28AMB8lyKjASdJ0BVsR2AqR1cUsVuo8RVVpzHoECho="
+    },
+    "valheim-nix": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "shawn8901",
+      "repo": "valheim-nix",
+      "branch": "main",
+      "revision": "0b2a44ca81434c2dfbc2ddef38af71e298b553e0",
+      "url": "https://github.com/shawn8901/valheim-nix/archive/0b2a44ca81434c2dfbc2ddef38af71e298b553e0.tar.gz",
+      "hash": "sha256-LChN2YR+fAyVedP2fRrp0F9+HxAJROu+wApIDAenVe4="
+    }
+  }
+}
