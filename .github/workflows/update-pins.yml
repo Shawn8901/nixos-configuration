@@ -54,7 +54,7 @@ jobs:
             git switch -c $branchName
           fi
 
-          nix-shell --run "lon update --commit"
+          nix-shell --run "lon update --commit || true"
 
           has_updates=$(git rev-list --count origin/main..HEAD)
           if [ $has_updates -eq 0 ]
