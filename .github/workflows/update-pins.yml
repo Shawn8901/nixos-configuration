@@ -1,0 +1,36 @@
+name: Pins Updater
+
+on:
+  schedule:
+    - cron: "30 10 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  update_pins:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.gen_packages.outputs.packages }}
+      machines: ${{ steps.gen_machines.outputs.machines }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: "${{ secrets.GH_TOKEN }}"
+          fetch-depth: 0
+      - name: Set up git
+        shell: bash
+        run: |
+          git config user.email git@pointjig.de
+          git config user.name "Git Bot"
+      - name: Install nix
+        uses: ./.github/actions/setup-env
+        with:
+          github_token: "${{ secrets.GH_TOKEN }}"
+          netrc_content: "${{ secrets.NETRC_CONTENT }}"
+      - name: Update Pins
+        shell: bash
+        run: |
+          nix-shell --run "lon bot github"
+        env:
+          LON_TOKEN: ${{ github.token }}
+          LON_LABELS: lon

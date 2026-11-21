@@ -6,46 +6,43 @@ keys: &all
   - &pointjig age1wlznz542ulyhjvp9zxe57z5rgy738wt6ygy6qsgjyavl5e9vcd0q27mu3n
   - &shelter age1qx60k4ft2lvs9qa3s0xqhpkdf26zdc8yw4vr7a7424ta9mcq9g8qrseqv3
   - &watchtower age1ctzz6yc073qv2sp8gtq3meeuaq8kcsw0aujaq3s5ecf7jsu8sudsmchn3v
-  - &beacon age1k5ewu4lxhk5xvuh5x4ve9ja355wqr6gfw3ltrf6tefnynyjvneqq0rv38p
+  - &beacon age1re0fzxguvfzg0khz9lgxy8d6u9japykv22f8jupgvt4emrwcyd2s5e9z2z
 
 creation_rules:
-  - path_regex: modules/aspects/secrets.yaml
+  - path_regex: modules(/.*)*/secrets.yaml
     key_groups:
       - age: *all
-  - path_regex: modules/aspects/(cfg/.*|users)/secrets.yaml
-    key_groups:
-      - age: *all
-  - path_regex: modules/aspects/hosts/pointalpha/[^/]+\.yaml$
+  - path_regex: hosts/pointalpha/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn
           - *pointalpha
-  - path_regex: modules/aspects/hosts/pointjig/[^/]+\.yaml$
+  - path_regex: hosts/pointjig/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn
           - *pointjig
-  - path_regex: modules/aspects/hosts/shelter/[^/]+\.yaml$
+  - path_regex: hosts/shelter/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn
           - *shelter
-  - path_regex: modules/aspects/hosts/tank/[^/]+\.yaml$
+  - path_regex: hosts/tank/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn
           - *tank
-  - path_regex: modules/aspects/hosts/zenbook/[^/]+\.yaml$
+  - path_regex: hosts/zenbook/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn
           - *zenbook
-  - path_regex: modules/aspects/hosts/watchtower/[^/]+\.yaml$
+  - path_regex: hosts/watchtower/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn
           - *watchtower
-  - path_regex: modules/aspects/hosts/beacon/[^/]+\.yaml$
+  - path_regex: hosts/beacon/[^/]+\.yaml$
     key_groups:
       - age:
           - *shawn

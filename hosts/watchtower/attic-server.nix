@@ -1,0 +1,56 @@
+{ config, ... }:
+{
+  sops.secrets.attic-env = { };
+  networking.firewall = {
+    allowedUDPPorts = [ 443 ];
+    allowedTCPPorts = [
+      80
+      443
+    ];
+  };
+
+  services = {
+    nginx = {
+      virtualHosts."cache.pointjig.de" = {
+        enableACME = true;
+        forceSSL = true;
+        http3 = false;
+        http2 = false;
+        kTLS = true;
+        extraConfig = ''
+          client_header_buffer_size 64k;
+          client_max_body_size 2G;
+        '';
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8089";
+          recommendedProxySettings = true;
+        };
+      };
+    };
+    atticd = {
+      environmentFile = config.sops.secrets.attic-env.path;
+      enable = true;
+      settings = {
+        listen = "[::]:8089";
+        database = {
+          url = "postgres:///atticd?user=atticd&host=/run/postgresql";
+          heartbeat = true;
+        };
+        compression.type = "zstd";
+        garbage-collection = {
+          interval = "12 hours";
+          default-retention-period = "14 days";
+        };
+      };
+    };
+    postgresql = {
+      ensureDatabases = [ "atticd" ];
+      ensureUsers = [
+        {
+          name = "atticd";
+          ensureDBOwnership = true;
+        }
+      ];
+    };
+  };
+}
