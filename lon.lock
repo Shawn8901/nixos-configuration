@@ -27,9 +27,9 @@
       "owner": "nix-community",
       "repo": "home-manager",
       "branch": "master",
-      "revision": "6857c7f7c338ad181729c52071386b0d3afa24bc",
-      "url": "https://github.com/nix-community/home-manager/archive/6857c7f7c338ad181729c52071386b0d3afa24bc.tar.gz",
-      "hash": "sha256-1RJm4DEu7YHJv94sjSY7sjqT+kHx/AUwmtUN4dtFBUo="
+      "revision": "03885bcd0b477bdecebebc57b213b0f8f0826d51",
+      "url": "https://github.com/nix-community/home-manager/archive/03885bcd0b477bdecebebc57b213b0f8f0826d51.tar.gz",
+      "hash": "sha256-RtgZbV+4BDtJqMImbiPJri3fmVDbCbrz/B0cuPQUJQY="
     },
     "nixpkgs": {
       "type": "Tarball",
