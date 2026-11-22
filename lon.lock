@@ -35,8 +35,8 @@
       "type": "Tarball",
       "fetchType": "tarball",
       "origin": "https://channel.hydra.pointjig.de/nixos-unstable-custom/nixexprs.tar.zst",
-      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1124499.7c994671c82b.tar.zst?narHash=sha256-SAINzQJeiWsMldkvMalVnTl666fvHfci/pBGzUTkXnQ=&lastModified=1795180460",
-      "hash": "sha256-SAINzQJeiWsMldkvMalVnTl666fvHfci/pBGzUTkXnQ="
+      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1125866.9e602d6a8315.tar.zst?narHash=sha256-eJ5gxBKFBWzkN4N+JeFEpXBaw85Z3TakO75BYZeaksQ=&lastModified=1795354117",
+      "hash": "sha256-eJ5gxBKFBWzkN4N+JeFEpXBaw85Z3TakO75BYZeaksQ="
     },
     "preservation": {
       "type": "GitHub",
