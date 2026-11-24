@@ -33,7 +33,7 @@
       logrotate.enable = true;
       qemuGuest.enable = true;
       resolved = {
-        enable = true;
+        enable = lib.mkDefault true;
         settings.Resolve.LLMNR = "false";
       };
       vnstat.enable = true;

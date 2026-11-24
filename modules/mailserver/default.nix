@@ -33,9 +33,13 @@ in
       snm-shawn.sopsFile = ./secrets.yaml;
       snm-dorman.sopsFile = ./secrets.yaml;
     };
-    services.nginx = {
-      enable = true;
-      virtualHosts.${cfg.fqdn}.enableACME = true;
+    services = {
+      nginx = {
+        enable = true;
+        virtualHosts.${cfg.fqdn}.enableACME = true;
+      };
+      knot-resolver.enable = true;
+      resolved.enable = false;
     };
     mailserver = {
       enable = true;
