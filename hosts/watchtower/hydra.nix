@@ -215,7 +215,7 @@ in
         evaluatorSettings.max_concurrent_evals = 1;
         extraConfig = ''
           compress_build_logs = 1
-          evaluator_max_memory_size = ${toString (4 * 1024)}
+          evaluator_max_memory_size = ${toString (6 * 1024)}
           <runcommand>
             job = *:*:merge-pr
             command = ${lib.getExe merge-pr}
