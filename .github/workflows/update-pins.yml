@@ -65,8 +65,11 @@ jobs:
 
           git push
 
-          PR=$(gh pr create --base main --label lon --fill \
-          --body "Automatic pin update for lon.lock on $(date -I)" \
-          --title "Update for lon.lock $(date -I)")
+          if [ $has_pr_open = "[]" ]
+          then
+            PR=$(gh pr create --base main --label lon --fill \
+            --body "Automatic pin update for lon.lock on $(date -I)" \
+            --title "Update for lon.lock $(date -I)")
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
