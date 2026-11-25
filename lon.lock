@@ -27,16 +27,16 @@
       "owner": "nix-community",
       "repo": "home-manager",
       "branch": "master",
-      "revision": "b56bcd042b5e69ad188eca20d9bec1bfbf3dd453",
-      "url": "https://github.com/nix-community/home-manager/archive/b56bcd042b5e69ad188eca20d9bec1bfbf3dd453.tar.gz",
-      "hash": "sha256-xkRZ+PcPWaAyf9YrEBszYD5w2S6/Ac2tIfsufzd4dEQ="
+      "revision": "6a13737c0ed27c7c285f59e3be423ed972aa605f",
+      "url": "https://github.com/nix-community/home-manager/archive/6a13737c0ed27c7c285f59e3be423ed972aa605f.tar.gz",
+      "hash": "sha256-d9Osol//t6hqeo1xlspsYMbhTJK507h6t0EmPyF5Db0="
     },
     "nixpkgs": {
       "type": "Tarball",
       "fetchType": "tarball",
       "origin": "https://channel.hydra.pointjig.de/nixos-unstable-custom/nixexprs.tar.zst",
-      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1125866.9e602d6a8315.tar.zst?narHash=sha256-eJ5gxBKFBWzkN4N+JeFEpXBaw85Z3TakO75BYZeaksQ=&lastModified=1795354117",
-      "hash": "sha256-eJ5gxBKFBWzkN4N+JeFEpXBaw85Z3TakO75BYZeaksQ="
+      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1125867.16a76f0cd8ee.tar.zst?narHash=sha256-LVSeMyrqGegU+8UMTABczST8JJGTOANzdJhyG5+3xOE=&lastModified=1795630679",
+      "hash": "sha256-LVSeMyrqGegU+8UMTABczST8JJGTOANzdJhyG5+3xOE="
     },
     "preservation": {
       "type": "GitHub",
@@ -52,20 +52,20 @@
       "type": "Git",
       "fetchType": "git",
       "branch": "master",
-      "revision": "d30aafe71a6b68888bec56a1ec030494b69da61e",
+      "revision": "116ef18d400f41ecefeb2d378588503847aec1cf",
       "url": "https://gitlab.com/rycee/nur-expressions.git",
-      "hash": "sha256-ahWady3zaDLyXbXZMMzzyw6eKdXlCJ1DBrShCCHjMB8=",
-      "lastModified": 1795492993,
+      "hash": "sha256-jr22Koa5st3EoDs2BgnVTCLCILz0PNIRxv1jdhKGheo=",
+      "lastModified": 1795603447,
       "submodules": false
     },
     "snm": {
       "type": "Git",
       "fetchType": "git",
       "branch": "main",
-      "revision": "3f3461ae8e2720430bcc1ac3c188061aacf13b4e",
+      "revision": "3b3a0ca31f0ffb01e711473b3f729f95643c36a7",
       "url": "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver.git",
-      "hash": "sha256-kHzf0kyHE7gkUId06urKZyi0i8f4xoxNsnnH60wODgQ=",
-      "lastModified": 1795468537,
+      "hash": "sha256-uijMOK/+A7FjJrab7/uU2mE+Eg+3dYkEj9SlN9XGWVc=",
+      "lastModified": 1795612032,
       "submodules": false
     },
     "sops-nix": {
