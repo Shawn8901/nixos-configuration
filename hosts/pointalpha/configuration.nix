@@ -15,6 +15,7 @@
     "${modulesPath}/profiles/perlless.nix"
     "${sources.disko}/module.nix"
     ./disko-config.nix
+    ./ai
   ];
   nixpkgs.config.allowUnfreePackages = [
     "keymapp"
@@ -117,7 +118,7 @@
         serve = {
           type = "tls";
           listen = ":8888";
-          ca = ../../hosts/tank/zrepl.crt;
+          ca = ../tank/zrepl.crt;
           cert = ./zrepl.crt;
           key = config.sops.secrets.zrepl.path;
           client_cns = [ "tank" ];

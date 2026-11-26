@@ -164,6 +164,18 @@
                       "python.analysis.autoImportCompletions" = true;
                       "python.analysis.typeCheckingMode" = "standard";
                       "find-it-faster.general.useTerminalInEditor" = true;
+                      "json.schemaDownload.trustedDomains" = {
+                        "https://developer.microsoft.com/json-schemas/" = true;
+                        "https://json-schema.org/" = true;
+                        "https://json.schemastore.org/" = true;
+                        "https://opencode.ai/config.json" = true;
+                        "https://raw.githubusercontent.com/devcontainers/spec/" = true;
+                        "https://raw.githubusercontent.com/microsoft/vscode/" = true;
+                        "https://schemastore.azurewebsites.net/" = true;
+                        "https://spec.openapis.org/" = true;
+                        "https://www.schemastore.org/" = true;
+                        "https://models.dev/model-schema.json" = true;
+                      };
                     };
                     extensions = with pkgs.vscode-extensions; [
                       # general stuff

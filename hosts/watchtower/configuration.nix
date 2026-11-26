@@ -1,6 +1,3 @@
-# cfg.monitoree
-# cfg.server
-# cfg.postgresql
 {
   config,
   pkgs,
@@ -70,8 +67,4 @@
     # vserver has no real disk available
     smartd.enable = false;
   };
-
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMguHbKev03NMawY9MX6MEhRhd6+h2a/aPIOorgfB5oM"
-  ];
 }

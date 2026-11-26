@@ -1,8 +1,3 @@
-# flake-file.inputs.asus-numberpad-driver = {
-#   url = "github:shawn8901/asus-numberpad-driver/nixos_improvement";
-#   inputs.nixpkgs.follows = "nixpkgs";
-# };
-
 {
   pkgs,
   lib,
@@ -145,5 +140,4 @@
   '';
 
   boot.zfs.useKeyringForCredentials = true;
-  # };
 }

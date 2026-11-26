@@ -10,8 +10,6 @@ let
   '';
 in
 {
-  imports = [ ./ai ];
-
   home.packages = [
     generate-zrepl-ssl
   ]

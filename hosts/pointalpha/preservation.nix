@@ -11,6 +11,11 @@
         "/var/lib/prometheus2"
         "/var/lib/upower"
         "/var/lib/mysql"
+        {
+          directory = "/var/lib/private/llama-cpp";
+          mode = "0700";
+        }
+
       ];
     };
   };

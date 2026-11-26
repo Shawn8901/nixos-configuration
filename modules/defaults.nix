@@ -39,7 +39,6 @@ lib.mkMerge [
     networking.hostId = substring 0 8 (hashString "md5" "${config.networking.hostName}");
     environment.defaultPackages = lib.mkForce [ ];
     boot = {
-      bcache.enable = false;
       enableContainers = lib.mkDefault false;
       tmp = {
         useTmpfs = lib.mkDefault true;
