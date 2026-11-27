@@ -20,6 +20,22 @@
                 { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
               ];
             }
+          ]
+          ++ lib.optionals (config.services.smartd.enable) [
+            {
+              job_name = "smartd";
+              static_configs = [
+                { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}" ]; }
+              ];
+            }
+          ]
+          ++ lib.optionals (config.services.nginx.enable) [
+            {
+              job_name = "nginx";
+              static_configs = [
+                { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.nginx.port}" ]; }
+              ];
+            }
           ];
         };
         remoteWrite = {
@@ -47,6 +63,19 @@
           listenAddress = "127.0.0.1";
           maxInterval = "5m";
         };
+        nginx = {
+          enable = config.services.nginx.enable;
+          listenAddress = "127.0.0.1";
+        };
+      };
+      nginx.virtualHosts.localhost.locations."/nginx_status" = {
+        extraConfig = ''
+          stub_status on;
+          access_log off;
+          allow 127.0.0.1;
+          allow ::1;
+          deny all;
+        '';
       };
     };
   };
