@@ -20,6 +20,12 @@
                 { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
               ];
             }
+            {
+              job_name = "process";
+              static_configs = [
+                { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.process.port}" ]; }
+              ];
+            }
           ]
           ++ lib.optionals (config.services.smartd.enable) [
             {
@@ -56,6 +62,16 @@
             "interrupts"
             "cgroups"
             "hwmon"
+          ];
+        };
+        process = {
+          enable = true;
+          listenAddress = "127.0.0.1";
+          settings.process_names = [
+            {
+              name = "{{.Matches.Wrapped}} {{ .Matches.Args }}";
+              cmdline = [ "^/nix/store[^ ]*/(?P<Wrapped>[^ /]*)" ];
+            }
           ];
         };
         smartctl = {
