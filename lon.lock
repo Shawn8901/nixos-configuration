@@ -27,16 +27,16 @@
       "owner": "nix-community",
       "repo": "home-manager",
       "branch": "master",
-      "revision": "54f903fdaaf5d5720ed36706fe75332af69eb793",
-      "url": "https://github.com/nix-community/home-manager/archive/54f903fdaaf5d5720ed36706fe75332af69eb793.tar.gz",
-      "hash": "sha256-J1iQ1QMnkFwZFXnlPt2t3Qx7TsGjw08/0L3QMqNt+Wg="
+      "revision": "5f5abf5eb8de62d954232f3797b5bf4505656b91",
+      "url": "https://github.com/nix-community/home-manager/archive/5f5abf5eb8de62d954232f3797b5bf4505656b91.tar.gz",
+      "hash": "sha256-Udjs2j0EkvK+qGXKHRIQwXWRgzNBIl4oXSUktuOzbmQ="
     },
     "nixpkgs": {
       "type": "Tarball",
       "fetchType": "tarball",
       "origin": "https://channel.hydra.pointjig.de/nixos-unstable-custom/nixexprs.tar.zst",
-      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1125867.16a76f0cd8ee.tar.zst?narHash=sha256-LVSeMyrqGegU+8UMTABczST8JJGTOANzdJhyG5+3xOE=&lastModified=1795630679",
-      "hash": "sha256-LVSeMyrqGegU+8UMTABczST8JJGTOANzdJhyG5+3xOE="
+      "url": "https://channel.hydra.pointjig.de/nixos-unstable-custom/tarballs/nixos-26.11pre1129580.48897c1a9f10.tar.zst?narHash=sha256-7XWgpy6/K6PELYFyUwc4e876Zx48X+jjaa3CX6VhugY=&lastModified=1795872944",
+      "hash": "sha256-7XWgpy6/K6PELYFyUwc4e876Zx48X+jjaa3CX6VhugY="
     },
     "preservation": {
       "type": "GitHub",
@@ -52,10 +52,10 @@
       "type": "Git",
       "fetchType": "git",
       "branch": "master",
-      "revision": "2f59f0fdf9105ba4ffd752672445af8cc53e7419",
+      "revision": "644a9604258e90611baf6023ec19448cff8f4102",
       "url": "https://gitlab.com/rycee/nur-expressions.git",
-      "hash": "sha256-l0tlHWpr+cfhywPFxSf3AJSMFyduSS0FVNQNpVD5yJk=",
-      "lastModified": 1795752180,
+      "hash": "sha256-Y1K13hFiCuqQr1Mosolh+3Bvn+l3VGHdDBn8zwC0lCU=",
+      "lastModified": 1795838584,
       "submodules": false
     },
     "snm": {
